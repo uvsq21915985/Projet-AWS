@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  app:
+    image: auth-microservice:v1.0.0
+    build: 
+      context: .
+    volumes:
+      - .:/auth_microservice
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    container_name: auth-microservice
