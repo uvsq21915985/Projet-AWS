@@ -51,10 +51,11 @@ def user_login(request):
 @permission_classes([IsAuthenticated])
 def validate_token(request):
     user = request.user
-    return Response({'user': {'id': user.id, 'username': user.username}})
+    return Response({'is_allowed':True,'user': {'id': user.id, 'username': user.username}})
 
 
 @api_view(['POST'])
+@authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def user_logout(request):
     if request.method == 'POST':
