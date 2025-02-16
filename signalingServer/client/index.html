@@ -3,44 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <script src="https://cdn.socket.io/4.8.1/socket.io.min.js" integrity="sha384-mkQ3/7FUtcGyoppY6bz/PORYoGqOl7/aSUMn2ymDOJcapfS6PHqxhRTMh1RR0Q6+" crossorigin="anonymous"></script>
-    <script>
-    const socket = io("http://localhost:8080");
-    </script>
-    <script src="index.js" defer></script>
+    <script src="login.js" defer></script>
     <title>Document</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="index.css">
 </head>
 <body>
-
-<div id="videos">
-   <div id="container">
-
-  <video class="videoplayer" id="localVideo" playsinline autoplay muted></video>
-  <video class="videoplayer" id="remoteVideo" playsinline autoplay></video>
-
-  <label for="roomId">enter the roomId</label>
-    <input type="text" id="roomId">
-    <div id="roomIdError"></div>
-
-    <div id="message1"></div>
-
-    <div id="message2"></div>
-
-    <button  id="join">Join</button>
-
-    <button id="create">create Room</button>
-
-
-    
-  
-
-
-</div>
-</div> 
-
-
+    <label>username</label>
+    <input type="text" id="username">
+    <label>password</label>
+    <input type="text" id="password">
+    <button id="login">login</button>
+    <div id="error"></div>
 </body>
-
 </html>
