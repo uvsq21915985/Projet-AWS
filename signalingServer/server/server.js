@@ -15,7 +15,10 @@ const io = socketio(server, {
 // list of all current rooms
 let rooms = {};
 
-
+io.on('connect_error', (err) => {
+    console.error(`Connection error: ${err.message}`);
+    // Implement reconnection logic or user notifications here
+  });
 io.on("connection", socket => {
 
 // create a room , adding room to array with the user that created it

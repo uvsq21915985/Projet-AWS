@@ -117,8 +117,27 @@ peerConnection.ontrack = (event) => {
 
 
 
-
-let userId = Math.floor(Math.random() * 1000);
+//use the validate API to validate the token and displaying the username if the token is validated
+async function validateUser(){
+    fetch("http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/validate/",{
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Token '+localStorage.getItem("token")
+          },
+}).then(response =>{
+if (!response.ok){
+    console.log(response);
+    errorMessage.innerHTML = "erreur dans l'authentification";
+    return false;
+}
+else{
+    // save the token in the session storage 
+    document.getElementById("displayUsername").innerHTML = response.json().user.username;
+    return true;
+}
+});
+}
 
 /**
  * function to join a room
@@ -127,7 +146,7 @@ let userId = Math.floor(Math.random() * 1000);
  * and if the room doesn't exist the server answer with "roomNotFound" (see below)
  */
 async function joinRoom(){
-   
+   if (validateUser){
     try{
        await setup();
     let roomId = document.getElementById("roomId").value;
@@ -143,6 +162,7 @@ async function joinRoom(){
     catch(error) {
         console.log(`getUserMedia error: ${error}`);
     };
+}
 }
 
 // when a peer has joined an existing room the user create an offer
@@ -160,6 +180,7 @@ socket.on("roomNotFound",()=>{
 
 // function to create a room we generate a random roomId and send it to the server that store it in an array (rooms)
 async function createRoom(){
+   if (validateUser){
     try{
     
     await setup();
@@ -176,6 +197,8 @@ async function createRoom(){
     }catch(err){
         console.log(`getUserMedia error: ${error}`);
     }
+
+   }
 }
     
 let localVideo = document.getElementById('localVideo');
