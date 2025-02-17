@@ -139,6 +139,9 @@ else{
 });
 }
 
+
+
+let userId =  Math.floor(Math.random() * 1000);
 /**
  * function to join a room
  * we get a roomId that the user typed and send it to the server
@@ -160,7 +163,7 @@ async function joinRoom(){
 
     }
     catch(error) {
-        console.log(`getUserMedia error: ${error}`);
+        console.log(" error:" ,error);
     };
 }
 }
@@ -195,7 +198,7 @@ async function createRoom(){
     document.getElementById('message1').innerHTML = "created room with id" +roomId;
 
     }catch(err){
-        console.log(`getUserMedia error: ${error}`);
+        console.log("error" , err);
     }
 
    }
