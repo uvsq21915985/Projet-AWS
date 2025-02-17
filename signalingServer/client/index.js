@@ -145,6 +145,8 @@ else{
  * if the room exist the server answer with a "userjoin" and thenn create an offer (see below function)
  * and if the room doesn't exist the server answer with "roomNotFound" (see below)
  */
+
+let userId = Math.floor(Math.random() * 1000);
 async function joinRoom(){
    if (validateUser){
     try{
@@ -187,7 +189,7 @@ async function createRoom(){
     console.log("creating a room");
     let roomId = Math.floor(Math.random() * 1000);
     console.log("roomId created : " , roomId);
-    console.log("userId", userId);
+   // console.log("userId", userId);
     socket.emit("createRoom",{
         room: roomId,
         name: userId,
@@ -195,7 +197,7 @@ async function createRoom(){
     document.getElementById('message1').innerHTML = "created room with id" +roomId;
 
     }catch(err){
-        console.log(`getUserMedia error: ${error}`);
+        console.log("getUserMedia error:" , err);
     }
 
    }
