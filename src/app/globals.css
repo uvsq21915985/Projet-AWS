@@ -173,7 +173,7 @@ input{
         background-color: var(--white);
         select,
         textarea,
-        
+
         input{
             background-color: transparent;
             resize: vertical;
