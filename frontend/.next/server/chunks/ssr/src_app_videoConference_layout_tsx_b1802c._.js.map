@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///home/hedil/master/aws/Projet-AWS/frontend/src/app/videoConference/layout.tsx"],"sourcesContent":["export default function layout({\n    children,\n  }: Readonly<{\n    children: React.ReactNode;\n  }>) {\n    return (\n      <html lang=\"fr\">\n        <body>\n          {children}\n        </body>\n      </html>\n    );}"],"names":[],"mappings":";;;;;AAAe,SAAS,OAAO,EAC3B,QAAQ,EAGR;IACA,qBACE,8OAAC;QAAK,MAAK;kBACT,cAAA,8OAAC;sBACE;;;;;;;;;;;AAGL"}},
+    {"offset": {"line": 28, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}
