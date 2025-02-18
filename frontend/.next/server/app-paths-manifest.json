@@ -1,0 +1,7 @@
+{
+  "/page": "app/page.js",
+  "/auth/login/page": "app/auth/login/page.js",
+  "/userPage/page": "app/userPage/page.js",
+  "/videoConference/page": "app/videoConference/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js"
+}
