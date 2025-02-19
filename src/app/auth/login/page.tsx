@@ -33,7 +33,7 @@ export default function Login() {
         <h1>Connexion</h1>
         <p>Se connecter pour passer des appels d'une autre maniere</p>
         {error && <p className="message msg-error text-center">{error}</p>}
-        <form action={handleSubmit} method="post">
+        <form action={(e) => handleSubmit(e)} method="post">
             <div className="form-group">
                 <label htmlFor="email" className="form-label">Email</label>
                 <div className="form-input">

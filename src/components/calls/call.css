@@ -1,0 +1,226 @@
+.call{
+    background-color: var(--black);
+    height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem;
+}
+
+.call-room{
+    height: 100%;
+    width: 100%;
+    border-radius: 8px;
+    background-color: #CECECE;
+    padding: 1rem;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    max-width: 1280px;
+    margin-inline: auto;
+
+    
+}
+.caller-badge{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    border-radius: 8px;
+    background-color: #BDBDBD;
+    width: max-content;
+    padding: .5rem .75rem;
+
+    .caller-badge-sg{
+        background-color: #321313;
+        color: var(--white);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        font-size: .7rem;
+    }
+
+    span:last-of-type{
+        font-size: .8rem;
+    }
+
+}
+
+.foreign-view{
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    height: 30vh;
+    max-width: 16rem;
+    width: 100%;
+    border-radius: 8px;
+    padding: .5rem;
+
+    background-color: #BDBDBD;
+
+    .caller-badge{
+        background-color: rgb(244, 244, 244, 0.39);
+    }
+}
+
+.call-actions{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    border-radius: 8px;
+    background-color: rgb(0, 0, 0, 0.06);
+    padding-block: 1rem;
+    max-width: 500px;
+    width: 100%;
+    margin-inline: auto;
+
+    .call-action{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: .6rem;
+        cursor: pointer;
+    
+        span{
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+    
+            background-color: var(--white);
+            color: var(--black);
+            border-radius: 50%;
+        }
+        p{
+            font-size: .8rem;
+            line-height: 20px;
+        }
+
+        &.bg-danger{
+            span{
+                color: var(--white);
+                background-color: var(--danger);
+            }
+        }
+    }
+}
+
+.call.group {
+    flex-direction: column;
+
+    --count: 6;
+    --gap: 1rem;
+
+    .other-member{
+        max-width: 1280px;
+        margin-inline: auto;
+        width: 100%;
+        margin-top: 1rem;
+
+        .other-member-wrapper{
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            gap: var(--gap);
+        }
+    }
+
+    .foreign-view{
+        position: inherit;
+        right: inherit;
+        top: inherit;
+        height: 18vh;
+        width: calc(calc(100% / var(--count)) - var(--gap));
+    }
+}
+
+@media screen and (max-width: 1080px) {
+    .call.group{
+        gap: 1rem;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: inherit;
+    
+        .other-member{
+            margin-top: 0;
+            width: 280px;
+    
+            max-height: 100%;
+    
+            overflow-y: scroll;
+            height: 100%;
+
+            .other-member-wrapper{
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+            }
+    
+            .foreign-view{
+                width: 100%;
+                height: 12rem;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .call.group{
+        gap: 1rem;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    
+        .other-member{
+            margin-top: 0;
+            height: 100%;
+            width: 100%;
+            background-color: rebeccapurple;
+
+            overflow-x: scroll;
+            overflow-y: inherit;
+
+            .other-member-wrapper{
+                flex-direction: row;
+                align-items: center;
+                justify-content: flex-start;
+                
+            }
+    
+            .foreign-view{
+                height: 18vh;
+                width: 180px;
+            }
+        }
+    }
+}
+
+.loading-call{
+    height: 90vh;
+    width: 100%;
+    border-radius: 8px;
+    background-color: #cecece54;
+    padding: 1rem;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    max-width: 1280px;
+    margin-inline: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg{
+        color: var(--main-color);
+    }
+}
