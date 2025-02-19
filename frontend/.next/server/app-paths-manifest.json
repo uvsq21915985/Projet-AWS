@@ -1,7 +1,15 @@
 {
+  "/videoConference/page": "app/videoConference/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/userPage/page": "app/userPage/page.js",
   "/page": "app/page.js",
   "/auth/login/page": "app/auth/login/page.js",
-  "/userPage/page": "app/userPage/page.js",
-  "/videoConference/page": "app/videoConference/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/joinRoom/page": "app/joinRoom/page.js",
+  "/(layout-app)/joinRoom/page": "app/(layout-app)/joinRoom/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(layout-app)/userPage/page": "app/(layout-app)/userPage/page.js",
+  "/(layout-video)/videoConference/page": "app/(layout-video)/videoConference/page.js",
+  "/(layout-app)/auth/login/page": "app/(layout-app)/auth/login/page.js",
+  "/(layout-app)/page": "app/(layout-app)/page.js",
+  "/(layout-video)/room/page": "app/(layout-video)/room/page.js"
 }
