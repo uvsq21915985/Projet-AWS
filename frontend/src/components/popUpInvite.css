@@ -1,0 +1,26 @@
+.btn{
+    padding: 25px;
+    font-size: 20px ;
+    color: var(--main-color);
+    background: var(--main-color);
+        
+        
+}
+
+
+.pop{
+
+   padding: 25px; 
+   font-size: 20px;  
+   background: white;
+   color: var(--main-color);
+    height: 100%;
+}
+
+.main{
+    padding: 25px;
+         font-size: 20px;
+           background: white;
+            color: var(--main-color);
+             height: '100%';
+}
