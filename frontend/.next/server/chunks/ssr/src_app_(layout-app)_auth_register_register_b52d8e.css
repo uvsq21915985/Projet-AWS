@@ -1,0 +1,43 @@
+/* [project]/src/app/(layout-app)/auth/register/register.css [app-client] (css) */
+.auth {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 60px);
+  background: var(--main-color);
+}
+
+.auth h1 {
+  margin-bottom: .35rem;
+}
+
+.auth p {
+  margin-bottom: 1rem;
+}
+
+.auth .btn {
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+}
+
+.auth .auth-wrapper {
+  width: 100%;
+  max-width: 500px;
+  background-color: var(--white);
+  padding: 3rem 2rem;
+  border-radius: 8px;
+}
+
+.auth .auth-wrapper a {
+  text-align: center;
+  margin-top: 1rem;
+  display: block;
+}
+
+.auth .auth-wrapper a span {
+  color: var(--main-color);
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=src_app_%28layout-app%29_auth_register_register_b52d8e.css.map*/

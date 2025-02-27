@@ -1,0 +1,248 @@
+/* [project]/src/app/globals.css [app-client] (css) */
+:root {
+  --main-color: #0b0071;
+  --font-familly: "Montserrat", sans-serif;
+  --danger: #ea4335;
+  --success: #07aa07;
+  --warning: #fbbc05;
+  --infos: #0532fb;
+  --white: #fff;
+  --black: #000;
+}
+
+body, html {
+  font-family: var(--font-familly);
+  font-size: .9rem;
+  font-weight: 400;
+  overflow-x: hidden;
+  background-color: var(--white);
+  line-height: 1.5;
+  scroll-behavior: smooth;
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track-piece, ::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px #0000;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb:vertical {
+  border-radius: 5px;
+  background: var(--scroll-bar);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+  font-family: var(--font-familly);
+}
+
+img {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+ul {
+  list-style: none;
+}
+
+a, a:hover {
+  text-decoration: none;
+  color: var(--black);
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+span, select, textarea, button, input {
+  font-family: var(--font-familly);
+}
+
+.mh-full {
+  min-height: 100vh;
+}
+
+.btn {
+  display: flex;
+  padding: .75rem 1rem;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.btn.btn-main {
+  background-color: var(--main-color);
+  color: var(--white);
+}
+
+.btn.btn-dark {
+  background-color: var(--black);
+  color: var(--white);
+}
+
+.btn.btn-danger {
+  background-color: var(--danger);
+  color: var(--white);
+}
+
+.btn.outlined {
+  border: 1px solid;
+}
+
+.btn.outlined-main {
+  border-color: var(--main-color);
+  color: var(--main-color);
+}
+
+.btn.disable {
+  opacity: .7;
+}
+
+.form-select, .form-textarea, .form-input {
+  border: 1px solid #cacaca4d;
+  box-shadow: 0 0 2px #00000010;
+  border-radius: 8px;
+  background-color: var(--white);
+}
+
+:is(.form-select, .form-textarea, .form-input) select, :is(.form-select, .form-textarea, .form-input) textarea, :is(.form-select, .form-textarea, .form-input) input {
+  border: none;
+  width: 100%;
+  padding: .75rem 1rem;
+  border-radius: 8px;
+}
+
+:is(.form-select, .form-textarea, .form-input).has-error {
+  border-color: var(--danger);
+}
+
+.form-group {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.form-group .form-input, .form-group .form-textarea, .form-group .form-select {
+  width: 100%;
+}
+
+.form-group .form-label {
+  margin-bottom: .5rem;
+  font-weight: 500;
+  display: block;
+  width: max-content;
+  position: relative;
+}
+
+.form-group .form-label:before {
+  content: "*";
+  position: absolute;
+  color: #fff0;
+  right: -5px;
+  top: -2px;
+}
+
+.form-group .form-input {
+  background-color: var(--white);
+}
+
+.form-group .form-input select, .form-group .form-input textarea, .form-group .form-input input {
+  background-color: #0000;
+  resize: vertical;
+}
+
+.form-group .form-info {
+  display: block;
+  margin-top: .45rem;
+  color: var(--black-700);
+  margin-left: .125rem;
+}
+
+.form-group .form-input.has-start-block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-group .form-input.has-start-block .start-block {
+  padding: .5rem .75rem;
+  color: var(--black-50);
+}
+
+.form-group .form-input.has-start-block input {
+  width: 100%;
+}
+
+.form-group .form-input.has-icon {
+  position: relative;
+}
+
+.form-group .form-input.has-icon .icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.message {
+  padding: 1rem .75rem;
+  border-radius: 8px;
+  background-color: #eee;
+  border: 1px solid #dbdbdb;
+}
+
+.message.msg-error {
+  color: var(--danger);
+  border-color: var(--danger);
+  background-color: #ea443511;
+}
+
+.container {
+  padding-inline: 3rem;
+}
+
+@media screen and (width >= 1300px) {
+  .container {
+    padding-inline: calc(50% - 650px + 1.5rem);
+  }
+}
+
+@media screen and (width <= 380px) {
+  .container {
+    padding-inline: 1.5rem;
+  }
+}
+
+.d-sm {
+  display: flex;
+}
+
+@media screen and (width >= 850px) {
+  .d-sm {
+    display: none;
+  }
+}
+
+.d-lg {
+  display: none !important;
+}
+
+@media screen and (width >= 850px) {
+  .d-lg {
+    display: flex !important;
+  }
+}
+
+/*# sourceMappingURL=src_app_globals_b52d8e.css.map*/

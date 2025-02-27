@@ -1,0 +1,9 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///home/hedil/master/aws/Projet-AWS/frontend/src/app/%28layout-video%29/videoConference/layout.tsx"],"sourcesContent":["export default function RootLayout({\n    children,\n  }: Readonly<{\n    children: React.ReactNode;\n  }>) {\n    return (\n      <html lang=\"fr\">\n        <body>\n          {children}\n        </body>\n      </html>\n    );\n}"],"names":[],"mappings":";;;;;AAAe,SAAS,WAAW,EAC/B,QAAQ,EAGR;IACA,qBACE,8OAAC;QAAK,MAAK;kBACT,cAAA,8OAAC;sBACE;;;;;;;;;;;AAIX"}},
+    {"offset": {"line": 28, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}},
+    {"offset": {"line": 39, "column": 0}, "map": {"version":3,"sources":["file:///home/hedil/master/aws/Projet-AWS/frontend/node_modules/next/src/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.ts"],"sourcesContent":["module.exports = require('../../module.compiled').vendored[\n  'react-rsc'\n].ReactJsxDevRuntime\n"],"names":["module","exports","require","vendored","ReactJsxDevRuntime"],"mappings":";AAAAA,OAAOC,OAAO,GAAGC,QAAQ,0HAAyBC,QAAQ,CACxD,YACD,CAACC,kBAAkB","ignoreList":[0]}},
+    {"offset": {"line": 41, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

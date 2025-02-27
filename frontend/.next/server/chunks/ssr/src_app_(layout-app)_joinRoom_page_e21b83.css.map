@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/riadn/Desktop/AWS_PUSH_LAST/Projet-AWS-videoConferencing/frontend/src/app/%28layout-app%29/joinRoom/page.css"],"sourcesContent":[".user-container{\n    padding: 20px;\n    width: 100%;\n    min-height: calc(100vh - 60px);\n    background: var(--main-color);\n    color : white;\n    gap: 50px;\n    padding: 20px;\n\n    .btn{\n        background-color: white;\n        margin: auto;\n        color: var(--main-color);\n        text-align: center;\n        text-decoration: none;\n        font-size: 16px;\n        padding: 20px;\n        margin: 50px 50px;\n        border: 2px solid white;\n    }\n\n    \n    .btn:hover{\n        background-color: var(--main-color);\n        border: 2px solid white;\n        color: white;\n    }\n    \n\n\n}\n\ninput{\n    height: 50px;\n    width: 500px;\n    margin-top: 100px;\n    font-size: large;\n    margin-left: 50px;\n}\n\nform{\n    font-size: large;\n    font-weight: bold;\n    padding: 10px;\n}\n\n"],"names":[],"mappings":"AAAA;;;;;;;;;;AASI;;;;;;;;;;;;AAaA;;;;;;AAUJ;;;;;;;;AAQA"}},
+    {"offset": {"line": 42, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}
