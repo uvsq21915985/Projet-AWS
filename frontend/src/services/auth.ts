@@ -15,11 +15,26 @@ export async function login(data: FormData){
         })
     });
 }
-
+/*
 export async function register(data: FormData){
     return fetch(
         API_ROUTE.register, {
         body: data
+    });
+}
+*/
+export async function register(data: FormData){
+
+    return fetch(API_ROUTE.register,{
+         method: "POST",
+         headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: String(data.get("username")),
+            email: String(data.get("email")),
+            password: String(data.get("password"))
+        })
     });
 }
 

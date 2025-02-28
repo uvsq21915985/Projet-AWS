@@ -46,7 +46,15 @@ async function login(data) {
 }
 async function register(data) {
     return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].register, {
-        body: data
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: String(data.get("username")),
+            email: String(data.get("email")),
+            password: String(data.get("password"))
+        })
     });
 }
 async function validate(token) {
