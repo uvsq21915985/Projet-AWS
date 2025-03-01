@@ -13,7 +13,7 @@ export default function Header(){
 
                 <nav className={active ? "active" : ""}>
                     <Link href={"/auth/login"}>A propos</Link>
-                    <Link href={"/auth/login"}>Notre equipe</Link>
+                    <Link href={"/teamPage"}>Notre equipe</Link>
                     <Link href={"/auth/login"} className="btn btn-main">Nous rejoindre</Link>
                 </nav>
 

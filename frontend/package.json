@@ -11,6 +11,7 @@
   "dependencies": {
     "@jitsi/react-sdk": "^1.4.4",
     "mediasoup-client": "^3.8.1",
+    "mymeet": "file:",
     "next": "^15.1.7",
     "peer": "^1.0.2",
     "peerjs": "^1.5.4",

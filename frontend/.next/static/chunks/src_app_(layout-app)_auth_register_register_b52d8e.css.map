@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack://[project]/src/app/(layout-app)/auth/register/register.css"],"sourcesContent":[".auth{\r\n    display: flex;\r\n    align-items: center;\r\n    justify-content: center;\r\n    min-height: calc(100vh - 60px);\r\n    background: var(--main-color);\r\n\r\n    h1{\r\n        margin-bottom: 0.35rem;\r\n    }\r\n\r\n    p{\r\n        margin-bottom: 1rem;\r\n    }\r\n\r\n    .btn{\r\n        width: 100%;\r\n        text-align: center;\r\n        justify-content: center;\r\n    }\r\n\r\n    .auth-wrapper{\r\n        width: 100%;\r\n        max-width: 500px;\r\n        background-color: var(--white);\r\n        padding: 3rem 2rem;\r\n        border-radius: 8px;\r\n\r\n        a{\r\n            text-align: center;\r\n            margin-top: 1rem;\r\n            display: block;\r\n\r\n            span{\r\n                color: var(--main-color);\r\n                text-decoration: underline;\r\n            }\r\n        }\r\n    }\r\n}"],"names":[],"mappings":"AAAA;;;;;;;;AAOI;;;;AAIA;;;;AAIA;;;;;;AAMA;;;;;;;;AAOI;;;;;;AAKI"}},
+    {"offset": {"line": 41, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}
