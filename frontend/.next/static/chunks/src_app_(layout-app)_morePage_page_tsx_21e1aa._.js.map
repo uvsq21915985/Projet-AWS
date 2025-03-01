@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file://C%3A/Users/33685/Projet-AWS/frontend/src/app/%28layout-app%29/morePage/page.tsx"],"sourcesContent":["\"use client\"\r\n\r\nimport \"./page.css\";\r\n\r\nexport default function MorePage() {\r\n    return (\r\n        <div className=\"info\">\r\n            <div className=\"info-wrapper\">\r\n            <h1>À propos de nous</h1>\r\n            <p>Bienvenue sur notre site! Dans le cadre d'un projet de fin d'année pour la matière AWS.</p>\r\n            </div>\r\n        </div>\r\n    );\r\n}"],"names":[],"mappings":";;;;AAAA;;;AAIe,SAAS;IACpB,qBACI,6LAAC;QAAI,WAAU;kBACX,cAAA,6LAAC;YAAI,WAAU;;8BACf,6LAAC;8BAAG;;;;;;8BACJ,6LAAC;8BAAE;;;;;;;;;;;;;;;;;AAIf;KATwB"}},
+    {"offset": {"line": 52, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}

@@ -32,7 +32,7 @@ export default function Login() {
       <div className="auth container">
         <div className="auth-wrapper">
         <h1>S'inscrire</h1>
-        <p>S'inscrire pour passer des appels d'une autre maniere</p>
+        <p>S'inscrire pour passer des appels d'une autre manière</p>
         {error && <p className="message msg-error text-center">{error}</p>}
         <form action={handleSubmit} method="post">
             <div className="form-group">
@@ -42,7 +42,7 @@ export default function Login() {
                 </div>
             </div>
             <div className="form-group">
-                <label htmlFor="lastname" className="form-label">Prenom</label>
+                <label htmlFor="lastname" className="form-label">Prénom</label>
                 <div className="form-input">
                     <input type="text" name="lastname" required value={lastname} onChange={(e) => setLastname(e.target.value)} id="lastname" autoComplete="false" placeholder="ex: mymeet" />
                 </div>
@@ -61,7 +61,7 @@ export default function Login() {
             </div>
 
             <button className={"btn btn-main jc-c ai-c "+(pending ? "disable" : "")} type="submit">{pending ? "Loading..." : "S'inscrire"}</button>
-            <Link href={"/auth/login"}>Deja membre ? <span className="clr_main">se connecter</span></Link>
+            <Link href={"/auth/login"}>Déjà membre ? <span className="clr_main">se connecter</span></Link>
         </form>
       </div>
       </div>

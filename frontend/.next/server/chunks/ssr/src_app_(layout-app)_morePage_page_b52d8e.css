@@ -1,0 +1,42 @@
+/* [project]/src/app/(layout-app)/morePage/page.css [app-client] (css) */
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - 60px);
+  background: var(--main-color);
+}
+
+.info h1 {
+  margin-bottom: .35rem;
+}
+
+.info p {
+  margin-top: .5rem;
+}
+
+.info p span {
+  color: var(--main-color);
+  font-weight: 600;
+}
+
+.info .info-wrapper {
+  width: 100%;
+  max-width: 500px;
+  background-color: var(--white);
+  padding: 3rem 2rem;
+  border-radius: 8px;
+}
+
+.info .info-wrapper a {
+  text-align: center;
+  margin-top: 1rem;
+  display: block;
+}
+
+.info .info-wrapper a span {
+  color: var(--main-color);
+  text-decoration: underline;
+}
+
+/*# sourceMappingURL=src_app_%28layout-app%29_morePage_page_b52d8e.css.map*/

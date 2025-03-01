@@ -4,6 +4,7 @@ import "./page.css";
 
 export default function TeamPage() {
     return (
+        // On utilise les conteneurs info/info-wrapper de ./page.css
         <div className="info">
             <div className="info-wrapper">
                 <h1>Bienvenue sur la page de notre équipe</h1>

@@ -9,10 +9,10 @@ export default function Header(){
     return (
         <header className="container">
             <div className="header_wrapper">
-                <div className="logo">My<span>Meet</span></div>
+                <div className="logo"><Link href={"/.."}>My<span>Meet</span></Link></div>
 
                 <nav className={active ? "active" : ""}>
-                    <Link href={"/auth/login"}>A propos</Link>
+                    <Link href={"/morePage"}>A propos</Link>
                     <Link href={"/teamPage"}>Notre equipe</Link>
                     <Link href={"/auth/login"} className="btn btn-main">Nous rejoindre</Link>
                 </nav>
