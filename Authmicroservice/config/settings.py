@@ -105,6 +105,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        # Enabling password validation section : https://docs.djangoproject.com/en/5.1/topics/auth/passwords/
+        "OPTIONS": {
+            "min_length": 12,
+        },
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
