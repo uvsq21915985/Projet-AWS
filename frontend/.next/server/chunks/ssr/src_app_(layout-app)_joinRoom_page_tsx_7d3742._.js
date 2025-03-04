@@ -16,58 +16,67 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navi
 ;
 function JoinRoom() {
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
-    // set the username with validation with the access token
     const onSubmit = async (formData)=>{
-        // we get the roomId
         if (formData.get("roomId")) {
             let roomId = formData.get("roomId");
-            // redirect to URL with  query string
             router.push("/room?id=" + roomId);
-        // handling error need to be implemented
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "user-container",
+        className: "join-container",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
+                className: "title",
                 children: "Rejoindre une vidéoconférence"
             }, void 0, false, {
                 fileName: "[project]/src/app/(layout-app)/joinRoom/page.tsx",
-                lineNumber: 45,
-                columnNumber: 4
+                lineNumber: 19,
+                columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
                 action: onSubmit,
                 method: "post",
+                className: "join-form",
                 children: [
-                    "Veuillez saisir le RoomID :",
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
+                        htmlFor: "roomId",
+                        className: "label",
+                        children: "Veuillez saisir le Room ID :"
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/(layout-app)/joinRoom/page.tsx",
+                        lineNumber: 22,
+                        columnNumber: 9
+                    }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                         type: "text",
-                        name: "roomId"
+                        name: "roomId",
+                        id: "roomId",
+                        className: "input",
+                        placeholder: "Entrer l'ID de la salle"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(layout-app)/joinRoom/page.tsx",
-                        lineNumber: 48,
-                        columnNumber: 5
+                        lineNumber: 25,
+                        columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                        className: "btn",
+                        className: "btn-join",
                         type: "submit",
-                        children: "Submit"
+                        children: "Rejoindre"
                     }, void 0, false, {
                         fileName: "[project]/src/app/(layout-app)/joinRoom/page.tsx",
-                        lineNumber: 49,
-                        columnNumber: 5
+                        lineNumber: 26,
+                        columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/(layout-app)/joinRoom/page.tsx",
-                lineNumber: 46,
-                columnNumber: 4
+                lineNumber: 21,
+                columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/(layout-app)/joinRoom/page.tsx",
-        lineNumber: 44,
+        lineNumber: 18,
         columnNumber: 5
     }, this);
 }

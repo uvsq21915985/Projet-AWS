@@ -1,46 +1,70 @@
-.user-container{
-    padding: 20px;
+/* Main Container */
+.join-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 60px);
     width: 100%;
-    min-height: calc(100vh - 60px);
     background: var(--main-color);
-    color : white;
-    gap: 50px;
-    padding: 20px;
-
-    .btn{
-        background-color: white;
-        margin: auto;
-        color: var(--main-color);
-        text-align: center;
-        text-decoration: none;
-        font-size: 16px;
-        padding: 20px;
-        margin: 50px 50px;
-        border: 2px solid white;
-    }
-
-    
-    .btn:hover{
-        background-color: var(--main-color);
-        border: 2px solid white;
-        color: white;
-    }
-    
-
-
-}
-
-input{
-    height: 50px;
-    width: 500px;
-    margin-top: 100px;
-    font-size: large;
-    margin-left: 50px;
-}
-
-form{
-    font-size: large;
+    color: white;
+    text-align: center;
+  }
+  
+  /* Title Styling */
+  .title {
+    font-size: 2rem;
     font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  /* Form Styling */
+  .join-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Label Styling */
+  .label {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  /* Input Field */
+  .input {
+    height: 50px;
+    width: 400px;
+    font-size: 1rem;
     padding: 10px;
-}
-
+    border: none;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  /* Button Styling */
+  .btn-join {
+    background-color: white;
+    color: var(--main-color);
+    text-align: center;
+    font-size: 1rem;
+    padding: 12px 25px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .btn-join:hover {
+    background-color: var(--main-color);
+    color: white;
+    border: 2px solid white;
+  }
+  
