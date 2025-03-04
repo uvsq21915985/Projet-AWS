@@ -4,5 +4,7 @@
   "/(layout-app)/userPage/page": "app/(layout-app)/userPage/page.js",
   "/(layout-app)/joinRoom/page": "app/(layout-app)/joinRoom/page.js",
   "/(layout-video)/videoConference/page": "app/(layout-video)/videoConference/page.js",
-  "/_not-found/page": "app/_not-found/page.js"
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(layout-video)/room/page": "app/(layout-video)/room/page.js",
+  "/(layout-app)/auth/register/page": "app/(layout-app)/auth/register/page.js"
 }

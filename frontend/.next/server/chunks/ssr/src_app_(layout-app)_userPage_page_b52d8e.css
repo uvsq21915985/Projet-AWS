@@ -79,7 +79,31 @@
 
 .brand {
   font-weight: bold;
-  color: #f3f707f8;
+  color: #eff300c9;
+}
+
+.logo-meet {
+  margin-top: 60px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 3px solid #eff300c9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+  transition: transform .3s ease-in-out;
+}
+
+.logo-meet:hover {
+  transform: scale(1.1);
+}
+
+.logo-meet img {
+  color: #0ff;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 /*# sourceMappingURL=src_app_%28layout-app%29_userPage_page_b52d8e.css.map*/

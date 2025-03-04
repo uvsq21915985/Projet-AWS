@@ -90,9 +90,37 @@
   /* Style spécial pour MyMeet */
   .brand {
     font-weight: bold;
-    color: rgba(243, 247, 7, 0.973);
+    color: rgba(239, 243, 0, 0.788);
   }
-
+  
+/* Logo avec une bordure circulaire blanche */
+.logo-meet {
+    
+    margin-top: 60px;
+    width: 60px; /* Ajustable selon la taille du logo */
+    height: 60px;
+    border-radius: 50%; /* Rend la bordure circulaire */
+    border: 3px solid rgba(239, 243, 0, 0.788); /* Bordure blanche */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px; /* Espacement interne */
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Effet au survol */
+  .logo-meet:hover {
+    transform: scale(1.1); /* Légère augmentation de taille au survol */
+  }
+  
+  /* Logo image à l'intérieur */
+  .logo-meet img {
+    color: aqua;
+    width: 100%; /* Ajuste l’image à l’intérieur */
+    height: auto;
+    object-fit: contain;
+  }
+  
  
   
   

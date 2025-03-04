@@ -41,6 +41,7 @@ export default function UserPage() {
           </Link>
         </div>
       </div>
+      <img className="logo-meet"src="/vercel.svg" alt="Logo Vercel" />
     </div>
   );
 }
