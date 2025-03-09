@@ -1,10 +1,8 @@
 {
   "pages": {
     "/_not-found/page": [
-      "static/chunks/[root of the server]__dc7986._.css",
-      "static/chunks/node_modules_next_dist_532a10._.js",
-      "static/chunks/src_1d7ffa._.js",
-      "static/chunks/src_app_layout_tsx_61af54._.js",
+      "static/chunks/node_modules_next_dist_5d579c._.js",
+      "static/chunks/node_modules_next_dist_client_components_not-found-error_61af54.js",
       "static/chunks/node_modules_next_dist_compiled_react-dom_1f56dc._.js",
       "static/chunks/node_modules_next_dist_compiled_107ce8._.js",
       "static/chunks/node_modules_next_dist_client_523921._.js",

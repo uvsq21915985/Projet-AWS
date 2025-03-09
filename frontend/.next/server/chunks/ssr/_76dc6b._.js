@@ -5,55 +5,60 @@ module.exports = {
 
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
+// code from https://medium.com/@dtulpa16/next-js-modals-made-easy-7bdce15b2a5e
 __turbopack_esm__({
     "PopUpInvite": (()=>PopUpInvite)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
 ;
-;
-function PopUpInvite(props) {
-    //{setPopUp} :{setPopUp: Dispatch<SetStateAction<boolean>>},roomId: string
-    let setPopUp = props.setPopUp;
-    let roomId = props.roomId;
+function PopUpInvite({ setPopUp }) {
     function handleClick() {
         setPopUp(false);
     }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "main",
+        style: {
+            padding: '25px',
+            fontSize: '20px',
+            background: 'white',
+            color: 'var(--main-color',
+            height: '100%'
+        },
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
                 children: "Inviter des Participant"
             }, void 0, false, {
                 fileName: "[project]/src/components/PopUpInvite.tsx",
-                lineNumber: 17,
+                lineNumber: 14,
                 columnNumber: 13
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                children: [
-                    "Pour inviter des participants vous devez leurs communiquer le roomId qui est de ",
-                    roomId
-                ]
-            }, void 0, true, {
+                children: "Pour inviter des participants vous devez leurs communiquer le roomId qui est de "
+            }, void 0, false, {
                 fileName: "[project]/src/components/PopUpInvite.tsx",
-                lineNumber: 18,
+                lineNumber: 15,
                 columnNumber: 15
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                children: " ils devront le saisir à l'adresse suivante pour pouvoir rejoindre la réunion : "
+                children: " ils devront le saisir à l'adresse suivante pour pouvoir rejoindre la room : "
             }, void 0, false, {
                 fileName: "[project]/src/components/PopUpInvite.tsx",
-                lineNumber: 19,
+                lineNumber: 16,
                 columnNumber: 15
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                 children: " http://localhost:3000/joinRoom"
             }, void 0, false, {
                 fileName: "[project]/src/components/PopUpInvite.tsx",
-                lineNumber: 20,
+                lineNumber: 17,
                 columnNumber: 15
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                className: "btn",
+                style: {
+                    padding: '25px',
+                    fontSize: '20px',
+                    color: "white",
+                    background: 'var(--main-color)'
+                },
                 onClick: handleClick,
                 children: "Close"
             }, void 0, false, {
@@ -64,7 +69,7 @@ function PopUpInvite(props) {
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/PopUpInvite.tsx",
-        lineNumber: 16,
+        lineNumber: 13,
         columnNumber: 11
     }, this);
 }
@@ -89,12 +94,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$jitsi$2f$r
 ;
 ;
 function Jitsit({ id }) {
-    const [roomId, setRoomId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])('');
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])(); // handle change of url
     const [invitePopUp, setInvitePopUp] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        setRoomId(id);
-    });
     let r = id;
     //let roomId= String(Math.floor( Math.random()* 9000000000000000)); // get a random number id
     // useEffect(()=>{
@@ -110,9 +111,9 @@ function Jitsit({ id }) {
                     flex: 1
                 },
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$jitsi$2f$react$2d$sdk$2f$lib$2f$components$2f$JitsiMeeting$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__JitsiMeeting$3e$__["JitsiMeeting"], {
-                    domain: "jitsimeetproject.hopto.org:443" // le domaine du server jitsi
+                    domain: "localhost:8443" // le domaine du server jitsi
                     ,
-                    roomName: roomId,
+                    roomName: id,
                     configOverwrite: {
                         startWithAudioMuted: true,
                         disableModeratorIndicator: true,
@@ -184,12 +185,12 @@ function Jitsit({ id }) {
                     }
                 }, void 0, false, {
                     fileName: "[project]/src/components/Jitsi.tsx",
-                    lineNumber: 29,
+                    lineNumber: 23,
                     columnNumber: 30
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/components/Jitsi.tsx",
-                lineNumber: 29,
+                lineNumber: 23,
                 columnNumber: 5
             }, this),
             invitePopUp && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -199,23 +200,22 @@ function Jitsit({ id }) {
                 children: [
                     " ",
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$PopUpInvite$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["PopUpInvite"], {
-                        setPopUp: setInvitePopUp,
-                        roomId: id
+                        setPopUp: setInvitePopUp
                     }, void 0, false, {
                         fileName: "[project]/src/components/Jitsi.tsx",
-                        lineNumber: 98,
+                        lineNumber: 93,
                         columnNumber: 43
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/Jitsi.tsx",
-                lineNumber: 98,
+                lineNumber: 93,
                 columnNumber: 17
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/Jitsi.tsx",
-        lineNumber: 28,
+        lineNumber: 22,
         columnNumber: 10
     }, this);
 }

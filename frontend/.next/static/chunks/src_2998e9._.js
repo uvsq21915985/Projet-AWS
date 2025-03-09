@@ -12,8 +12,7 @@ const API_ROUTE = {
     login: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/login/",
     register: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/register/",
     validate: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/validate/",
-    acess: "http://localhost:8000/api/token",
-    refresh: "http://localhost:8000/api/token/refresh"
+    logout: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/logout/"
 };
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
@@ -27,13 +26,14 @@ var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_
 __turbopack_esm__({
     "getUserName": (()=>getUserName),
     "login": (()=>login),
+    "logout": (()=>logout),
     "register": (()=>register),
     "validate": (()=>validate)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/shared/API_ROUTE.ts [app-client] (ecmascript)");
 ;
 async function login(data) {
-    return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].acess, {
+    return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].login, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -46,15 +46,7 @@ async function login(data) {
 }
 async function register(data) {
     return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].register, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: String(data.get("username")),
-            email: String(data.get("email")),
-            password: String(data.get("password"))
-        })
+        body: data
     });
 }
 async function validate(token) {
@@ -66,6 +58,20 @@ async function validate(token) {
         },
         redirect: "follow"
     });
+}
+async function logout(token) {
+    return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].logout, {
+        method: "POST",
+        headers: {
+            "Authorization": "Token " + token,
+            'Content-Type': 'application/json'
+        },
+        redirect: "follow"
+    }).then(()=>{
+        // Rediriger vers la landing page
+        localStorage.removeItem("token");
+        window.location.href = "/";
+    }).catch((error)=>console.error("Erreur lors de la déconnexion :", error));
 }
 async function getUserName() {
     let token = localStorage.getItem("token");

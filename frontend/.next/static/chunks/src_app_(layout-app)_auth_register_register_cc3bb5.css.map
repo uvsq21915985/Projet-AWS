@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file:///home/hedil/master/aws/Projet-AWS/frontend/src/app/%28layout-app%29/auth/register/register.css"],"sourcesContent":[".auth{\n    display: flex;\n    align-items: center;\n    justify-content: center;\n    min-height: calc(100vh - 60px);\n    background: var(--main-color);\n\n    h1{\n        margin-bottom: 0.35rem;\n    }\n\n    p{\n        margin-bottom: 1rem;\n    }\n\n    .btn{\n        width: 100%;\n        text-align: center;\n        justify-content: center;\n    }\n\n    .auth-wrapper{\n        width: 100%;\n        max-width: 500px;\n        background-color: var(--white);\n        padding: 3rem 2rem;\n        border-radius: 8px;\n\n        a{\n            text-align: center;\n            margin-top: 1rem;\n            display: block;\n\n            span{\n                color: var(--main-color);\n                text-decoration: underline;\n            }\n        }\n    }\n}"],"names":[],"mappings":"AAAA;;;;;;;;AAOI;;;;AAIA;;;;AAIA;;;;;;AAMA;;;;;;;;AAOI;;;;;;AAKI"}},
+    {"offset": {"line": 41, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
+}
