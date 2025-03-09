@@ -2,6 +2,23 @@ import { API_ROUTE } from "@/shared/API_ROUTE";
 import { error } from "console";
 import { ZCOOL_XiaoWei } from "next/font/google";
 
+
+export async function login(data: FormData){
+    return fetch(
+        API_ROUTE.acess, {
+        method: "POST",
+        headers: {
+                'Content-Type': 'application/json'
+              },
+        body: JSON.stringify({
+            username: String(data.get("email")),
+            password: String(data.get("password"))
+        })
+    });
+}
+
+/*
+
 export async function login(data: FormData){
     return fetch(
         API_ROUTE.login, {
@@ -15,13 +32,22 @@ export async function login(data: FormData){
         })
     });
 }
-
+*/
 export async function register(data: FormData){
-    return fetch(
-        API_ROUTE.register, {
-        body: data
+
+    return fetch(API_ROUTE.register,{
+         method: "POST",
+         headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: String(data.get("username")),
+            email: String(data.get("email")),
+            password: String(data.get("password"))
+        })
     });
 }
+
 
 // to validate a user using the token stored in the local storage ( for now )
 export async function validate(token: String){

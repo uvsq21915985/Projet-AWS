@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import "./register.css"
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { register } from "@/services/auth";
 
 
@@ -14,15 +14,19 @@ export default function Login() {
         const [password, setPassword] = useState<string>('');
         const [error, setError] = useState<string|null>(null);
     
-        const handleSubmit = async (e: FormData) => {
+        const handleSubmit = async (f: FormEvent<HTMLFormElement>) => {
+            f.preventDefault(); // so we dont have reload
+        const e = new FormData(f.currentTarget);
             if (pending) {
                 return 
             }
             setPending(true)
             try {
+                console.log("send to the aapi: ",e)
                 let res = await register(e);
             } catch (error) {
-                setTimeout(() => setError(null), 1500)
+               // setTimeout(() => setError(null), 1500)
+               console.log("ERROR:" ,error);
                 setError("Certain champ sont mal rempli !")
             }
             setPending(false)
@@ -34,7 +38,7 @@ export default function Login() {
         <h1>S'inscrire</h1>
         <p>S'inscrire pour passer des appels d'une autre maniere</p>
         {error && <p className="message msg-error text-center">{error}</p>}
-        <form action={handleSubmit} method="post">
+        <form onSubmit={handleSubmit} method="post">
             <div className="form-group">
                 <label htmlFor="firstname" className="form-label">Nom</label>
                 <div className="form-input">

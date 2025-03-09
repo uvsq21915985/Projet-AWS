@@ -10,12 +10,15 @@ page for creating a meeting
 
 */ 
 export default function Jitsit({id} :{id: string}) {
+  const [roomId,setRoomId] = useState('');
   const router = useRouter(); // handle change of url
   const [invitePopUp,setInvitePopUp] = useState(false);
 
+  useEffect(()=>{setRoomId(id)})
 
 
   let r = id;
+  
   //let roomId= String(Math.floor( Math.random()* 9000000000000000)); // get a random number id
 
   // useEffect(()=>{
@@ -24,8 +27,8 @@ export default function Jitsit({id} :{id: string}) {
 
   return <div style={{ display: "flex" }}>
     <div style={{  flex: 1}}><JitsiMeeting 
-domain = "localhost:8443" // le domaine du server jitsi
-roomName = {id}
+domain = "jitsimeetproject.hopto.org:443" // le domaine du server jitsi
+roomName = {roomId}
 configOverwrite = {{
     startWithAudioMuted: true,
     disableModeratorIndicator: true,
@@ -44,10 +47,10 @@ configOverwrite = {{
         id: 'custominvite', // the key
         text: 'inviter un participant'
     }
-    ],
-    buttonsWithNotifyClick: [
+  ],
+  buttonsWithNotifyClick: [
         'custominvite' // expose the click/tap event in the api 
-    ]
+  ],
    
 }}
 interfaceConfigOverwrite = {{TOOLBAR_BUTTONS: [
@@ -57,7 +60,6 @@ interfaceConfigOverwrite = {{TOOLBAR_BUTTONS: [
     'videoquality',
     'help', 'mute-everyone'
 ]}}
-
 userInfo = {{
     displayName: 'displayName',
     email: "email"

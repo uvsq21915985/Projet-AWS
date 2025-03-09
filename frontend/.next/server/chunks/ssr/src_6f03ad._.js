@@ -11,7 +11,9 @@ __turbopack_esm__({
 const API_ROUTE = {
     login: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/login/",
     register: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/register/",
-    validate: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/validate/"
+    validate: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/validate/",
+    acess: "http://localhost:8000/api/token",
+    refresh: "http://localhost:8000/api/token/refresh"
 };
 }}),
 "[project]/src/services/auth.ts [app-ssr] (ecmascript)": ((__turbopack_context__) => {
@@ -28,7 +30,7 @@ __turbopack_esm__({
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/shared/API_ROUTE.ts [app-ssr] (ecmascript)");
 ;
 async function login(data) {
-    return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].login, {
+    return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].acess, {
         method: "POST",
         headers: {
             'Content-Type': 'application/json'
@@ -41,7 +43,15 @@ async function login(data) {
 }
 async function register(data) {
     return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].register, {
-        body: data
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: String(data.get("username")),
+            email: String(data.get("email")),
+            password: String(data.get("password"))
+        })
     });
 }
 async function validate(token) {
