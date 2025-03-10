@@ -61,6 +61,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'login.middleware.LogRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -100,12 +101,12 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-
+CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
   "*",  
 ]
 
-CORS_ALLOW_CREDENTIALS = True
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -152,14 +153,18 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
+       # 'login.authentification.CustomJWTAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
-    'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
-    'SLIDING_TOKEN_REFRESH_LIFETIME_LATE_USER': timedelta(days=1),
-    'SLIDING_TOKEN_LIFETIME_LATE_USER': timedelta(days=30),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_COOKIE': 'access_token',
+    'AUTH_COOKIE_REFRESH': 'refresh_token',
+    'AUTH_COOKIE_SECURE': False,
+    'AUTH_COOKIE_HTTP_ONLY': True,
+    #'AUTH_COOKIE_DOMAIN': None,
+    'AUTH_COOKIE_SAMESITE': 'Lax',
 }

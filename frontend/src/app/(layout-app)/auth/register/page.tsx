@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import "./register.css"
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { register } from "@/services/auth";
 import { useRouter } from 'next/navigation';
 
@@ -15,7 +15,9 @@ export default function Register() {
         const [password, setPassword] = useState<string>('');
         const [error, setError] = useState<string|null>(null);
     
-        const handleSubmit = async (e: FormData) => {
+        const handleSubmit = async (f: FormEvent<HTMLFormElement>) => {
+            f.preventDefault();
+            const e = new FormData(f.currentTarget);
             console.log("RESPONSEFORM" , e);
             console.log("email :", e.get("email"));
             console.log("username :", e.get("username"));
@@ -50,7 +52,7 @@ export default function Register() {
         <h1>S'inscrire</h1>
         <p>S'inscrire pour passer des appels d'une autre maniere</p>
         {error && <p className="message msg-error text-center">{error}</p>}
-        <form action={handleSubmit} method="post">
+        <form onSubmit={handleSubmit} method="post">
             <div className="form-group">
                 <label htmlFor="username" className="form-label">Nom d'utilisateur</label>
                 <div className="form-input">

@@ -15,6 +15,46 @@ export async function login(data: FormData){
         })
     });
 }
+
+export async function loginJwt(data: FormData) {
+    return fetch(API_ROUTE.loginJWT,{
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: String(data.get("email")),
+            password: String(data.get("password"))
+        })
+    })
+    
+}
+
+export async function logoutJWT(){
+    return fetch(API_ROUTE.logoutJWT,{
+        method: 'POST',
+        credentials: 'include',
+    });
+}
+
+export async function validateToken(){
+    return fetch(API_ROUTE.validateJWT,{
+        method: 'GET',
+        credentials: 'include',
+    });
+}
+
+export async function refreshToken(){
+    return fetch(API_ROUTE.refreshJWT,{
+        method: 'GET',
+        credentials: 'include',
+    });
+}
+
+export async function refresh(jwt:String) {
+    return 
+    
+}
 /*
 export async function register(data: FormData){
     return fetch(
