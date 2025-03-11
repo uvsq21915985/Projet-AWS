@@ -1,0 +1,6 @@
+.dashboard-layout{
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    margin-top: 2rem;
+}

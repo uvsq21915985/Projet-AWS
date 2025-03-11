@@ -1,0 +1,30 @@
+.profil-page{
+    max-width: 580px;
+    margin-inline: auto;
+
+    h2{
+        font-weight: 600;
+    }
+
+    .btn{
+        margin-left: auto;
+    }
+
+    form{
+        margin-top: 1.5rem;
+
+        .icon,
+        .form-info{
+            opacity: .5;
+            cursor: pointer;
+        }
+    }
+}
+
+.msg{
+    color: green;
+}
+
+.error{
+    color: red;
+}
