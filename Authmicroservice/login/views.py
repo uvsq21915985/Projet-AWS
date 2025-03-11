@@ -1,5 +1,5 @@
 from rest_framework import status
-from .serializers import UserSerializer, ReunionSerializer
+from .serializers import UserSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import AccessToken
@@ -11,7 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.authentication import TokenAuthentication
 from django.conf import settings
-from .models import CustomUser, CustomReunion
+from .models import CustomUser
 from django.views.decorators.csrf import csrf_exempt
 
 
@@ -87,10 +87,9 @@ def user_login(request):
     else:
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
-@csrf_exempt
 @api_view(['GET'])
-@authentication_classes([])  
-@permission_classes([])
+#@authentication_classes([])  
+@permission_classes([IsAuthenticated])
 def validate_token(request):
     print("IN VALIDATE")
     print("Cookies :", request.COOKIES)
@@ -108,7 +107,8 @@ def validate_token(request):
     except Exception as e:
         print(f"Token validation failed: {str(e)}")  
         return Response({'error': 'Invalid or expired token'}, status=status.HTTP_401_UNAUTHORIZED)
-    return Response({'is_allowed':True,'user': {'id': user.id, 'username': user.username}})
+    user_to_send = UserSerializer(user).data  
+    return Response({'is_allowed':True,'user': user_to_send})
 
 
 @api_view(['POST'])
@@ -175,38 +175,3 @@ def refresh_token(request):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
-##pour les reunions
-@api_view(['POST'])
-@authentication_classes([])
-@permission_classes([]) 
-def create_reunion(request):
-    if request.method == 'POST':
-        print('POST REQUEST')
-        access_token = request.COOKIES.get('access_token')
-        refresh_token = request.COOKIES.get('refresh_token')
-        print(f"USER : {request.user}")
-
-        print(f"Access Token: {access_token}")  # Print the access token
-        print(f"Refresh Token: {refresh_token}")
-        serializer = ReunionSerializer(data=request.data, context={'request': request}) #to get the user
-        if serializer.is_valid():
-            print('SERIALIZER')
-            serializer.save()  
-            print('SAVED')
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    else:
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
-
-
-@api_view(['GET'])
-@authentication_classes([JWTAuthentication])  
-@permission_classes([IsAuthenticated])
-def get_user_reunions(request):
-    if request.method == 'GET':
-        user = request.user 
-        reunions = CustomReunion.objects.filter(creator=user)
-        serializer = CustomReunionSerializer(reunions, many=True)
-        return Response(serializer.data)
-    else:
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)

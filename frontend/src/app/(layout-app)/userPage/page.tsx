@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getUserName } from "@/services/auth";
+import { getUser } from "@/services/auth";
 import Link from "next/link";
 import "./page.css";
 
@@ -13,9 +13,9 @@ export default function UserPage() {
   }, []);
 
   async function setStateUser() {
-    let user = await getUserName();
+    let user = await getUser();
     console.log("USERNAME FOUND : ", user);
-    setUsername(user);
+    setUsername(user.username);
   }
 
   return (

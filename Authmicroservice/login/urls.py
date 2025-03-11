@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import register_user, user_login, user_logout,validate_token, refresh_token,create_reunion,get_user_reunions
+from .views import register_user, user_login, user_logout,validate_token, refresh_token
+from .user_views import update_user,update_password
 from django.contrib import admin
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 urlpatterns = [
@@ -9,6 +10,6 @@ urlpatterns = [
     path('logout/', user_logout, name='logout'),
     path('validate/', validate_token, name='validate'),
     path('refresh/', refresh_token, name='refresh'),
-    path('createreunion/', create_reunion, name='create-reunion'),
-    path('reunions/', get_user_reunions, name='reunions'),
+    path('update_user/', update_user, name='update_user'),
+    path('update_password/', update_password, name='update_password'),
 ]

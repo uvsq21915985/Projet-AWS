@@ -3,7 +3,7 @@
 import Link from "next/link";
 import "./login.css"
 import {  FormEvent, useState } from "react";
-import { login } from "@/services/auth";
+import { loginJWT } from "@/services/auth";
 import { useRouter } from 'next/navigation';
 
 
@@ -29,22 +29,13 @@ export default function Login() {
         setPending(true)
         try {
             console.log("LOGIN STARTING");
-            let res = await login(e);
-            console.log("RESPONSE" , res);
+           // let res = await login(e);
+           let res = await loginJWT(e); 
+           console.log("RESPONSE" , res);
             console.log("RESPONSE IS OK :" ,res.ok);
          //   redirect('/videoConference');
             if (res.ok){
-                console.log("IN RES OK");
-                let json = await res.json();
-                // make sure that token is inside provided json
-                if (json.hasOwnProperty("token")){
-                    localStorage.setItem("token",json.token);
-                    window.dispatchEvent(new Event("authChange")); // Notifie tous les composants React que le token a changé
-
-                }
                 router.push('/userPage');
-                
-            
             }
         } catch (error) {
             console.log("LOGIN EROOR", error);
@@ -82,3 +73,4 @@ export default function Login() {
       </div>
     );
   }
+

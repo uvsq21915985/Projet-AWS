@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 
 import { PopUpInvite } from './PopUpInvite';
+import { create_reunion } from '@/services/auth';
 /*
 page for creating a meeting
 
@@ -13,12 +14,19 @@ export default function Jitsit({id} :{id: string}) {
   const [roomId,setRoomId] = useState('');
   const router = useRouter(); // handle change of url
   const [invitePopUp,setInvitePopUp] = useState(false);
+  const [startTime, setStartTime] = useState(Number);
+  const [endTime, setEndTime] = useState(Number);
+  const [numParticipants, setNumParticipants] = useState<number>(1);
+ 
+  useEffect(()=>{
+    setRoomId(id);
+    setStartTime(Date.now());
+  }
+    
+  ,[])
 
-  useEffect(()=>{setRoomId(id)})
 
-
-  let r = id;
-  
+ 
   //let roomId= String(Math.floor( Math.random()* 9000000000000000)); // get a random number id
 
   // useEffect(()=>{
@@ -54,7 +62,7 @@ configOverwrite = {{
    
 }}
 interfaceConfigOverwrite = {{TOOLBAR_BUTTONS: [
-    'microphone', 'camera','custominvite', 'closedcaptions', 'desktop', 'fullscreen',
+    'microphone', 'camera','invite'/*,'custominvite'*/, 'closedcaptions', 'desktop', 'fullscreen',
     'fodeviceselection', 'hangup', 'profile', 'chat', 'recording',
      'settings', 'raisehand',
     'videoquality',
@@ -74,10 +82,22 @@ onApiReady = { (api) => {
           api.executeCommand('toggleLobby', true);    
       }
     })
+    api.on('videoConferenceJoined',(event)=>{
+      setStartTime(Date.now());
+    });
+
+    api.on("participantJoined",(event)=>{setNumParticipants(api.getNumberOfParticipants());})
+    
     //go back to user page when the conference is ended
     api.on('videoConferenceLeft',()=>{
+      setEndTime(Date.now());
       console.log("USER IS REDIRECTED");
-     // router.prefetch("/userPage"); // to have layout  ( when using push it doesn't work)
+      const numberOfParticipants = api.getNumberOfParticipants();
+      console.log("number of participant " , numberOfParticipants);
+
+      //create the reunion in database
+      if (numParticipants)
+        create_reunion(roomId,startTime,Date.now(),numParticipants);
       router.push("/userPage");
     })
     // when a user click on the invite a participant button there will be an alert

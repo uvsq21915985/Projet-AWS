@@ -7,7 +7,9 @@ import { FormEvent } from "react";
 export default function JoinRoom() {
   const router = useRouter();
 
-  const onSubmit = async (formData: FormData) => {
+  const onSubmit = async (f: FormEvent<HTMLFormElement>) => {
+    f.preventDefault();
+    const formData = new FormData(f.currentTarget);
     if (formData.get("roomId")) {
       let roomId = formData.get("roomId");
       router.push("/room?id=" + roomId);
@@ -18,7 +20,7 @@ export default function JoinRoom() {
     <div className="join-container">
       <h1 className="title">Rejoindre une vidéoconférence</h1>
 
-      <form action={onSubmit} method="post" className="join-form">
+      <form onSubmit={onSubmit} method="post" className="join-form">
         <label htmlFor="roomId" className="label">
           Veuillez saisir le Room ID :
         </label>

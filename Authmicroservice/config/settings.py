@@ -41,6 +41,7 @@ ALLOWED_HOSTS = [env('HOST')]
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'rest_framework',
     #'rest_framework.authtoken',
     'rest_framework_simplejwt',
@@ -51,9 +52,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'login',
+    'reunions',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -103,10 +106,24 @@ DATABASES = {
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-  "*",  
+    "http://localhost:3000",
+]
+
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'x-csrftoken',
+    'Authorization',
 ]
 
 
+"""
+CSRF_COOKIE_SECURE = False  # Set to True in production for HTTPS
+CSRF_COOKIE_HTTPONLY = False  # The CSRF token must be accessible via JavaScript
+CSRF_COOKIE_SAMESITE = 'Lax'  # Set to 'Strict' or 'Lax' as per your needs
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',  # Allow requests from your Next.js frontend
+]
+"""
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -153,8 +170,8 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-       # 'login.authentification.CustomJWTAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'login.authentification.CustomJWTAuthentication',
+       # 'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
 

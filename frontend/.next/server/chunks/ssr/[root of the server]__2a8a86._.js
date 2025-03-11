@@ -46,7 +46,14 @@ const API_ROUTE = {
     validate: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/validate/",
     logout: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/logout/",
     token: "http://localhost:8000/api/token",
-    refresh: "http://localhost:8000/api/token/refresh"
+    refreshJWT: "http://localhost:8000/api/refresh/",
+    validateJWT: "http://localhost:8000/api/validate/",
+    loginJWT: "http://localhost:8000/api/login/",
+    logoutJWT: "http://localhost:8000/api/logout/",
+    updateUser: "http://localhost:8000/api/update_user/",
+    updatePassword: "http://localhost:8000/api/update_password/",
+    create_reunion: "http://localhost:8000/api/create_reunion/",
+    get_reunions: "http://localhost:8000/api/get_reunions/"
 };
 }}),
 "[project]/src/services/auth.ts [app-ssr] (ecmascript)": ((__turbopack_context__) => {
@@ -55,18 +62,44 @@ const API_ROUTE = {
 var { r: __turbopack_require__, f: __turbopack_module_context__, i: __turbopack_import__, s: __turbopack_esm__, v: __turbopack_export_value__, n: __turbopack_export_namespace__, c: __turbopack_cache__, M: __turbopack_modules__, l: __turbopack_load__, j: __turbopack_dynamic__, P: __turbopack_resolve_absolute_path__, U: __turbopack_relative_url__, R: __turbopack_resolve_module_id_path__, b: __turbopack_worker_blob_url__, g: global, __dirname, x: __turbopack_external_require__, y: __turbopack_external_import__, z: __turbopack_require_stub__ } = __turbopack_context__;
 {
 __turbopack_esm__({
-    "getUserName": (()=>getUserName),
-    "login": (()=>login),
-    "loginJwt": (()=>loginJwt),
-    "logout": (()=>logout),
+    "create_reunion": (()=>create_reunion),
+    "getUser": (()=>getUser),
+    "get_reunions": (()=>get_reunions),
+    "handleTokenRefresh": (()=>handleTokenRefresh),
+    "loginJWT": (()=>loginJWT),
+    "logoutJWT": (()=>logoutJWT),
+    "refreshJWT": (()=>refreshJWT),
     "register": (()=>register),
-    "validate": (()=>validate)
+    "updatePassword": (()=>updatePassword),
+    "updateUser": (()=>updateUser),
+    "validateJWT": (()=>validateJWT)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_import__("[project]/src/shared/API_ROUTE.ts [app-ssr] (ecmascript)");
 ;
-async function login(data) {
-    return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].login, {
-        method: "POST",
+async function handleTokenRefresh(route, params) {
+    let res = await fetch(route, params);
+    if (res.status === 401 || res.status == 403) {
+        try {
+            // try to refresh the token
+            console.log("tthe validate JWT return 401");
+            const refreshRes = await refreshJWT();
+            console.log("the refresh token is ", refreshJWT);
+            if (refreshRes.ok) {
+                return fetch(route, params);
+            } else {
+                console.log("error refresh token failed");
+                return res;
+            }
+        } catch (error) {
+            return res;
+        }
+    }
+    return res;
+}
+async function loginJWT(data) {
+    return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].loginJWT, {
+        method: 'POST',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },
@@ -76,68 +109,186 @@ async function login(data) {
         })
     });
 }
-async function loginJwt(data) {
-    return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].refresh, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: String(data.get("email")),
-            password: String(data.get("password"))
-        })
+async function logoutJWT() {
+    return await fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].logoutJWT, {
+        method: 'POST',
+        credentials: 'include'
     });
+}
+async function validateJWT() {
+    return await handleTokenRefresh(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].validateJWT, {
+        method: 'GET',
+        credentials: 'include'
+    });
+/* let res = await fetch(API_ROUTE.validateJWT,{
+        method: 'GET',
+        credentials: 'include',
+    });
+    // when the validation token dont work
+    if (res.status === 401 || res.status == 403){
+        try{
+            // try to refresh the token
+            console.log("tthe validate JWT return 401");
+            const refreshRes = await refreshJWT();
+            console.log("the refresh token is " ,refreshJWT);
+            if (refreshRes.ok){
+                return fetch(API_ROUTE.validateJWT,{
+                    method: 'GET',
+                    credentials: 'include',
+                });
+            }else{
+                console.log("error refresh token failed");
+                return res;
+                
+            }
+        }catch(error){
+            return res;
+            
+        }
+    }
+    return res;*/ }
+async function refreshJWT() {
+    let res = await fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].refreshJWT, {
+        method: 'POST',
+        credentials: 'include'
+    });
+    return res;
 }
 async function register(data) {
     return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].register, {
-        method: "POST",
+        body: data
+    });
+}
+async function getUser() {
+    let res = await validateJWT();
+    if (res.ok) {
+        let json = await res.json();
+        return json.user /*.username*/ ;
+    // need to add some management for error
+    } else {
+        return "";
+    }
+}
+async function updateUser(data) {
+    return await handleTokenRefresh(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].updateUser, {
+        method: 'PUT',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username: String(data.get("username")),
-            email: String(data.get("email")),
+            username: String(data.get("email")),
             password: String(data.get("password"))
         })
     });
-}
-async function validate(token) {
-    return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].validate, {
-        method: "GET",
+/*let res = await fetch(API_ROUTE.updateUser,{
+        method: 'PUT',
+        credentials: 'include',
         headers: {
-            "Authorization": "Token " + token,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: String(data.get("email")),
+            password: String(data.get("password"))
+        })
+    });
+     // when the validation token dont work
+     if (res.status === 401){
+        try{
+            // try to refresh the token
+            console.log("tthe validate JWT return 401");
+            const refreshRes = await refreshJWT();
+            console.log("the refresh token is " ,refreshJWT);
+            if (refreshRes.ok){
+                return fetch(API_ROUTE.validateJWT,{
+                    method: 'GET',
+                    credentials: 'include',
+                });
+            }else{
+                console.log("error refresh token failed");
+                return res;
+                
+            }
+        }catch(error){
+            return res;
+            
+        }
+    }
+    return res;*/ }
+async function updatePassword(data) {
+    let res = await handleTokenRefresh(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].updatePassword, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
             'Content-Type': 'application/json'
         },
-        redirect: "follow"
+        body: JSON.stringify({
+            oldpassword: String(data.get("password")),
+            newpassword: String(data.get("newpassword"))
+        })
+    });
+    return res;
+/*let res = await fetch(API_ROUTE.updatePassword,{
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            oldpassword: String(data.get("password")),
+            newpassword: String(data.get("newpassword"))
+        })
+
+    });
+     // when the validation token dont work
+     if (res.status === 401){
+        try{
+            // try to refresh the token
+            console.log("tthe validate JWT return 401");
+            const refreshRes = await refreshJWT();
+            console.log("the refresh token is " ,refreshJWT);
+            if (refreshRes.ok){
+                return fetch(API_ROUTE.validateJWT,{
+                    method: 'GET',
+                    credentials: 'include',
+                });
+            }else{
+                console.log("error refresh token failed");
+                return res;
+                
+            }
+        }catch(error){
+            return res;
+            
+        }
+    }
+    return res;*/ }
+async function create_reunion(roomId, startTime, endTime, numberOfParticipants) {
+    const duration = (endTime - startTime) / 1000;
+    const hours = Math.floor(duration / 3600);
+    const minutes = Math.floor(duration % 3600 / 60);
+    const seconds = Math.floor(duration % 60);
+    const formattedDuration = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+    return await handleTokenRefresh(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].create_reunion, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            name: roomId,
+            begin_time: new Date(startTime).toISOString(),
+            end_time: new Date(endTime).toISOString(),
+            num_participants: numberOfParticipants,
+            duration: formattedDuration // to have right format for django rest api
+        })
     });
 }
-async function logout(token) {
-    return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].logout, {
-        method: "POST",
-        headers: {
-            "Authorization": "Token " + token,
-            'Content-Type': 'application/json'
-        },
-        redirect: "follow"
-    }).then(()=>{
-        // Rediriger vers la landing page
-        // localStorage.removeItem("token");
-        localStorage.setItem("token", "null");
-        window.location.href = "/";
-    }).catch((error)=>console.error("Erreur lors de la déconnexion :", error));
-}
-async function getUserName() {
-    let token = localStorage.getItem("token");
-    if (token) {
-        let res = await validate(token);
-        if (res.ok) {
-            let json = await res.json();
-            return json.user.username;
-        // need to add some management for error
-        }
-    } else {
-        return "";
-    }
+async function get_reunions() {
+    return await handleTokenRefresh(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["API_ROUTE"].get_reunions, {
+        method: 'GET',
+        credentials: 'include'
+    });
 }
 }}),
 "[project]/src/components/Header.tsx [app-ssr] (ecmascript)": ((__turbopack_context__) => {
@@ -164,14 +315,16 @@ function Header() {
     const [active, setActive] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [isAllowed, setIsAllowed] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [token, setToken] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null); // Commencer avec null
+    const [isLogin, setIsLogin] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
     // Fonction pour vérifier si l'utilisateur est autorisé
     const checkUserAccess = async ()=>{
         try {
-            const storedToken = localStorage.getItem("token") ?? null; // Gérer null proprement
+            /*   const storedToken = localStorage.getItem("token") ?? null; // Gérer null proprement
             setToken(storedToken); // Mettre à jour le token dans le state
+
             if (storedToken) {
-                const response = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$auth$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["validate"])(storedToken);
+                const response = await validate(storedToken);
                 const data = await response.json();
                 setIsAllowed(data?.is_allowed || false);
             } else {
@@ -179,6 +332,18 @@ function Header() {
             }
         } catch (error) {
             console.error("Validation error:", error);
+            setIsAllowed(false);
+        }*/ const response = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$auth$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["validateJWT"])();
+            const data = await response.json();
+            if (response.ok) {
+                setIsAllowed(true);
+            } else {
+                console.log("not log in ");
+                setIsAllowed(false);
+            }
+        } catch (error) {
+            console.log("not validated not log in");
+            //  console.error("Validation error:", error);
             setIsAllowed(false);
         }
     };
@@ -196,13 +361,20 @@ function Header() {
     // Fonction logout (garde celle que tu veux)
     const handleLogout = async ()=>{
         try {
-            const token = localStorage.getItem("token");
-            if (token) {
-                await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$auth$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["logout"])(token);
+            const response = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$auth$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["validateJWT"])();
+            if (response.ok) {
+                let res = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$services$2f$auth$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["logoutJWT"])();
+                // Déclencher l'événement authChange pour mettre à jour le state immédiatement
+                window.dispatchEvent(new Event("authChange"));
+                router.push('/auth/login');
+            } else {
+                throw Error;
             }
-            // Déclencher l'événement authChange pour mettre à jour le state immédiatement
-            window.dispatchEvent(new Event("authChange"));
-        } catch (error) {
+        /* const token = localStorage.getItem("token");
+            if (token) {
+                await logout(token);
+            }
+            */ } catch (error) {
             console.error("Error during logout:", error);
         }
     };
@@ -211,22 +383,32 @@ function Header() {
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "header_wrapper",
             children: [
-                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "logo",
+                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                    href: "/",
                     children: [
-                        "My",
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                            children: "Meet"
-                        }, void 0, false, {
+                        " ",
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "logo",
+                            children: [
+                                "My",
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                    children: "Meet"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/Header.tsx",
+                                    lineNumber: 90,
+                                    columnNumber: 53
+                                }, this)
+                            ]
+                        }, void 0, true, {
                             fileName: "[project]/src/components/Header.tsx",
-                            lineNumber: 67,
-                            columnNumber: 41
+                            lineNumber: 90,
+                            columnNumber: 29
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Header.tsx",
-                    lineNumber: 67,
-                    columnNumber: 17
+                    lineNumber: 90,
+                    columnNumber: 13
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
                     className: active ? "active" : "",
@@ -236,7 +418,7 @@ function Header() {
                             children: "A propos"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.tsx",
-                            lineNumber: 70,
+                            lineNumber: 93,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
@@ -244,7 +426,7 @@ function Header() {
                             children: "Notre équipe"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.tsx",
-                            lineNumber: 71,
+                            lineNumber: 94,
                             columnNumber: 21
                         }, this),
                         isAllowed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -253,22 +435,31 @@ function Header() {
                             children: "Se déconnecter"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.tsx",
-                            lineNumber: 73,
+                            lineNumber: 96,
                             columnNumber: 25
                         }, this),
-                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                        !isAllowed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                             href: "/auth/login",
                             className: "btn btn-main",
                             children: "Nous rejoindre"
                         }, void 0, false, {
                             fileName: "[project]/src/components/Header.tsx",
-                            lineNumber: 77,
-                            columnNumber: 21
+                            lineNumber: 100,
+                            columnNumber: 39
+                        }, this),
+                        isAllowed && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
+                            href: "/dashboard",
+                            className: "btn btn-main",
+                            children: "Mon compte"
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/Header.tsx",
+                            lineNumber: 101,
+                            columnNumber: 38
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Header.tsx",
-                    lineNumber: 69,
+                    lineNumber: 92,
                     columnNumber: 17
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -277,34 +468,34 @@ function Header() {
                     children: [
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {}, void 0, false, {
                             fileName: "[project]/src/components/Header.tsx",
-                            lineNumber: 81,
+                            lineNumber: 106,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {}, void 0, false, {
                             fileName: "[project]/src/components/Header.tsx",
-                            lineNumber: 82,
+                            lineNumber: 107,
                             columnNumber: 21
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {}, void 0, false, {
                             fileName: "[project]/src/components/Header.tsx",
-                            lineNumber: 83,
+                            lineNumber: 108,
                             columnNumber: 21
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/components/Header.tsx",
-                    lineNumber: 80,
+                    lineNumber: 105,
                     columnNumber: 17
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/components/Header.tsx",
-            lineNumber: 66,
+            lineNumber: 89,
             columnNumber: 13
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/Header.tsx",
-        lineNumber: 65,
+        lineNumber: 88,
         columnNumber: 9
     }, this);
 }
