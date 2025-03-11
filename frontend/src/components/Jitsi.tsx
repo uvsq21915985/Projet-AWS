@@ -5,17 +5,28 @@ import { useRouter } from 'next/navigation';
 
 
 import { PopUpInvite } from './PopUpInvite';
+import { create_reunion } from '@/services/auth';
 /*
 page for creating a meeting
 
 */ 
 export default function Jitsit({id} :{id: string}) {
+  const [roomId,setRoomId] = useState('');
   const router = useRouter(); // handle change of url
   const [invitePopUp,setInvitePopUp] = useState(false);
+  const [startTime, setStartTime] = useState(Number);
+  const [endTime, setEndTime] = useState(Number);
+  const [numParticipants, setNumParticipants] = useState<number>(1);
+ 
+  useEffect(()=>{
+    setRoomId(id);
+    setStartTime(Date.now());
+  }
+    
+  ,[])
 
 
-
-  let r = id;
+ 
   //let roomId= String(Math.floor( Math.random()* 9000000000000000)); // get a random number id
 
   // useEffect(()=>{
@@ -24,40 +35,56 @@ export default function Jitsit({id} :{id: string}) {
 
   return <div style={{ display: "flex" }}>
     <div style={{  flex: 1}}><JitsiMeeting 
-domain = "localhost:8443" // le domaine du server jitsi
-roomName = {id}
+domain = "jitsimeetproject.hopto.org:443" // le domaine du server jitsi
+roomName = {roomId}
 configOverwrite = {{
     startWithAudioMuted: true,
     disableModeratorIndicator: true,
     startScreenSharing: true,
-    enableEmailInStats: false,
+    //enableEmailInStats: false,
    // brandingRoomAlias: "localhost:3000", // to modify the link given in invite button
-    inviteAppName: "myMeet",
+  //  inviteAppName: "myMeet",
     lobby: {
       autoKnock: true,
       enableChat: true
   },
-  DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
+  //DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
   customToolbarButtons: [
     {
         icon: '',
         id: 'custominvite', // the key
-        text: 'inviter un participant'
+        text: 'inviter un participant',
     }
-    ],
-    buttonsWithNotifyClick: [
+  ],
+  buttonsWithNotifyClick: [
         'custominvite' // expose the click/tap event in the api 
-    ]
-   
-}}
-interfaceConfigOverwrite = {{TOOLBAR_BUTTONS: [
-    'microphone', 'camera','custominvite', 'closedcaptions', 'desktop', 'fullscreen',
+  ],
+  toolbarButtons: [
+    'microphone', 'camera', 'custominvite', 'invite', 'closedcaptions', 'desktop', 'fullscreen',
     'fodeviceselection', 'hangup', 'profile', 'chat', 'recording',
      'settings', 'raisehand',
     'videoquality',
     'help', 'mute-everyone'
-]}}
-
+],
+mainToolbarButtons: [
+       [ 'microphone', 'camera', 'desktop', 'chat', 'raisehand', 'custominvite', 'participants-pane', 'tileview' ],
+       [ 'microphone', 'camera', 'desktop', 'chat', 'raisehand', 'participants-pane', 'tileview' ],
+       [ 'microphone', 'camera', 'desktop', 'chat', 'raisehand', 'participants-pane' ],
+       [ 'microphone', 'camera', 'desktop', 'chat', 'participants-pane' ],
+       [ 'microphone', 'camera', 'chat', 'participants-pane' ],
+       [ 'microphone', 'camera', 'chat' ],
+       [ 'microphone', 'camera' ]
+   ]
+   
+}}
+interfaceConfigOverwrite = {{
+ /* TOOLBAR_BUTTONS: [
+    'microphone', 'camera', 'custominvite', 'invite', 'closedcaptions', 'desktop', 'fullscreen',
+    'fodeviceselection', 'hangup', 'profile', 'chat', 'recording',
+     'settings', 'raisehand',
+    'videoquality',
+    'help', 'mute-everyone'
+]*/}}
 userInfo = {{
     displayName: 'displayName',
     email: "email"
@@ -72,18 +99,32 @@ onApiReady = { (api) => {
           api.executeCommand('toggleLobby', true);    
       }
     })
+    api.on('videoConferenceJoined',(event)=>{
+      setStartTime(Date.now());
+    });
+
+    api.on("participantJoined",(event)=>{setNumParticipants(api.getNumberOfParticipants());})
+    
     //go back to user page when the conference is ended
     api.on('videoConferenceLeft',()=>{
+      setEndTime(Date.now());
       console.log("USER IS REDIRECTED");
-     // router.prefetch("/userPage"); // to have layout  ( when using push it doesn't work)
+      const numberOfParticipants = api.getNumberOfParticipants();
+      console.log("number of participant " , numberOfParticipants);
+
+      //create the reunion in database
+      if (numParticipants)
+        create_reunion(roomId,startTime,Date.now(),numParticipants);
       router.push("/userPage");
     })
     // when a user click on the invite a participant button there will be an alert
     api.addListener('toolbarButtonClicked',(e)=>{
-        setInvitePopUp(true);
-        /*if (e.key == 'custominvite'){
-            alert("L'inentifiant de la room est : "+ r+ "\nLes participants doivent le saisir à l'adresse suivante : http://localhost:3000/joinRoom")
-        }*/
+      
+        if (e.key == 'custominvite'){
+          setInvitePopUp(true);
+          api.executeCommand("invite");
+            //alert("L'inentifiant de la room est : "+ r+ "\nLes participants doivent le saisir à l'adresse suivante : http://localhost:3000/joinRoom")
+        }
     })
 } }
 

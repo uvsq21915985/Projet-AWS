@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import "./login.css"
-import {  useState } from "react";
-import { login } from "@/services/auth";
+import {  FormEvent, useState } from "react";
+import { loginJWT } from "@/services/auth";
 import { useRouter } from 'next/navigation';
 
 
@@ -15,7 +15,9 @@ export default function Login() {
     const [error, setError] = useState<string|null>(null);
     
 
-    const handleSubmit = async (e: FormData) => {
+    const handleSubmit = async (f: FormEvent<HTMLFormElement>) => {
+        f.preventDefault();
+        const e = new FormData(f.currentTarget);
         console.log("RESPONSEFORM" , e);
         console.log("email :", e.get("email"));
         console.log("password :", e.get("password"));
@@ -27,20 +29,13 @@ export default function Login() {
         setPending(true)
         try {
             console.log("LOGIN STARTING");
-            let res = await login(e);
-            console.log("RESPONSE" , res);
+           // let res = await login(e);
+           let res = await loginJWT(e); 
+           console.log("RESPONSE" , res);
             console.log("RESPONSE IS OK :" ,res.ok);
          //   redirect('/videoConference');
             if (res.ok){
-                console.log("IN RES OK");
-                let json = await res.json();
-                // make sure that token is inside provided json
-                if (json.hasOwnProperty("token")){
-                    localStorage.setItem("token",json.token);
-                }
                 router.push('/userPage');
-                
-            
             }
         } catch (error) {
             console.log("LOGIN EROOR", error);
@@ -56,7 +51,7 @@ export default function Login() {
         <h1>Connexion</h1>
         <p>Se connecter pour passer des appels d'une autre maniere</p>
         {error && <p className="message msg-error text-center">{error}</p>}
-        <form action={handleSubmit} method="post">
+        <form onSubmit={handleSubmit}>
             <div className="form-group">
                 <label htmlFor="email" className="form-label">Email</label>
                 <div className="form-input">
@@ -78,3 +73,4 @@ export default function Login() {
       </div>
     );
   }
+

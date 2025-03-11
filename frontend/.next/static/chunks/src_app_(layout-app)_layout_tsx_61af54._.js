@@ -6,7 +6,7 @@
   "path": "static/chunks/src_app_(layout-app)_layout_tsx_61af54._.js",
   "chunks": [
     "static/chunks/[root of the server]__9ffd6a._.css",
-    "static/chunks/_a3bec6._.js"
+    "static/chunks/_c04e6b._.js"
   ],
   "source": "dynamic"
 });

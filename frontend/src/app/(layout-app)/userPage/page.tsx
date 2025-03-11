@@ -1,46 +1,47 @@
-"use client"
+"use client";
 
-
-import { useEffect, useState } from 'react';
-import { getUserName } from '@/services/auth';
+import { useEffect, useState } from "react";
+import { getUser } from "@/services/auth";
 import Link from "next/link";
-
 import "./page.css";
 
-
-/* page displayed when user is connected
-it has two button one to join a call and another to create
- a new call where the user will automatically be
-the moderator
-*/
 export default function UserPage() {
+  const [username, setUsername] = useState<String>();
 
-    const [username, setUsername] = useState<String>();
+  useEffect(() => {
+    setStateUser();
+  }, []);
 
-    // set the username with validation with the access token
-    useEffect( ()=>{
+  async function setStateUser() {
+    let user = await getUser();
+    console.log("USERNAME FOUND : ", user);
+    setUsername(user.username);
+  }
 
-        setStateUser();
-    })
-
-    async function setStateUser(){
-        let user = await getUserName();
-        console.log("USERNAME FOUND : ", user);
-        setUsername(user);
-    }
-
-    
   return (
-    
     <div className="user-container">
-          <h1>Bienvenue {username}</h1>
-          
-            <div className="btn-container-user">
-              <Link href={"/videoConference"} className="btn-container-user btn">Lancer un call</Link>
-              <Link href={"/joinRoom"} className="btn-container-user btn">Rejoindre un call</Link>
-              </div>
-            
-  </div>
- 
+      {/* Garde la barre de navigation intacte */}
+
+      {/* Contenu principal */}
+      <div className="dashboard-content">
+        <h2 className="welcome-text">Bienvenue {username}</h2>
+
+        {/* Phrase unique sous le message de bienvenue */}
+        <p className="info-text">
+          Restez connectés et échangez sans limites avec <span className="brand">MyMeet</span>.
+        </p>
+
+        {/* Boutons */}
+        <div className="btn-container">
+          <Link href="/videoConference" className="btn-primary">
+            Lancer un call
+          </Link>
+          <Link href="/joinRoom" className="btn-secondary">
+            Rejoindre un call
+          </Link>
+        </div>
+      </div>
+      <img className="logo-meet"src="/vercel.svg" alt="Logo Vercel" />
+    </div>
   );
 }
