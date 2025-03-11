@@ -1,0 +1,45 @@
+/* [project]/src/app/(layout-app)/joinRoom/page.css [app-client] (css) */
+.user-container {
+  padding: 20px;
+  width: 100%;
+  min-height: calc(100vh - 60px);
+  background: var(--main-color);
+  color: #fff;
+  gap: 50px;
+  padding: 20px;
+}
+
+.user-container .btn {
+  background-color: #fff;
+  margin: auto;
+  color: var(--main-color);
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  padding: 20px;
+  margin: 50px;
+  border: 2px solid #fff;
+}
+
+.user-container .btn:hover {
+  background-color: var(--main-color);
+  border: 2px solid #fff;
+  color: #fff;
+}
+
+input {
+  height: 50px;
+  width: 500px;
+  margin-top: 100px;
+  font-size: large;
+  margin-left: 50px;
+}
+
+form {
+  font-size: large;
+  font-weight: bold;
+  padding: 10px;
+}
+
+
+/*# sourceMappingURL=src_app_%28layout-app%29_joinRoom_page_e21b83.css.map*/
