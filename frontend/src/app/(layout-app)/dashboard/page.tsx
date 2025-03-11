@@ -10,6 +10,9 @@ export default function Dashboard() {
       const reunions  = await get_reunions();
       
       let json  = await reunions.json();
+      console.log("json is" ,json);
+      console.log("JSON LENGTH" , json.length);
+      if (json.length)
       setNumberReunion(json.length);
   }
   getReunions();

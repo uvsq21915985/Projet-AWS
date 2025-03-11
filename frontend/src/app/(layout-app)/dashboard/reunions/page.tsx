@@ -42,6 +42,8 @@ export default function Reunions() {
             const reunions  = await get_reunions();
             
             let json  = await reunions.json();
+            // s'il y a des réunions on les ajoute
+            if (json.length > 0)
             setCalls(json);
         }
         getReunions();

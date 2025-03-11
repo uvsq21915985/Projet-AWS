@@ -28,7 +28,7 @@ export async function handleTokenRefresh(route :string, params: { method: string
             // try to refresh the token
             console.log("tthe validate JWT return 401");
             const refreshRes = await refreshJWT();
-            console.log("the refresh token is " ,refreshJWT);
+            console.log("the refresh token is " ,refreshRes);
             if (refreshRes.ok){
                 return fetch(route,params);
             }else{
