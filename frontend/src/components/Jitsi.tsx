@@ -37,7 +37,7 @@ export default function Jitsit({id} :{id: string}) {
     <div style={{  flex: 1}}><JitsiMeeting 
 domain = "jitsimeetproject.hopto.org:443" // le domaine du server jitsi
 roomName = {roomId}
-configOverwrite = {{
+/*configOverwrite = {{
     startWithAudioMuted: true,
     disableModeratorIndicator: true,
     startScreenSharing: true,
@@ -78,13 +78,17 @@ mainToolbarButtons: [
    
 }}
 interfaceConfigOverwrite = {{
- /* TOOLBAR_BUTTONS: [
+  TOOLBAR_BUTTONS: [
     'microphone', 'camera', 'custominvite', 'invite', 'closedcaptions', 'desktop', 'fullscreen',
     'fodeviceselection', 'hangup', 'profile', 'chat', 'recording',
      'settings', 'raisehand',
     'videoquality',
     'help', 'mute-everyone'
-]*/}}
+]
+SHOW_JITSI_WATERMARK: false
+}}
+
+*/
 userInfo = {{
     displayName: 'displayName',
     email: "email"
@@ -119,11 +123,11 @@ onApiReady = { (api) => {
     })
     // when a user click on the invite a participant button there will be an alert
     api.addListener('toolbarButtonClicked',(e)=>{
-      
+        //when the custom invite buttom is clicked
         if (e.key == 'custominvite'){
           setInvitePopUp(true);
           api.executeCommand("invite");
-            //alert("L'inentifiant de la room est : "+ r+ "\nLes participants doivent le saisir à l'adresse suivante : http://localhost:3000/joinRoom")
+          
         }
     })
 } }

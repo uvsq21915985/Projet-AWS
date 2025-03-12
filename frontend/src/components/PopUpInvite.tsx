@@ -14,7 +14,7 @@ export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>>
     return (
       
           <div className="main">
-            <h3 >Inviter des Participant</h3>
+            <h3 >Inviter des Participants</h3>
               <p>Pour inviter des participants vous devez leurs communiquer le roomId qui est de {roomId}</p>
               <p> ils devront le saisir à l'adresse suivante pour pouvoir rejoindre la réunion : </p>
               <p> http://localhost:3000/joinRoom</p>

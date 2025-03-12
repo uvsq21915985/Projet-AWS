@@ -1,26 +1,8 @@
 import { API_ROUTE } from "@/shared/API_ROUTE";
-import { error } from "console";
-import { Hanalei_Fill, ZCOOL_XiaoWei } from "next/font/google";
-import {jwtDecode } from 'jwt-decode';
-
-/*
-export async function login(data: FormData){
-    return fetch(
-        API_ROUTE.login, {
-        method: "POST",
-        headers: {
-                'Content-Type': 'application/json'
-              },
-        body: JSON.stringify({
-            username: String(data.get("email")),
-            password: String(data.get("password"))
-        })
-    });
-}
-*/
 
 
-     
+
+// function used to handle the tokens : when a token expired he is refreshed so the user can stay connected     
 export async function handleTokenRefresh(route :string, params: { method: string;headers?: HeadersInit, credentials: RequestCredentials,body?: string} ){
     let res = await fetch(route,params);
     if (res.status === 401 || res.status == 403){
@@ -73,33 +55,6 @@ export async function validateJWT(){
         method: 'GET',
         credentials: 'include',
     });
-   /* let res = await fetch(API_ROUTE.validateJWT,{
-        method: 'GET',
-        credentials: 'include',
-    });
-    // when the validation token dont work
-    if (res.status === 401 || res.status == 403){
-        try{
-            // try to refresh the token
-            console.log("tthe validate JWT return 401");
-            const refreshRes = await refreshJWT();
-            console.log("the refresh token is " ,refreshJWT);
-            if (refreshRes.ok){
-                return fetch(API_ROUTE.validateJWT,{
-                    method: 'GET',
-                    credentials: 'include',
-                });
-            }else{
-                console.log("error refresh token failed");
-                return res;
-                
-            }
-        }catch(error){
-            return res;
-            
-        }
-    }
-    return res;*/
 }
 
 export async function refreshJWT(){
@@ -120,74 +75,13 @@ export async function register(data: FormData){
 }
 
 
-/*
-export async function register(data: FormData){
-
-    return fetch(API_ROUTE.register,{
-         method: "POST",
-         headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            username: String(data.get("username")),
-            email: String(data.get("email")),
-            password: String(data.get("password"))
-        })
-    });
-}
-
-
-// to validate a user using the token stored in the local storage ( for now )
-export async function validate(token: String){
-
-    return fetch(API_ROUTE.validate,{
-         method: "GET",
-         headers: {
-            "Authorization": "Token "+token,
-            'Content-Type': 'application/json'
-          },
-        redirect: "follow"
-    });
-}
-
-
-/*
-export async function logout(token: string) {
-    return fetch(API_ROUTE.logout, {
-        method: "POST",
-        headers: {
-            "Authorization": "Token " + token,
-            'Content-Type': 'application/json'
-        },
-        redirect: "follow"
-    }).then(() => {
-        // Rediriger vers la landing page
-       // localStorage.removeItem("token");
-        localStorage.setItem("token", "null"); 
-        window.location.href = "/";
-    }).catch(error => console.error("Erreur lors de la déconnexion :", error));
-}
-
-
-/**the response to validate function has this structure 
- * for example
- * {
-    "is_allowed": true,
-    "user": {
-        "id": 9,
-        "username": "user@free.fr"
-    }
-}
- * 
- * 
- */
 
 
 export async function getUser(){
     let res = await validateJWT();
     if (res.ok){
         let json = await res.json();
-        return json.user/*.username*/;
+        return json.user;
         // need to add some management for error
     }
     
@@ -208,40 +102,7 @@ export async function updateUser(data: FormData){
             password: String(data.get("password"))
         })
     });
-    /*let res = await fetch(API_ROUTE.updateUser,{
-        method: 'PUT',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            username: String(data.get("email")),
-            password: String(data.get("password"))
-        })
-    });
-     // when the validation token dont work
-     if (res.status === 401){
-        try{
-            // try to refresh the token
-            console.log("tthe validate JWT return 401");
-            const refreshRes = await refreshJWT();
-            console.log("the refresh token is " ,refreshJWT);
-            if (refreshRes.ok){
-                return fetch(API_ROUTE.validateJWT,{
-                    method: 'GET',
-                    credentials: 'include',
-                });
-            }else{
-                console.log("error refresh token failed");
-                return res;
-                
-            }
-        }catch(error){
-            return res;
-            
-        }
-    }
-    return res;*/
+    
 }
 
 export async function updatePassword(data: FormData) {
@@ -256,41 +117,7 @@ export async function updatePassword(data: FormData) {
             newpassword: String(data.get("newpassword"))
         })})
     return res;
-    /*let res = await fetch(API_ROUTE.updatePassword,{
-        method: 'PUT',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            oldpassword: String(data.get("password")),
-            newpassword: String(data.get("newpassword"))
-        })
-
-    });
-     // when the validation token dont work
-     if (res.status === 401){
-        try{
-            // try to refresh the token
-            console.log("tthe validate JWT return 401");
-            const refreshRes = await refreshJWT();
-            console.log("the refresh token is " ,refreshJWT);
-            if (refreshRes.ok){
-                return fetch(API_ROUTE.validateJWT,{
-                    method: 'GET',
-                    credentials: 'include',
-                });
-            }else{
-                console.log("error refresh token failed");
-                return res;
-                
-            }
-        }catch(error){
-            return res;
-            
-        }
-    }
-    return res;*/
+   
 }
 
 
@@ -315,7 +142,7 @@ export async function create_reunion(roomId: string, startTime: number, endTime:
         })});
 }
 
-
+// get all the reunions a user has created
 export async function get_reunions(){
     return await handleTokenRefresh(API_ROUTE.get_reunions,{
         method: 'GET',
