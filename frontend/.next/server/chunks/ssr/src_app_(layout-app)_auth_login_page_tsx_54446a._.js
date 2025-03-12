@@ -76,9 +76,9 @@ function Login() {
         if (!password.trim()) {
             setError("Le mot de passe est obligatoire.");
         } else if (password.length < 9) {
-            setError("Le mot de passe doit contenir au moins 9 caractères.");
-        } else if (/[0-9]/.test(password)) {
-            setError("Le mot de passe ne doit pas contenir que des chiffres");
+            setError("Le mot de passe doit contenir au minimum 9 caractères.");
+        //} else if (/[0-9]/.test(password)) {
+        //    setError("Le mot de passe ne doit pas contenir que des chiffres");
         } else {
             setError(null);
         }
