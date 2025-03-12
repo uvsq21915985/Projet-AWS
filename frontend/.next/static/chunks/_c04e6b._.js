@@ -91,33 +91,7 @@ async function validateJWT() {
         method: 'GET',
         credentials: 'include'
     });
-/* let res = await fetch(API_ROUTE.validateJWT,{
-        method: 'GET',
-        credentials: 'include',
-    });
-    // when the validation token dont work
-    if (res.status === 401 || res.status == 403){
-        try{
-            // try to refresh the token
-            console.log("tthe validate JWT return 401");
-            const refreshRes = await refreshJWT();
-            console.log("the refresh token is " ,refreshJWT);
-            if (refreshRes.ok){
-                return fetch(API_ROUTE.validateJWT,{
-                    method: 'GET',
-                    credentials: 'include',
-                });
-            }else{
-                console.log("error refresh token failed");
-                return res;
-                
-            }
-        }catch(error){
-            return res;
-            
-        }
-    }
-    return res;*/ }
+}
 async function refreshJWT() {
     let res = await fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].refreshJWT, {
         method: 'POST',
@@ -152,40 +126,7 @@ async function updateUser(data) {
             password: String(data.get("password"))
         })
     });
-/*let res = await fetch(API_ROUTE.updateUser,{
-        method: 'PUT',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            username: String(data.get("email")),
-            password: String(data.get("password"))
-        })
-    });
-     // when the validation token dont work
-     if (res.status === 401){
-        try{
-            // try to refresh the token
-            console.log("tthe validate JWT return 401");
-            const refreshRes = await refreshJWT();
-            console.log("the refresh token is " ,refreshJWT);
-            if (refreshRes.ok){
-                return fetch(API_ROUTE.validateJWT,{
-                    method: 'GET',
-                    credentials: 'include',
-                });
-            }else{
-                console.log("error refresh token failed");
-                return res;
-                
-            }
-        }catch(error){
-            return res;
-            
-        }
-    }
-    return res;*/ }
+}
 async function updatePassword(data) {
     let res = await handleTokenRefresh(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].updatePassword, {
         method: 'PUT',
@@ -199,41 +140,7 @@ async function updatePassword(data) {
         })
     });
     return res;
-/*let res = await fetch(API_ROUTE.updatePassword,{
-        method: 'PUT',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            oldpassword: String(data.get("password")),
-            newpassword: String(data.get("newpassword"))
-        })
-
-    });
-     // when the validation token dont work
-     if (res.status === 401){
-        try{
-            // try to refresh the token
-            console.log("tthe validate JWT return 401");
-            const refreshRes = await refreshJWT();
-            console.log("the refresh token is " ,refreshJWT);
-            if (refreshRes.ok){
-                return fetch(API_ROUTE.validateJWT,{
-                    method: 'GET',
-                    credentials: 'include',
-                });
-            }else{
-                console.log("error refresh token failed");
-                return res;
-                
-            }
-        }catch(error){
-            return res;
-            
-        }
-    }
-    return res;*/ }
+}
 async function create_reunion(roomId, startTime, endTime, numberOfParticipants) {
     const duration = (endTime - startTime) / 1000;
     const hours = Math.floor(duration / 3600);

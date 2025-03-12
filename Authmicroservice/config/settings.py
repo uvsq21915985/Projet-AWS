@@ -128,12 +128,20 @@ CSRF_TRUSTED_ORIGINS = [
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        # 'OPTIONS': {
+        #    'user_attributes': ('username', 'email'), 
+        #    'max_similarity': 0.5,  # (50% de similarité)
+        #}
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {'min_length': 9},
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        # 'OPTIONS': {
+        #     'password_list_path': BASE_DIR / 'french_passwords_top1000.txt',
+        # }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
