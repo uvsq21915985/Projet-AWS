@@ -12,6 +12,7 @@ export default function JoinRoom() {
     const formData = new FormData(f.currentTarget);
     if (formData.get("roomId")) {
       let roomId = formData.get("roomId");
+      console.log("ROOM ID SAIISIE : ",roomId);
       router.push("/room?id=" + roomId);
     }
   };

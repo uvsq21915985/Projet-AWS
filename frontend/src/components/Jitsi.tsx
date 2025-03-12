@@ -11,7 +11,7 @@ page for creating a meeting
 
 */ 
 export default function Jitsit({id} :{id: string}) {
-  const [roomId,setRoomId] = useState('');
+  const [roomId,setRoomId] = useState(id);
   const router = useRouter(); // handle change of url
   const [invitePopUp,setInvitePopUp] = useState(false);
   const [startTime, setStartTime] = useState(Number);
@@ -37,7 +37,7 @@ export default function Jitsit({id} :{id: string}) {
     <div style={{  flex: 1}}><JitsiMeeting 
 domain = "jitsimeetproject.hopto.org:443" // le domaine du server jitsi
 roomName = {roomId}
-/*configOverwrite = {{
+configOverwrite = {{
     startWithAudioMuted: true,
     disableModeratorIndicator: true,
     startScreenSharing: true,
@@ -74,7 +74,7 @@ mainToolbarButtons: [
        [ 'microphone', 'camera', 'chat', 'participants-pane' ],
        [ 'microphone', 'camera', 'chat' ],
        [ 'microphone', 'camera' ]
-   ]
+   ],
    
 }}
 interfaceConfigOverwrite = {{
@@ -84,11 +84,11 @@ interfaceConfigOverwrite = {{
      'settings', 'raisehand',
     'videoquality',
     'help', 'mute-everyone'
-]
-SHOW_JITSI_WATERMARK: false
+],
+SHOW_JITSI_WATERMARK: false,
 }}
 
-*/
+
 userInfo = {{
     displayName: 'displayName',
     email: "email"
