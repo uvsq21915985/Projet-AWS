@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   app:
-    image: auth-microservice:v1.0.0
+    image: auth-microservice:v2.0.0
     build: 
       context: .
     volumes:

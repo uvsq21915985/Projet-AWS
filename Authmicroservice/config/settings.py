@@ -35,7 +35,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [env('HOST')]
+ALLOWED_HOSTS = [env('HOST'), 'authdjango.myddns.me']
 
 
 # Application definition
@@ -56,9 +56,9 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -104,27 +104,6 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
-
-CORS_ALLOW_HEADERS = [
-    'content-type',
-    'x-csrftoken',
-    'Authorization',
-]
-
-
-"""
-CSRF_COOKIE_SECURE = False  # Set to True in production for HTTPS
-CSRF_COOKIE_HTTPONLY = False  # The CSRF token must be accessible via JavaScript
-CSRF_COOKIE_SAMESITE = 'Lax'  # Set to 'Strict' or 'Lax' as per your needs
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:3000',  # Allow requests from your Next.js frontend
-]
-"""
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -171,8 +150,11 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'login.authentification.CustomJWTAuthentication',
-       # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+    'DEFAULT_RENDERER_CLASSES' : (
+        'rest_framework.renderers.JSONRenderer',
+    )
 }
 
 SIMPLE_JWT = {
@@ -180,8 +162,23 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'AUTH_COOKIE': 'access_token',
     'AUTH_COOKIE_REFRESH': 'refresh_token',
-    'AUTH_COOKIE_SECURE': False,
+    'AUTH_COOKIE_SECURE': True,
     'AUTH_COOKIE_HTTP_ONLY': True,
     #'AUTH_COOKIE_DOMAIN': None,
-    'AUTH_COOKIE_SAMESITE': 'Lax',
+    'AUTH_COOKIE_SAMESITE': 'None',
 }
+
+CSRF_COOKIE_SECURE = True  # Set to True in production for HTTPS
+CSRF_COOKIE_HTTPONLY = False  # The CSRF token must be accessible via JavaScript
+CSRF_COOKIE_SAMESITE = 'None'  # Set to 'Strict' or 'Lax' as per your needs
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:3000',
+    "http://mymeet.myddns.me",
+    "https://mymeet.myddns.me",
+]
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
+SESSION_COOKIE_SECURE = True  # Set to True in production
+SESSION_COOKIE_SAMESITE = 'None'  # Needed for cross-origin requests
+

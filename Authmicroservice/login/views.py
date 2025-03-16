@@ -1,6 +1,6 @@
 from rest_framework import status
 from .serializers import UserSerializer
-from rest_framework.authtoken.models import Token
+#from rest_framework.authtoken.models import Token
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import AccessToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -9,13 +9,16 @@ from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
-from rest_framework.authentication import TokenAuthentication
+#from rest_framework.authentication import TokenAuthentication
 from django.conf import settings
 from .models import CustomUser
+from .authentification import CustomJWTAuthentication
 from django.views.decorators.csrf import csrf_exempt
 
 
 @api_view(['POST'])
+@authentication_classes([])
+@permission_classes([]) 
 def register_user(request):
     if request.method == 'POST':
         serializer = UserSerializer(data=request.data)
@@ -88,26 +91,27 @@ def user_login(request):
         return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 @api_view(['GET'])
-#@authentication_classes([])  
+@authentication_classes([CustomJWTAuthentication]) 
 @permission_classes([IsAuthenticated])
 def validate_token(request):
     print("IN VALIDATE")
-    print("Cookies :", request.COOKIES)
+    print("Cookies FOUND IN VALIDATE:", request.COOKIES)
     token =  request.COOKIES.get(settings.SIMPLE_JWT['AUTH_COOKIE'])
-    print(f"VALIDATE REQUEST : {token}")
+    print(f"VALIDATE AUTH TOKEN : {token}")
+    print(f"request user {request.user}")
     if not token:
         return Response({'error': 'No token found in cookies'}, status=status.HTTP_401_UNAUTHORIZED)
     try:
-        validated_token = AccessToken(token)
-        # The user's information is stored in the payload of the validated token
-        user_id = validated_token['user_id']  # Access the user_id from the token
+        user_id = request.user.id
+        print(f"USER ID{user_id}")
+       # user_id = validated_token['user_id']  # Access the user_id from the token
         # get user from database
         user = CustomUser.objects.get(id=user_id) 
 
     except Exception as e:
         print(f"Token validation failed: {str(e)}")  
         return Response({'error': 'Invalid or expired token'}, status=status.HTTP_401_UNAUTHORIZED)
-    user_to_send = UserSerializer(user).data  
+    user_to_send = UserSerializer(request.user).data  
     return Response({'is_allowed':True,'user': user_to_send})
 
 
