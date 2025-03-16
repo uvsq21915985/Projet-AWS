@@ -1,11 +1,4 @@
 {
   "/(layout-app)/page": "app/(layout-app)/page.js",
-  "/(layout-app)/auth/login/page": "app/(layout-app)/auth/login/page.js",
-  "/(layout-app)/userPage/page": "app/(layout-app)/userPage/page.js",
-  "/(layout-video)/videoConference/page": "app/(layout-video)/videoConference/page.js",
-  "/(layout-app)/joinRoom/page": "app/(layout-app)/joinRoom/page.js",
-  "/(layout-video)/room/page": "app/(layout-video)/room/page.js",
-  "/room/[slug]/page": "app/room/[slug]/page.js",
-  "/(layout-app)/dashboard/page": "app/(layout-app)/dashboard/page.js",
-  "/(layout-app)/dashboard/reunions/page": "app/(layout-app)/dashboard/reunions/page.js"
+  "/(layout-app)/auth/login/page": "app/(layout-app)/auth/login/page.js"
 }

@@ -70,6 +70,7 @@ export async function refreshJWT(){
 export async function register(data: FormData){
     return fetch(
         API_ROUTE.register, {
+	method: 'POST',	
         body: data
     });
 }

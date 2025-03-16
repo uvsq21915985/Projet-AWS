@@ -41,10 +41,10 @@ __turbopack_esm__({
     "API_ROUTE": (()=>API_ROUTE)
 });
 const API_ROUTE = {
-    login: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/login/",
+    /*login: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/login/",
     register: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/register/",
-    validate: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/validate/",
-    logout: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/logout/",
+    validate:"http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/validate/",
+    logout:"http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/logout/",
     token: "http://localhost:8000/api/token",
     refreshJWT: "http://localhost:8000/api/refresh/",
     validateJWT: "http://localhost:8000/api/validate/",
@@ -53,7 +53,21 @@ const API_ROUTE = {
     updateUser: "http://localhost:8000/api/update_user/",
     updatePassword: "http://localhost:8000/api/update_password/",
     create_reunion: "http://localhost:8000/api/create_reunion/",
-    get_reunions: "http://localhost:8000/api/get_reunions/"
+    get_reunions: "http://localhost:8000/api/get_reunions/",
+
+    */ login: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/login/",
+    register: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/register/",
+    validate: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/validate/",
+    logout: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/logout/",
+    // token: "http://localhost:8000/api/token",
+    refreshJWT: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/refresh/",
+    validateJWT: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/validate/",
+    loginJWT: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/login/",
+    logoutJWT: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/logout/",
+    updateUser: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/update_user/",
+    updatePassword: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/update_password/",
+    create_reunion: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/create_reunion/",
+    get_reunions: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/get_reunions/"
 };
 }}),
 "[project]/src/services/auth.ts [app-ssr] (ecmascript)": ((__turbopack_context__) => {
