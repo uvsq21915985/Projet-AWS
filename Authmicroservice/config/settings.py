@@ -158,27 +158,14 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
+    'REFRESH_TOKEN_LIFETIME': timedelta(minutes=120),
     'AUTH_COOKIE': 'access_token',
     'AUTH_COOKIE_REFRESH': 'refresh_token',
     'AUTH_COOKIE_SECURE': True,
     'AUTH_COOKIE_HTTP_ONLY': True,
-    #'AUTH_COOKIE_DOMAIN': None,
     'AUTH_COOKIE_SAMESITE': 'None',
 }
 
-CSRF_COOKIE_SECURE = True  # Set to True in production for HTTPS
-CSRF_COOKIE_HTTPONLY = False  # The CSRF token must be accessible via JavaScript
-CSRF_COOKIE_SAMESITE = 'None'  # Set to 'Strict' or 'Lax' as per your needs
-CSRF_TRUSTED_ORIGINS = [
-    'http://localhost:3000',
-    "http://mymeet.myddns.me",
-    "https://mymeet.myddns.me",
-]
-
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_ALL_ORIGINS = True
-SESSION_COOKIE_SECURE = True  # Set to True in production
-SESSION_COOKIE_SAMESITE = 'None'  # Needed for cross-origin requests
-
+CORS_ALLOWED_ORIGINS = [ "https://mymeet.myddns.me",]
