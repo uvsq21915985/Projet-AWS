@@ -23,7 +23,6 @@ export default function Home() {
           height={500}
           alt="Picture of the hero"
         />
-        
       </div>
     </div>
   );
