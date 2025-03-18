@@ -1,35 +1,35 @@
 'use client'
- 
+
 import Jitsit from '@/components/Jitsi';
-import { setDefaultAutoSelectFamily } from 'net';
-import { useSearchParams } from 'next/navigation'
-import { useState,useEffect } from 'react'
- 
-export default function SearchBar() {
-  const searchParams = useSearchParams()
+import { useSearchParams } from 'next/navigation';
+import { useState, useEffect, Suspense } from 'react';
 
+function RoomComponent() {
+    const searchParams = useSearchParams();
+    const [roomId, setRoomId] = useState<string | null>(null);
 
-  const [roomId, setRoomId] = useState<string>("error");
+    useEffect(() => {
+        const id = searchParams.get('id');
+        console.log("ID RECUPERER DS URL " + id);
+        if (id) {
+            console.log("id is valid");
+            setRoomId(id);
+            console.log("ROOM ID SET WITH : ", id);
+        }
+    }, [searchParams]);
 
-
-  useEffect(()=>{
-    let id = searchParams.get('id');
-    console.log("ID RECUPERER DS URL " +id);
-    if (id){
-        console.log("id is valid");
-        setRoomId(id);
-        console.log("ROOD ID SET WITH : " , roomId);
-
+    if (!roomId) {
+        // Ajout de Suspense pour le chargement de la page
+        return <div>Loading room...</div>; 
     }
-  },[searchParams])
 
+    return <Jitsit id={roomId} />;
+}
 
-
-
-
-
-if (roomId !== "error")
-  return <Jitsit id={roomId} ></Jitsit>
-  // ADD LOADING SREEN
-
+export default function SearchBar() {
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            <RoomComponent />
+        </Suspense>
+    );
 }
