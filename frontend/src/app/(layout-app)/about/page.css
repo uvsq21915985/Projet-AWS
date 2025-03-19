@@ -1,0 +1,39 @@
+.info{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 60px);
+    background: var(--main-color);
+
+    h1{
+        margin-bottom: 0.35rem;
+    }
+
+    p{
+        margin-top: 0.5rem;
+    
+        span{
+          color: var(--main-color);
+          font-weight: 600;
+        }
+    }
+
+    .info-wrapper{
+        width: 100%;
+        max-width: 500px;
+        background-color: var(--white);
+        padding: 3rem 2rem;
+        border-radius: 8px;
+
+        a{
+            text-align: center;
+            margin-top: 1rem;
+            display: block;
+
+            span{
+                color: var(--main-color);
+                text-decoration: underline;
+            }
+        }
+    }
+}
