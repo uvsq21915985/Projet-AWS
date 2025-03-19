@@ -9,33 +9,19 @@ __turbopack_esm__({
     "API_ROUTE": (()=>API_ROUTE)
 });
 const API_ROUTE = {
-    /*login: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/login/",
-    register: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/register/",
-    validate:"http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/validate/",
-    logout:"http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/logout/",
-    token: "http://localhost:8000/api/token",
-    refreshJWT: "http://localhost:8000/api/refresh/",
-    validateJWT: "http://localhost:8000/api/validate/",
-    loginJWT: "http://localhost:8000/api/login/",
-    logoutJWT: "http://localhost:8000/api/logout/",
-    updateUser: "http://localhost:8000/api/update_user/",
-    updatePassword: "http://localhost:8000/api/update_password/",
-    create_reunion: "http://localhost:8000/api/create_reunion/",
-    get_reunions: "http://localhost:8000/api/get_reunions/",
-
-    */ login: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/login/",
-    register: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/register/",
-    validate: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/validate/",
-    logout: "http://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/logout/",
-    // token: "http://localhost:8000/api/token",
-    refreshJWT: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/refresh/",
-    validateJWT: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/validate/",
-    loginJWT: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/login/",
-    logoutJWT: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/logout/",
-    updateUser: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/update_user/",
-    updatePassword: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/update_password/",
-    create_reunion: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/create_reunion/",
-    get_reunions: "https://ec2-34-224-60-168.compute-1.amazonaws.com:8000/api/get_reunions/"
+    login: "https://authdjango.myddns.me/api/login/",
+    register: "https://authdjango.myddns.me/api/register/",
+    validate: "https://authdjango.myddns.me/api/validate/",
+    logout: "https://authdjango.myddns.me/api/logout/",
+    // token: "https://localhost:8000/api/token",
+    refreshJWT: "https://authdjango.myddns.me/api/refresh/",
+    validateJWT: "https://authdjango.myddns.me/api/validate/",
+    loginJWT: "https://authdjango.myddns.me/api/login/",
+    logoutJWT: "https://authdjango.myddns.me/api/logout/",
+    updateUser: "https://authdjango.myddns.me/api/update_user/",
+    updatePassword: "https://authdjango.myddns.me/api/update_password/",
+    create_reunion: "https://authdjango.myddns.me/api/create_reunion/",
+    get_reunions: "https://authdjango.myddns.me/api/get_reunions/"
 };
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {
     __turbopack_refresh__.registerExports(module, globalThis.$RefreshHelpers$);
@@ -115,6 +101,7 @@ async function refreshJWT() {
 }
 async function register(data) {
     return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].register, {
+        method: 'POST',
         body: data
     });
 }
