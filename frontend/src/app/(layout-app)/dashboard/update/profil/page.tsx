@@ -72,21 +72,6 @@ const handleSubmit = async (f: FormEvent<HTMLFormElement>) => {
             </div>
           </div>
           <div className="form-group required">
-            <label htmlFor="name" className="form-label">
-              Nom
-            </label>
-            <div className="form-input">
-              <input
-                type="text"
-                required
-                name="name"
-                autoComplete="false"
-                id="name"
-                placeholder={username}
-              />
-            </div>
-          </div>
-          <div className="form-group required">
             <label htmlFor="email" className="form-label">
               Adresse email
             </label>

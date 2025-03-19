@@ -1,7 +1,5 @@
 import { API_ROUTE } from "@/shared/API_ROUTE";
 
-
-
 // function used to handle the tokens : when a token expired he is refreshed so the user can stay connected     
 export async function handleTokenRefresh(route :string, params: { method: string;headers?: HeadersInit, credentials: RequestCredentials,body?: string} ){
     let res = await fetch(route,params);
@@ -11,9 +9,9 @@ export async function handleTokenRefresh(route :string, params: { method: string
             console.log("tthe validate JWT return 401");
             const refreshRes = await refreshJWT();
             console.log("the refresh token is " ,refreshRes);
-            if (refreshRes.ok){
+            if (refreshRes.ok) {
                 return fetch(route,params);
-            }else{
+            } else {
                 console.log("error refresh token failed");
                 return res;
                 
@@ -24,9 +22,7 @@ export async function handleTokenRefresh(route :string, params: { method: string
         }
     }
     return res;
-
 }
-
 
 export async function loginJWT(data: FormData) {
     return fetch(API_ROUTE.loginJWT,{
@@ -43,17 +39,29 @@ export async function loginJWT(data: FormData) {
     
 }
 
-export async function logoutJWT(){
-    return await fetch(API_ROUTE.logoutJWT,{
-        method: 'POST',
-        credentials: 'include',
-    });
+export async function logoutJWT() {
+    try {
+        const response = await fetch(API_ROUTE.logoutJWT, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            },    
+        });
+
+        return response;
+    } catch (error) {
+        console.error("Error during logout:", error);
+    }
 }
 
 export async function validateJWT(){
     return await handleTokenRefresh(API_ROUTE.validateJWT,{
         method: 'GET',
         credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
     });
 }
 
@@ -61,22 +69,27 @@ export async function refreshJWT(){
     let res = await fetch(API_ROUTE.refreshJWT,{
         method: 'POST',
         credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
     });
     return res;
 }
 
-
-
 export async function register(data: FormData){
     return fetch(
         API_ROUTE.register, {
-	method: 'POST',	
-        body: data
+        method: 'POST',	
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: String(data.get("username")),
+            email: String(data.get("email")),
+            password: String(data.get("password"))
+        })
     });
 }
-
-
-
 
 export async function getUser(){
     let res = await validateJWT();
@@ -97,13 +110,13 @@ export async function updateUser(data: FormData){
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
-          },
+        },
         body: JSON.stringify({
-            username: String(data.get("email")),
+            username: String(data.get("username")),
+            email: String(data.get("email")),
             password: String(data.get("password"))
         })
     });
-    
 }
 
 export async function updatePassword(data: FormData) {
@@ -148,7 +161,10 @@ export async function get_reunions(){
     return await handleTokenRefresh(API_ROUTE.get_reunions,{
         method: 'GET',
         credentials: 'include',
-        })
+        headers: {
+            'Content-Type': 'application/json'
+          },
+    })
 }
 
 
