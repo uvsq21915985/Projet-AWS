@@ -35,7 +35,7 @@ export default function Jitsit({id} :{id: string}) {
 
   return <div style={{ display: "flex" }}>
     <div style={{  flex: 1}}><JitsiMeeting 
-domain = "jitsimeetproject.hopto.org:443" // le domaine du server jitsi
+domain = "mymeet.myddns.me:443" // le domaine du server jitsi
 roomName = {roomId}
 configOverwrite = {{
     startWithAudioMuted: true,
