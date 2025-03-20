@@ -130,8 +130,8 @@ def user_logout(request):
 
 
 @api_view(['POST'])
-@authentication_classes([])  
-@permission_classes([IsAuthenticatedOrReadOnly])
+@permission_classes([AllowAny])
+@authentication_classes([])
 def refresh_token(request):
     if request.method == 'POST':
         refresh_token = request.COOKIES.get(settings.SIMPLE_JWT['AUTH_COOKIE_REFRESH'])
