@@ -38,7 +38,7 @@ export default function Login() {
                 router.push('/userPage');
             }
         } catch (error) {
-            console.log("LOGIN EROOR", error);
+            console.log("LOGIN ERROR", error);
             setTimeout(() => setError(null), 1500)
             setError("mot de passe ou email erroné !")
         }
