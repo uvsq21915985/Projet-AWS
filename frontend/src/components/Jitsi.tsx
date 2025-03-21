@@ -32,9 +32,6 @@ export default function Jitsit({id} :{id: string}) {
     
   ,[])
 
-  function close(){
-    setInvitePopUp(false);
-  }
 
 
  
