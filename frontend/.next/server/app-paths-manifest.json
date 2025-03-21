@@ -1,5 +1,6 @@
 {
   "/(layout-app)/page": "app/(layout-app)/page.js",
-  "/(layout-app)/team/page": "app/(layout-app)/team/page.js",
-  "/(layout-app)/about/page": "app/(layout-app)/about/page.js"
+  "/(layout-app)/auth/login/page": "app/(layout-app)/auth/login/page.js",
+  "/(layout-video)/videoConference/page": "app/(layout-video)/videoConference/page.js",
+  "/(layout-app)/userPage/page": "app/(layout-app)/userPage/page.js"
 }

@@ -6,6 +6,26 @@
   background: var(--main-color);
 }
 
+.closebtn {
+  padding: 10px;
+  font-size: 10px;
+  color: var(--main-color);
+  background: var(--main-color);
+  margin: auto;
+}
+
+.popUpInvite {
+  height: 100px;
+  width: 500px;
+  color: green;
+  background: #fff;
+  border: 3px solid green;
+  margin: auto;
+  position: relative;
+  top: 30%;
+  opacity: 1;
+}
+
 .pop {
   padding: 25px;
   font-size: 20px;

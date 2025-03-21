@@ -81,28 +81,49 @@ async function loginJWT(data) {
     });
 }
 async function logoutJWT() {
-    return await fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].logoutJWT, {
-        method: 'POST',
-        credentials: 'include'
-    });
+    try {
+        const response = await fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].logoutJWT, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        return response;
+    } catch (error) {
+        console.error("Error during logout:", error);
+    }
 }
 async function validateJWT() {
     return await handleTokenRefresh(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].validateJWT, {
         method: 'GET',
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
     });
 }
 async function refreshJWT() {
     let res = await fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].refreshJWT, {
         method: 'POST',
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
     });
     return res;
 }
 async function register(data) {
     return fetch(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].register, {
         method: 'POST',
-        body: data
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            username: String(data.get("username")),
+            email: String(data.get("email")),
+            password: String(data.get("password"))
+        })
     });
 }
 async function getUser() {
@@ -123,7 +144,8 @@ async function updateUser(data) {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            username: String(data.get("email")),
+            username: String(data.get("username")),
+            email: String(data.get("email")),
             password: String(data.get("password"))
         })
     });
@@ -166,7 +188,10 @@ async function create_reunion(roomId, startTime, endTime, numberOfParticipants) 
 async function get_reunions() {
     return await handleTokenRefresh(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].get_reunions, {
         method: 'GET',
-        credentials: 'include'
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        }
     });
 }
 if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelpers !== null) {

@@ -6,6 +6,12 @@ import { useRouter } from 'next/navigation';
 
 import { PopUpInvite } from './PopUpInvite';
 import { create_reunion } from '@/services/auth';
+import ReactModal from 'react-modal';
+
+
+
+import '../app/globals.css';
+import './popUpInvite.css';
 /*
 page for creating a meeting
 
@@ -21,9 +27,14 @@ export default function Jitsit({id} :{id: string}) {
   useEffect(()=>{
     setRoomId(id);
     setStartTime(Date.now());
+    ReactModal.setAppElement('body');
   }
     
   ,[])
+
+  function close(){
+    setInvitePopUp(false);
+  }
 
 
  
@@ -35,7 +46,8 @@ export default function Jitsit({id} :{id: string}) {
 
   return <div style={{ display: "flex" }}>
     <div style={{  flex: 1}}><JitsiMeeting 
-domain = "jitsimeetproject.hopto.org:443" // le domaine du server jitsi
+//domain = "jitsimeetproject.hopto.org:443" // le domaine du server jitsi
+domain = "localhost:8443"
 roomName = {roomId}
 configOverwrite = {{
     startWithAudioMuted: true,
@@ -125,9 +137,7 @@ onApiReady = { (api) => {
     api.addListener('toolbarButtonClicked',(e)=>{
         //when the custom invite buttom is clicked
         if (e.key == 'custominvite'){
-          setInvitePopUp(true);
-          api.executeCommand("invite");
-          
+          setInvitePopUp(true);  
         }
     })
 } }
@@ -138,10 +148,15 @@ getIFrameRef = { (iframeRef) => { iframeRef.style.height = String(window.innerHe
 
 
 /></div>
-{invitePopUp && <div style={{ flex: 1 }}> <PopUpInvite setPopUp={setInvitePopUp} roomId={id}/></div>}
+
+
+
+ <PopUpInvite setPopUp={setInvitePopUp} invitePopUp={invitePopUp} roomId={id}/>
 
 
 </div>
 
 
 }
+
+
