@@ -20,7 +20,7 @@ export default function Jitsit({id} :{id: string}) {
   const [startTime, setStartTime] = useState(0);
   const [isReunionCreated,setReunionCreated] = useState(false);
   const [numParticipants, setNumParticipants] = useState<number>(1);
-  let numParticipants = 0;
+  //let numParticipants = 0;
  
   useEffect(()=>{
     setRoomId(id);
