@@ -37,6 +37,15 @@ export default function Register() {
                     console.log("IN RES OK");
                     console.log("The user has been registered")
                     router.push('/auth/login');
+                }                
+                else {
+                    const errorPromise = await res.json();
+                    // Prend le json, concatenes les erreurs
+                    const errorMessages = Object.values(errorPromise).flat();
+                    // Concatenation messages d'erreur
+                    const errorMessage = errorMessages.join(', ');
+                    console.log("RES IS OK BUT ! " + errorMessages);
+                    setError("Erreur lors de l'inscription : " + errorMessage)
                 }
             } catch (error) {
                 console.log("LOGIN EROOR", error);
