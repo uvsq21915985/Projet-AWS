@@ -19,7 +19,7 @@ frontend/.next/
 .next/
 node_modules/
 /out/
-
+.idea/
 # production
 /build
 
