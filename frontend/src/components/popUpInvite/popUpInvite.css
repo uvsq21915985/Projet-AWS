@@ -1,0 +1,123 @@
+.btn{
+    padding: 15px;
+    font-size: 15px ;
+    color: white;
+    background: var(--main-color); 
+    margin-top: 5px;
+    margin-bottom: 5px;
+    
+   
+        
+}
+
+.closebtn{
+    color: white;
+    background: red ; 
+    margin: auto;
+    margin-top: 10px;
+    font-weight: 600;
+
+        
+}
+
+h3{
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+.closebtn:hover{
+    color:var(--main-color);
+    background: white;
+}
+
+.emailbtn{
+    color:rgb(231, 231, 231);
+    background-color: rgb(30, 60, 196);
+    margin: auto;
+    width: auto;
+    height: 30px;
+    padding: 6px;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 14px;
+
+
+}
+
+.emailbtn:hover{
+    color:rgb(30, 60, 196);
+    background: rgb(231, 231, 231);
+   
+
+}
+
+.copybtn{
+    background: rgba(82, 143, 238, 1);
+    font-weight: 600;
+    width: 400px;
+    
+}
+
+.roomId{
+    width: 170px;
+}
+
+
+
+.inviteTitle{
+    font-size: 20px ;
+    font-weight: 600;
+    padding-bottom: 10px;
+}
+
+.popUpInvite{
+    height: auto;
+    width: 750px;
+    color: white;
+    font-size: 15px ;
+    background: rgb(14,14,14);
+    border: 1px solid rgb(57,57,57);
+    margin: auto;
+    position: relative;
+    top: 30%;
+    opacity: 1;
+    padding: 20px;
+
+}
+
+
+.pop{
+
+   padding: 25px; 
+   font-size: 20px;  
+   background: white;
+   color: var(--main-color);
+    height: 100%;
+}
+
+.main{
+    padding: 25px;
+    font-size: 20px;
+    background: white;
+    color: var(--main-color);
+    height: '100%';
+}
+
+
+
+
+.same-line-container{
+display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.input {
+    height: 30px;
+    width: 400px;
+    font-size: 1rem;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+  }
