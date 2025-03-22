@@ -43,7 +43,6 @@ export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>>
 
   const sendEmail = async(f: FormEvent<HTMLFormElement>) => {
     f.preventDefault();
-    console.log("HANDLE SUBMIT");
     const formData = new FormData(f.currentTarget);
     let user = await getUser();
     try{
