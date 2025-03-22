@@ -34,6 +34,9 @@ export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>>
    }, 1000);
    }
   
+  function sendEmail(){
+
+  }
 
   
     return (
@@ -45,6 +48,7 @@ export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>>
           { overlay: {backgroundColor: 'rgba(47,47,47, 0.7)'}, content: {}} }
         >
           <div className='inviteTitle'> Inviter des Participants</div>
+          <h3>En copiant le lien</h3>
           <p>Pour inviter des participants vous devez leurs communiquer le roomId qui est de:</p>
 
           <button className='btn copybtn roomId' 
@@ -68,6 +72,16 @@ export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>>
         : isHovering ? "copier le lien de la réunion": "http://projet-aws-iota.vercel.app/joinRoom"
         }
         </button>
+        <h3>En en voyant un mail</h3>
+        <form onSubmit={sendEmail} method="post" className="join-form">
+        <div className="same-line-container">
+        <label htmlFor="roomId" className="label">
+          Veuillez saisir l'email: 
+        </label>
+        <input  type="email" name="roomId" id="roomId" className="input" placeholder="Entrer l'email de l'utilisateur à inviter" required/>
+        <button className="btn emailbtn" onClick={sendEmail}> envoyer</button>
+        </div>
+      </form>
           <button className="btn closebtn" onClick={close}> Fermer</button>
       </ReactModal>
          

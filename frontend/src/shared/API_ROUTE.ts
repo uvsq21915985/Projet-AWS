@@ -14,4 +14,7 @@ export const API_ROUTE = {
     updatePassword: "https://authdjango.myddns.me/api/update_password/",
     create_reunion: "https://authdjango.myddns.me/api/create_reunion/",
     get_reunions: "https://authdjango.myddns.me/api/get_reunions/",
+    create_room: "https://authdjango.myddns.me/api/create_room/",
+    check_room: "https://authdjango.myddns.me/api/check_room/",
+    delete_room: "https://authdjango.myddns.me/api/delete_room/",
 }

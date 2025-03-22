@@ -167,4 +167,51 @@ export async function get_reunions(){
     })
 }
 
+// create a room in database and return room name
+export async function create_room(schedule_time: number) {
+  try{
+    let res = await handleTokenRefresh(API_ROUTE.create_room,{
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            schedule_time: new Date(schedule_time).toISOString()
+        })});
+        if (res.ok){
+
+    let json = await res.json();
+    return json.name;
+        }else{return '';}
+    }catch(error){return ''}
+}
+
+export async function delete_room(roomID : string){
+    return await handleTokenRefresh(API_ROUTE.delete_room+roomID+"/",
+            {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+}
+
+export async function check_room(roomID : string){
+    let res =  await handleTokenRefresh(API_ROUTE.check_room+roomID+"/",
+            {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+                'Content-Type': 'application/json'
+              }
+            });
+    return res.ok;
+}
+
+
+// get all rooms scheduled for the future for the user 
+export async function get_scheduled_rooms(){} 
+
 

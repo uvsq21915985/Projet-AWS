@@ -13,6 +13,29 @@
   margin-top: 10px;
 }
 
+h3 {
+  padding-top: 40px;
+  padding-bottom: 20px;
+}
+
+.closebtn:hover {
+  color: var(--main-color);
+  background: #fff;
+}
+
+.emailbtn {
+  color: var(--main-color);
+  background: #fff;
+  margin: auto;
+}
+
+.emailbtn:hover {
+  color: #fff;
+  background: var(--main-color);
+  border-color: #fff;
+  border-width: 3px;
+}
+
 .copybtn {
   background: #528fee;
   font-weight: 600;
@@ -30,8 +53,8 @@
 }
 
 .popUpInvite {
-  height: 300px;
-  width: 500px;
+  height: auto;
+  width: 750px;
   color: #fff;
   font-size: 15px;
   background: #0e0e0e;
@@ -57,6 +80,22 @@
   background: #fff;
   color: var(--main-color);
   height: "100%";
+}
+
+.same-line-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.input {
+  height: 30px;
+  width: 450px;
+  font-size: 1rem;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  outline: none;
 }
 
 /*# sourceMappingURL=src_components_popUpInvite_b52d8e.css.map*/

@@ -3,6 +3,8 @@
     font-size: 15px ;
     color: white;
     background: var(--main-color); 
+    
+   
         
 }
 
@@ -11,7 +13,33 @@
     background: var(--main-color);
     margin: auto;
     margin-top: 10px;
+
         
+}
+
+h3{
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+.closebtn:hover{
+    color:var(--main-color);
+    background: white;
+}
+
+.emailbtn{
+    color:var(--main-color);
+    background: white;
+    margin: auto;
+
+}
+
+.emailbtn:hover{
+    color: white;
+    background: var(--main-color);
+    border-color: white;
+    border-width: 3px;
+
 }
 
 .copybtn{
@@ -34,8 +62,8 @@
 }
 
 .popUpInvite{
-    height: 300px;
-    width: 500px;
+    height: auto;
+    width: 750px;
     color: white;
     font-size: 15px ;
     background: rgb(14,14,14);
@@ -65,3 +93,22 @@
     color: var(--main-color);
     height: '100%';
 }
+
+
+
+
+.same-line-container{
+display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.input {
+    height: 30px;
+    width: 450px;
+    font-size: 1rem;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+  }

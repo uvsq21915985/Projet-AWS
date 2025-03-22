@@ -15,7 +15,7 @@
   .title {
     font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
   }
   
   /* Form Styling */
@@ -67,4 +67,17 @@
     color: white;
     border: 2px solid white;
   }
-  
+
+
+.message-error{
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.errorinput{
+  border: 2px solid red;
+
+}
