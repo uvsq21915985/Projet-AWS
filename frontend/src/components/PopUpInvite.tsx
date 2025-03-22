@@ -79,7 +79,7 @@ export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>>
           Veuillez saisir l'email: 
         </label>
         <input  type="email" name="roomId" id="roomId" className="input" placeholder="Entrer l'email de l'utilisateur à inviter" required/>
-        <button className="btn emailbtn" onClick={sendEmail}> envoyer</button>
+        <button className="btn emailbtn" type="submit"> envoyer</button>
         </div>
       </form>
           <button className="btn closebtn" onClick={close}> Fermer</button>

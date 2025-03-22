@@ -13,7 +13,6 @@ const API_ROUTE = {
     register: "https://authdjango.myddns.me/api/register/",
     validate: "https://authdjango.myddns.me/api/validate/",
     logout: "https://authdjango.myddns.me/api/logout/",
-    // token: "https://localhost:8000/api/token",
     refreshJWT: "https://authdjango.myddns.me/api/refresh/",
     validateJWT: "https://authdjango.myddns.me/api/validate/",
     loginJWT: "https://authdjango.myddns.me/api/login/",
@@ -22,6 +21,20 @@ const API_ROUTE = {
     updatePassword: "https://authdjango.myddns.me/api/update_password/",
     create_reunion: "https://authdjango.myddns.me/api/create_reunion/",
     get_reunions: "https://authdjango.myddns.me/api/get_reunions/",
+    end_reunion: "https://authdjango.myddns.me/api/end_reunion/",
+    // login: "http://127.0.0.1:8000/api/login/",
+    //     register: "http://127.0.0.1:8000/api/register/",
+    //     validate:"http://127.0.0.1:8000/api/validate/",
+    //     logout:"http://127.0.0.1:8000/api/logout/",
+    //     refreshJWT: "http://127.0.0.1:8000/api/refresh/",
+    //     validateJWT: "http://127.0.0.1:8000/api/validate/",
+    //     loginJWT: "http://127.0.0.1:8000/api/login/",
+    //     logoutJWT: "http://127.0.0.1:8000/api/logout/",
+    //     updateUser: "http://127.0.0.1:8000/api/update_user/",
+    //     updatePassword: "http://127.0.0.1:8000/api/update_password/",
+    //     create_reunion: "http://127.0.0.1:8000/api/create_reunion/",
+    //     get_reunions: "http://127.0.0.1:8000/api/get_reunions/",
+    //     end_reunion: "http://127.0.0.1:8000/api/end_reunion/",
     create_room: "https://authdjango.myddns.me/api/create_room/",
     check_room: "https://authdjango.myddns.me/api/check_room/",
     delete_room: "https://authdjango.myddns.me/api/delete_room/"
@@ -40,6 +53,7 @@ __turbopack_esm__({
     "create_reunion": (()=>create_reunion),
     "create_room": (()=>create_room),
     "delete_room": (()=>delete_room),
+    "end_reunion": (()=>end_reunion),
     "getUser": (()=>getUser),
     "get_reunions": (()=>get_reunions),
     "get_scheduled_rooms": (()=>get_scheduled_rooms),
@@ -171,12 +185,7 @@ async function updatePassword(data) {
     });
     return res;
 }
-async function create_reunion(roomId, startTime, endTime, numberOfParticipants) {
-    const duration = (endTime - startTime) / 1000;
-    const hours = Math.floor(duration / 3600);
-    const minutes = Math.floor(duration % 3600 / 60);
-    const seconds = Math.floor(duration % 60);
-    const formattedDuration = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+async function create_reunion(roomId, startTime, numberOfParticipants) {
     return await handleTokenRefresh(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].create_reunion, {
         method: 'POST',
         credentials: 'include',
@@ -184,11 +193,23 @@ async function create_reunion(roomId, startTime, endTime, numberOfParticipants) 
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            name: roomId,
+            room_id: roomId,
             begin_time: new Date(startTime).toISOString(),
+            num_participants: numberOfParticipants
+        })
+    });
+}
+async function end_reunion(roomId, endTime, numberOfParticipants) {
+    return await handleTokenRefresh(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$shared$2f$API_ROUTE$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__["API_ROUTE"].end_reunion, {
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            room_id: roomId,
             end_time: new Date(endTime).toISOString(),
-            num_participants: numberOfParticipants,
-            duration: formattedDuration // to have right format for django rest api
+            num_participants: numberOfParticipants
         })
     });
 }

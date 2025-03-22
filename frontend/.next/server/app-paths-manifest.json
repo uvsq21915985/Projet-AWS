@@ -1,6 +1,4 @@
 {
-  "/(layout-video)/videoConference/page": "app/(layout-video)/videoConference/page.js",
-  "/(layout-app)/userPage/page": "app/(layout-app)/userPage/page.js",
   "/(layout-app)/page": "app/(layout-app)/page.js",
   "/(layout-app)/emailTest/page": "app/(layout-app)/emailTest/page.js"
 }

@@ -20,7 +20,7 @@ export default function Jitsit({id} :{id: string}) {
   const [startTime, setStartTime] = useState(0);
   const [isReunionCreated,setReunionCreated] = useState(false);
   const [numParticipants, setNumParticipants] = useState<number>(1);
-  let numParticipants = 0;
+  let numP = 0;
  
   useEffect(()=>{
     setRoomId(id);
@@ -32,8 +32,9 @@ export default function Jitsit({id} :{id: string}) {
 
 
   function handleWhenAllUserLeft(){
-    if (numParticipants ==0 && !isReunionCreated){
+    if (!isReunionCreated && numParticipants ==0 ){
       delete_room(roomId);
+      setReunionCreated(true);
     }
   }
 
@@ -112,26 +113,23 @@ onApiReady = { (api) => {
       }
     })
     api.on('videoConferenceJoined',(event)=>{
-      numParticipants++;
+      numP++;
        create_reunion(roomId, Date.now(), numParticipants);
       if (startTime==0)
       setStartTime(Date.now());
     });
 
     api.on("participantJoined",(event)=>{
-      numParticipants++;
+      numP++;
       setNumParticipants(api.getNumberOfParticipants());
 
       })
     
     //go back to user page when the conference is ended
     api.on('videoConferenceLeft',()=>{
-      numParticipants--;
+      numP--;
       handleWhenAllUserLeft();
-      setEndTime(Date.now());
       console.log("USER IS REDIRECTED");
-      const numberOfParticipants = api.getNumberOfParticipants();
-      console.log("number of participant " , numberOfParticipants);
 
       //create the reunion in database
       // if (numParticipants)
@@ -142,7 +140,7 @@ onApiReady = { (api) => {
     )
 
     api.addListener('participantLeft',()=>{
-      numParticipants--;
+      numP--;
       handleWhenAllUserLeft();
     })
 
