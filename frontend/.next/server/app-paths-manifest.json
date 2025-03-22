@@ -1,4 +1,5 @@
 {
   "/(layout-app)/page": "app/(layout-app)/page.js",
-  "/(layout-app)/emailTest/page": "app/(layout-app)/emailTest/page.js"
+  "/(layout-app)/emailTest/page": "app/(layout-app)/emailTest/page.js",
+  "/(layout-app)/auth/login/page": "app/(layout-app)/auth/login/page.js"
 }

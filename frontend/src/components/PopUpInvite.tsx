@@ -1,12 +1,18 @@
 
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, FormEvent, SetStateAction, useState } from "react";
 import './popUpInvite.css';
 
 import ReactModal from 'react-modal';
+import { getUser } from '@/services/auth';
+import emailjs from '@emailjs/browser';
 
+const SERVICE_ID = process.env.SERVICE_ID  ;
+const TEMPLATE_ID = process.env.TEMPLATE_ID;
+const PUBLIC_KEY = process.env.PUBLIC_KEY;
 
 
 import '../app/globals.css';
+import { error } from "console";
 export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>> ; invitePopUp: boolean ; roomId: string; } ) {
   //{setPopUp} :{setPopUp: Dispatch<SetStateAction<boolean>>},roomId: string
 
@@ -34,9 +40,32 @@ export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>>
    }, 1000);
    }
   
-  function sendEmail(){
 
+  const sendEmail = async(f: FormEvent<HTMLFormElement>) => {
+    f.preventDefault();
+    console.log("HANDLE SUBMIT");
+    const formData = new FormData(f.currentTarget);
+    let user = await getUser();
+    try{
+      // parameters defined in template in emailJS to send emails
+    const templateParams = {
+        from_name: user.name,
+        email: formData.get("email"),
+        roomId: roomId,
+        link:"https://projet-aws-iota.vercel.app/joinRoom"
+    };
+    if (SERVICE_ID && TEMPLATE_ID && PUBLIC_KEY){
+    const res = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
+   
+    if (res.status === 200) {
+      console.log("Message sent successfully!");
+
+    }
+  }else{throw error}
+  } catch (error) {
+    console.log("Failed to send message. Please try again later.");
   }
+}
 
   
     return (
@@ -75,10 +104,10 @@ export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>>
         <h3>En en voyant un mail</h3>
         <form onSubmit={sendEmail} method="post" className="join-form">
         <div className="same-line-container">
-        <label htmlFor="roomId" className="label">
+        <label htmlFor="email" className="label">
           Veuillez saisir l'email: 
         </label>
-        <input  type="email" name="roomId" id="roomId" className="input" placeholder="Entrer l'email de l'utilisateur à inviter" required/>
+        <input  type="email" name="email" id="email" className="input" placeholder="Entrer l'email de l'utilisateur à inviter" required/>
         <button className="btn emailbtn" type="submit"> envoyer</button>
         </div>
       </form>
