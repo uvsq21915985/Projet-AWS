@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Jitsit from '@/components/Jitsi';
+import Jitsit from '@/components/Jitsi/Jitsi';
 import {create_room } from "@/services/auth";
 
 /*

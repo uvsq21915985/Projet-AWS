@@ -1,6 +1,6 @@
 'use client'
 
-import Jitsit from '@/components/Jitsi';
+import Jitsit from '@/components/Jitsi/Jitsi';
 import { useSearchParams } from 'next/navigation';
 import { useState, useEffect, Suspense } from 'react';
 
