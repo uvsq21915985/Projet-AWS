@@ -108,14 +108,15 @@ onApiReady = { (api) => {
           api.executeCommand('toggleLobby', true);
           
           // Vérifier si c'est le premier modérateur (donc le créateur)
-          if (!startTime) { 
-              create_reunion(roomId, Date.now(), numParticipants);
-              setStartTime(Date.now());
-          }
+          // if (!startTime) { 
+          //     create_reunion(roomId, Date.now(), numParticipants);
+          //     setStartTime(Date.now());
+          // }
       }
   });
   
     api.on('videoConferenceJoined',(event)=>{
+      create_reunion(roomId, Date.now(), numParticipants);
       setStartTime(Date.now());
     });
 
@@ -129,8 +130,9 @@ onApiReady = { (api) => {
       console.log("number of participant " , numberOfParticipants);
 
       //create the reunion in database
-      if (numParticipants)
-        end_reunion(roomId,Date.now(),numParticipants);
+      // if (numParticipants)
+      //   end_reunion(roomId,Date.now(),numParticipants);
+      end_reunion(roomId,Date.now(),numParticipants);
       router.push("/userPage");
     })
     // when a user click on the invite a participant button there will be an alert
