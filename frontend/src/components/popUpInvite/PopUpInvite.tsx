@@ -12,6 +12,14 @@ const TEMPLATE_ID = process.env.TEMPLATE_ID;
 const PUBLIC_KEY = process.env.PUBLIC_KEY;
 
 
+<<<<<<< HEAD:frontend/src/components/popUpInvite/PopUpInvite.tsx
+=======
+import '../app/globals.css';
+import error from "next/error";
+//import { error } from "console";
+export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>> ; invitePopUp: boolean ; roomId: string; } ) {
+  //{setPopUp} :{setPopUp: Dispatch<SetStateAction<boolean>>},roomId: string
+>>>>>>> b32d425d6160241173c01ca0d7d98941a499f522:frontend/src/components/PopUpInvite.tsx
 
 export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>> ; invitePopUp: boolean ; roomId: string; } ) {
   let setPopUp = props.setPopUp;
