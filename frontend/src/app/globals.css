@@ -51,7 +51,7 @@ html {
   padding: 0;
   outline: none;
   box-sizing: border-box;
-  font-family: var(--font-familly);
+  font-family: var(--font-familly) !important;
 }
 
 img {
@@ -61,10 +61,12 @@ img {
 ul {
   list-style: none;
 }
+
 a,
 a:hover {
   text-decoration: none;
   color: var(--black);
+  font-family: var(--font-familly);
 }
 
 button{

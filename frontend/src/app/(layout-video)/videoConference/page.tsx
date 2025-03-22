@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Jitsit from '@/components/Jitsi/Jitsi';
 import {create_room } from "@/services/auth";
+import { Suspense } from 'react'
+import Loading from '@/components/Loading/Loading';
+import LocalStorage from '@/app/hooks/LocalStorage';
 
 /*
 page for creating a meeting
@@ -17,34 +20,37 @@ export default function VideoConference() {
   let trials = 0;
   const maxTrails = 6;
 
-  useEffect( ()=>{
-    const creatingRoom = async () => {
-      setLoading(true)
-      while (roomId=='' && trials < maxTrails){
-      let name = await create_room(Date.now());
-          setRoomId(name);
-          trials++;
-          console.log("trials is" ,trials);
-      }
-      if (maxTrails == trials){
-        setError(true);
-      }
-      setLoading(false);
-  
+  const creatingRoom = async () => {
+    setLoading(true);
+    let s_name = ""
+    while (s_name == "" && trials < maxTrails){
+        s_name= await create_room(Date.now());
+        trials++;
+        
     }
-   // creatingRoom()
-   setRoomId(String(Math.floor( Math.random()* 9000000000000000)));
-   setLoading(false);
-   console.log("")
+    if (maxTrails == trials){
+      setError(true);
+    }else{
+      setRoomId(s_name);
+    }
+    setLoading(false);
+  }
+  
+  useEffect(()=>{
+    if (!LocalStorage.isAuth()) {
+      router.push('/auth/login')
+      return
+    }
+    creatingRoom();
   },[])
+
 
 
 
 return (
 <div>
-  {!loading && <Jitsit id={roomId} ></Jitsit> }
-
-
+  {loading && <Loading />}
+  {!loading && <Jitsit id={roomId} ></Jitsit>}
 </div>
 );
 

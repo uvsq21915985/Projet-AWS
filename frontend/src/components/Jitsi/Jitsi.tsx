@@ -4,11 +4,12 @@ import { useRouter } from 'next/navigation';
 
 
 
-import { PopUpInvite } from '@/components/popUpInvite/PopUpInvite';
+import { PopUpInvite } from './PopUpInvite';
 import { create_reunion, end_reunion , delete_room } from '@/services/auth';
 import ReactModal from 'react-modal';
-import '../../app/globals.css';
-import '@/components/popUpInvite/popUpInvite.css';
+import '../app/globals.css';
+import './popUpInvite.css';
+import LocalStorage from '@/app/hooks/LocalStorage';
 /*
 page for creating a meeting
 
@@ -44,20 +45,23 @@ export default function Jitsit({id} :{id: string}) {
     throw new Error('Function not implemented.');
   }
 
-  return <div>
-    <div>
-      <JitsiMeeting 
-//domain = "jitsimeetproject.hopto.org:443" // *jitsi domain name
-domain = "localhost:8443"
+  return <div style={{ display: "flex" }}>
+    <div style={{  flex: 1}}><JitsiMeeting 
+    domain = "jitsimeetproject.hopto.org:443" // le domaine du server jitsi
+//domain = "localhost:8443"
 roomName = {roomId}
 configOverwrite = {{
     startWithAudioMuted: true,
     disableModeratorIndicator: true,
     startScreenSharing: true,
+    //enableEmailInStats: false,
+  //  brandingRoomAlias: "localhost:3000", // to modify the link given in invite button
+  //  inviteAppName: "myMeet",
     lobby: {
       autoKnock: true,
       enableChat: true
   },
+  //DISABLE_JOIN_LEAVE_NOTIFICATIONS: true,
   customToolbarButtons: [
     {
         icon: '',
@@ -69,7 +73,7 @@ configOverwrite = {{
         'custominvite' // expose the click/tap event in the api 
   ],
   toolbarButtons: [
-    'microphone', 'camera', 'custominvite', 'closedcaptions', 'desktop', 'fullscreen',
+    'microphone', 'camera', 'custominvite', 'invite', 'closedcaptions', 'desktop', 'fullscreen',
     'fodeviceselection', 'hangup', 'profile', 'chat', 'recording',
      'settings', 'raisehand',
     'videoquality',
@@ -88,7 +92,7 @@ mainToolbarButtons: [
 }}
 interfaceConfigOverwrite = {{
   TOOLBAR_BUTTONS: [
-    'microphone', 'camera', 'custominvite', 'closedcaptions', 'desktop', 'fullscreen',
+    'microphone', 'camera', 'custominvite', 'invite', 'closedcaptions', 'desktop', 'fullscreen',
     'fodeviceselection', 'hangup', 'profile', 'chat', 'recording',
      'settings', 'raisehand',
     'videoquality',
@@ -99,8 +103,8 @@ SHOW_JITSI_WATERMARK: false,
 
 
 userInfo = {{
-    displayName: 'displayName',
-    email: "email"
+  displayName: LocalStorage.getUser().user.username,
+  email: LocalStorage.getUser().user.email
 }}
 
 onApiReady = { (api) => {
@@ -115,7 +119,6 @@ onApiReady = { (api) => {
     api.on('videoConferenceJoined',(event)=>{
       setNumParticipants((prev) => prev + 1);
        create_reunion(roomId, Date.now(), numParticipants);
-       setReunionCreated(true);
       if (startTime==0)
       setStartTime(Date.now());
     });
