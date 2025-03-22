@@ -40,6 +40,10 @@ export default function Jitsit({id} :{id: string}) {
 
  
 
+  function setEndTime(arg0: number) {
+    throw new Error('Function not implemented.');
+  }
+
   return <div style={{ display: "flex" }}>
     <div style={{  flex: 1}}><JitsiMeeting 
 domain = "jitsimeetproject.hopto.org:443" // le domaine du server jitsi
@@ -112,21 +116,21 @@ onApiReady = { (api) => {
       }
     })
     api.on('videoConferenceJoined',(event)=>{
-      numParticipants++;
+      setNumParticipants((prev) => prev + 1);
        create_reunion(roomId, Date.now(), numParticipants);
       if (startTime==0)
       setStartTime(Date.now());
     });
 
     api.on("participantJoined",(event)=>{
-      numParticipants++;
+      setNumParticipants((prev) => prev + 1);
       setNumParticipants(api.getNumberOfParticipants());
 
       })
     
     //go back to user page when the conference is ended
     api.on('videoConferenceLeft',()=>{
-      numParticipants--;
+      setNumParticipants((prev) => prev - 1);
       handleWhenAllUserLeft();
       setEndTime(Date.now());
       console.log("USER IS REDIRECTED");
@@ -142,7 +146,7 @@ onApiReady = { (api) => {
     )
 
     api.addListener('participantLeft',()=>{
-      numParticipants--;
+      setNumParticipants((prev) => prev - 1);
       handleWhenAllUserLeft();
     })
 

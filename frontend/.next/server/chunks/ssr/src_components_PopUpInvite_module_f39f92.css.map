@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["file:///home/hedil/master/aws/Projet-AWS/frontend/src/components/PopUpInvite.module.css"],"sourcesContent":[".btn{\n    background-color: white;\n    margin: auto;\n    color: var(--main-color);\n    text-align: center;\n    text-decoration: none;\n    font-size: 16px;\n    padding: 50px;\n    margin: auto;\n    margin: 50px 50px;\n    border: 2px solid white;\n}\n\n.container{\n    padding: '50px';\n     font-size: '20px' ; \n     color: var(--main-color);\n}\n"],"names":[],"mappings":"AAAA;;;;;;;;;;;;;AAaA"}},
-    {"offset": {"line": 19, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"A"}}]
-}
