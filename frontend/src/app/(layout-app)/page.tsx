@@ -1,6 +1,6 @@
-
 import './page.css'
 import Image from 'next/image'
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -13,7 +13,7 @@ export default function Home() {
             <p>Communiquez, collaborez et célébrez les bons moments où que vous soyez avec My<span>Meet</span></p>
             <div className="btn-blocks">
               <div className="btn outlined outlined-main">Lancer un call</div>
-              <div className="btn btn-main">Nous rejoindre</div>
+              <Link href="/auth/login"><div className="btn btn-main">Nous rejoindre</div></Link>
             </div>
         
         </div>

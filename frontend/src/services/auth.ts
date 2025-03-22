@@ -135,25 +135,34 @@ export async function updatePassword(data: FormData) {
 }
 
 
-export async function create_reunion(roomId: string, startTime: number, endTime: number, numberOfParticipants: number) {
-    const duration = (endTime - startTime)/1000;
-    const hours = Math.floor(duration / 3600);
-    const minutes = Math.floor((duration % 3600) / 60);
-    const seconds = Math.floor(duration % 60);
-    const formattedDuration = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+export async function create_reunion(roomId: string, startTime: number, numberOfParticipants: number) {
     return await handleTokenRefresh(API_ROUTE.create_reunion,{
         method: 'POST',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            name: roomId,
+        },
+        body: JSON.stringify({
+            room_id: roomId,
             begin_time: new Date(startTime).toISOString(),
+            num_participants: numberOfParticipants,
+        })
+    });
+}
+
+export async function end_reunion(roomId: string, endTime: number, numberOfParticipants: number) {
+    return await handleTokenRefresh(API_ROUTE.end_reunion,{
+        method: 'PUT',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            room_id: roomId,
             end_time: new Date(endTime).toISOString(),
             num_participants: numberOfParticipants,
-            duration: formattedDuration // to have right format for django rest api
-        })});
+        })
+    });
 }
 
 // get all the reunions a user has created
