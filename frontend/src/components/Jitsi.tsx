@@ -9,6 +9,7 @@ import { create_reunion, end_reunion , delete_room } from '@/services/auth';
 import ReactModal from 'react-modal';
 import '../app/globals.css';
 import './popUpInvite.css';
+import LocalStorage from '@/app/hooks/LocalStorage';
 /*
 page for creating a meeting
 
@@ -46,7 +47,7 @@ export default function Jitsit({id} :{id: string}) {
 
   return <div style={{ display: "flex" }}>
     <div style={{  flex: 1}}><JitsiMeeting 
-domain = "jitsimeetproject.hopto.org:443" // le domaine du server jitsi
+    domain = "jitsimeetproject.hopto.org:443" // le domaine du server jitsi
 //domain = "localhost:8443"
 roomName = {roomId}
 configOverwrite = {{
@@ -54,7 +55,7 @@ configOverwrite = {{
     disableModeratorIndicator: true,
     startScreenSharing: true,
     //enableEmailInStats: false,
-   // brandingRoomAlias: "localhost:3000", // to modify the link given in invite button
+  //  brandingRoomAlias: "localhost:3000", // to modify the link given in invite button
   //  inviteAppName: "myMeet",
     lobby: {
       autoKnock: true,
@@ -102,8 +103,8 @@ SHOW_JITSI_WATERMARK: false,
 
 
 userInfo = {{
-    displayName: 'displayName',
-    email: "email"
+  displayName: LocalStorage.getUser().user.username,
+  email: LocalStorage.getUser().user.email
 }}
 
 onApiReady = { (api) => {

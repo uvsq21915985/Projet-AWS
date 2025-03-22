@@ -5,6 +5,7 @@ import "./login.css"
 import {  FormEvent, useState } from "react";
 import { loginJWT } from "@/services/auth";
 import { useRouter } from 'next/navigation';
+import LocalStorage from "@/app/hooks/LocalStorage";
 
 
 export default function Login() {
@@ -35,7 +36,9 @@ export default function Login() {
             console.log("RESPONSE IS OK :" ,res.ok);
          //   redirect('/videoConference');
             if (res.ok){
-                router.push('/userPage');
+                let d = await res.json()
+                LocalStorage.saveUser(d)
+                location.replace('/dashboard')
             }
         } catch (error) {
             console.log("LOGIN ERROR", error);

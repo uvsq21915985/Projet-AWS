@@ -12,7 +12,6 @@ const PUBLIC_KEY = process.env.PUBLIC_KEY;
 
 
 import '../app/globals.css';
-import { error } from "console";
 export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>> ; invitePopUp: boolean ; roomId: string; } ) {
   //{setPopUp} :{setPopUp: Dispatch<SetStateAction<boolean>>},roomId: string
 
@@ -61,8 +60,8 @@ export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>>
       console.log("Message sent successfully!");
 
     }
-  }else{throw error}
-  } catch (error) {
+  }else{throw new Error("sometign went wrong")}
+  } catch {
     console.log("Failed to send message. Please try again later.");
   }
 }
