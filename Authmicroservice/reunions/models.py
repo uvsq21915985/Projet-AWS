@@ -23,10 +23,10 @@ class CustomReunion(models.Model):
             self.duration = None
             self.save(update_fields=['duration'])
 
-    def save(self, args, **kwargs):
+    def save(self, *args, **kwargs):
         if self.end_time:
             self.duration = self.end_time - self.begin_time
-        super().save(args, **kwargs)
+        super().save(*args, **kwargs)
 
     class Meta:
         db_table = 'reunion'
