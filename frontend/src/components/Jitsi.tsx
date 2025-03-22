@@ -5,11 +5,8 @@ import { useRouter } from 'next/navigation';
 
 
 import { PopUpInvite } from './PopUpInvite';
-import { create_reunion } from '@/services/auth';
+import { create_reunion, end_reunion } from '@/services/auth';
 import ReactModal from 'react-modal';
-
-
-
 import '../app/globals.css';
 import './popUpInvite.css';
 /*
@@ -106,12 +103,18 @@ userInfo = {{
 onApiReady = { (api) => {
 
   
-
-    api.on('participantRoleChanged', (event)=>{
-      if(event.role === 'moderator') {
-          api.executeCommand('toggleLobby', true);    
+    api.on('participantRoleChanged', (event) => {
+      if (event.role === 'moderator') {
+          api.executeCommand('toggleLobby', true);
+          
+          // Vérifier si c'est le premier modérateur (donc le créateur)
+          if (!startTime) { 
+              create_reunion(roomId, Date.now(), numParticipants);
+              setStartTime(Date.now());
+          }
       }
-    })
+  });
+  
     api.on('videoConferenceJoined',(event)=>{
       setStartTime(Date.now());
     });
@@ -127,7 +130,7 @@ onApiReady = { (api) => {
 
       //create the reunion in database
       if (numParticipants)
-        create_reunion(roomId,startTime,Date.now(),numParticipants);
+        end_reunion(roomId,Date.now(),numParticipants);
       router.push("/userPage");
     })
     // when a user click on the invite a participant button there will be an alert
@@ -155,5 +158,6 @@ getIFrameRef = { (iframeRef) => { iframeRef.style.height = String(window.innerHe
 
 
 }
+
 
 
