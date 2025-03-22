@@ -12,7 +12,8 @@ const PUBLIC_KEY = process.env.PUBLIC_KEY;
 
 
 import '../app/globals.css';
-import { error } from "console";
+import error from "next/error";
+//import { error } from "console";
 export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>> ; invitePopUp: boolean ; roomId: string; } ) {
   //{setPopUp} :{setPopUp: Dispatch<SetStateAction<boolean>>},roomId: string
 
