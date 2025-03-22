@@ -64,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'login.middleware.LogRequestMiddleware',
+    # 'login.middleware.LogRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -169,4 +169,4 @@ SIMPLE_JWT = {
 }
 
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [ "https://projet-aws-iota.vercel.app/",]
+CORS_ALLOWED_ORIGINS = ["https://projet-aws-iota.vercel.app","http://localhost:3000","https://projet-aws-git-read-projet-aws.vercel.app"]#[ "https://mymeet.myddns.me",]                                                               
