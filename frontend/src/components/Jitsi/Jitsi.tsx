@@ -43,12 +43,15 @@ export default function Jitsit(props: {id: string ; subject: string}) {
 
 
   function handleWhenAllUserLeft(){
-    if (numParticipants ==0 ){
-      end_reunion(roomId,Date.now(),numParticipants);
-      console.log("End API CALL@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+
+    end_reunion(roomId,Date.now(),numParticipants);
+    console.log("End API CALL@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    // if (numParticipants ==0 ){
+    //   end_reunion(roomId,Date.now(),numParticipants);
+    //   console.log("End API CALL@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
     
 
-    }
+    // }
   }
 
 
@@ -135,7 +138,7 @@ onApiReady = { (api) => {
 
     api.addListener('participantLeft',()=>{
       setNumParticipants((prev) => prev - 1);
-      handleWhenAllUserLeft();
+      // handleWhenAllUserLeft();
       //router.push("/userPage");
     })
 
