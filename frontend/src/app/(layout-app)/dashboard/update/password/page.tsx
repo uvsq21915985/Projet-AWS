@@ -1,10 +1,12 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import "./page.css";
-import { getUser, updatePassword, updateUser } from "@/services/auth";
+import { getUser, updatePassword, updateUser, validateJWT } from "@/services/auth";
+import { useRouter } from "next/navigation";
 
 export default function Password() {
+  const router = useRouter();
   const [pshow, setPshow] = useState<string>("password");
   const [cPshow, setCpShow] = useState<string>("password");
   const [oldpassword, setOldPassword] = useState<string>('');
@@ -14,7 +16,17 @@ export default function Password() {
 
 
 
+  useEffect(()=> {
 
+    const reRoute = async () => {
+      try{const res = await validateJWT();
+      if (!res.ok) {
+        router.push("/auth/login");
+      }
+    }catch(e){router.push("/auth/login");}
+    }
+    reRoute();
+},[])
   const handleSubmit = async (f: FormEvent<HTMLFormElement>) => {
     f.preventDefault();
     const e = new FormData(f.currentTarget);

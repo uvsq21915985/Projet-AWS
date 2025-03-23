@@ -3,7 +3,7 @@
 import LocalStorage from '@/app/hooks/LocalStorage';
 import Jitsit from '@/components/Jitsi/Jitsi';
 import Loading from '@/components/Loading/Loading';
-import { check_room } from '@/services/auth';
+import { check_room, validateJWT } from '@/services/auth';
 import { redirect, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 import { useState, useEffect, Suspense } from 'react';
@@ -14,6 +14,19 @@ function RoomComponent() {
     const [roomId, setRoomId] = useState<string | null>(null);
 
     useEffect(() => {
+
+ 
+
+            const reRoute = async () => {
+              try{const res = await validateJWT();
+              if (!res.ok) {
+                router.push("/auth/login");
+              }
+            }catch(e){router.push("/auth/login");}
+            }
+            reRoute();
+      
+
         const id = searchParams.get('id');
         console.log("ID RECUPERER DS URL " + id);
         if (id) {

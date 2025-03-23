@@ -2,13 +2,26 @@
 
 import { useRouter } from "next/navigation";
 import "./page.css";
-import "../../../app/globals.css";
-import { FormEvent , useState } from "react";
-import { check_room } from "@/services/auth";
+import "../../globals.css";
+import { FormEvent , useEffect, useState } from "react";
+import { check_room, validateJWT } from "@/services/auth";
 
 export default function JoinRoom() {
   const router = useRouter();
   const [error, setError] = useState<string|null>(null);
+
+  useEffect(()=> {
+
+    const reRoute = async () => {
+      try{const res = await validateJWT();
+      if (!res.ok) {
+        router.push("/auth/login");
+      }
+    }catch(e){router.push("/auth/login");}
+    }
+    reRoute();
+},[])
+
 
   const onSubmit = async (f: FormEvent<HTMLFormElement>) => {
     f.preventDefault();

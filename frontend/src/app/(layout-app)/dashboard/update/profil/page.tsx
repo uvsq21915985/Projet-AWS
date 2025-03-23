@@ -2,9 +2,11 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import "./page.css";
-import { getUser, updateUser } from "@/services/auth";
+import { getUser, updateUser, validateJWT } from "@/services/auth";
+import { useRouter } from "next/navigation";
 
 export default function Profil() {
+  const router = useRouter();
   const [email, setEmail] = useState<string>('');
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -12,6 +14,7 @@ export default function Profil() {
   const [error, setError] = useState<string|null>(null);
 
   async function setUserParamters(){
+   
     const user = await getUser();
     console.log("USER : ");
     console.log(user);
@@ -21,6 +24,15 @@ export default function Profil() {
   }
   useEffect(()=>{
    setUserParamters();
+   const reRoute = async () => {
+    try{const res = await validateJWT();
+    if (!res.ok) {
+      router.push("/auth/login");
+    }
+  }catch(e){router.push("/auth/login");}
+  }
+  reRoute();
+
 
   },[])
 

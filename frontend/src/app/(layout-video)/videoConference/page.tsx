@@ -4,23 +4,34 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Jitsit from '@/components/Jitsi/Jitsi';
 import ErrorPage from '@/components/ErrorPage/ErrorPage';
-import {create_room, reRoute } from "@/services/auth";
+import {create_room, reRoute, validateJWT } from "@/services/auth";
 import { Suspense } from 'react'
 import Loading from '@/components/Loading/Loading';
 import LocalStorage from '@/app/hooks/LocalStorage';
 
 /*
-page for creating a meeting
+page pour créer une réunion
 
 */ 
 export default function VideoConference() {
-  const router = useRouter(); // handle change of url
+  const router = useRouter(); 
   const searchParams = useSearchParams();
   const [roomId, setRoomId] = useState('');
   const [subject, setSubject] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
+  useEffect(()=> {
+
+    const reRoute = async () => {
+      try{const res = await validateJWT();
+      if (!res.ok) {
+        router.push("/auth/login");
+      }
+    }catch(e){router.push("/auth/login");}
+    }
+    reRoute();
+},[])
   const creatingRoom = async () => {
     try{
     setLoading(true);

@@ -1,11 +1,21 @@
 "use client"
 import { useEffect, useState } from 'react';
 import './page.css'
-import { get_reunions } from '@/services/auth';
+import { get_reunions, validateJWT } from '@/services/auth';
+import { useRouter } from 'next/navigation';
 
 export default function Dashboard() {
+  const router = useRouter();
   const [numberReunion, setNumberReunion] = useState<number>(0);
   useEffect(()=> {
+    const reRoute = async () => {
+      try{const res = await validateJWT();
+      if (!res.ok) {
+        router.push("/auth/login");
+      }
+    }catch(e){router.push("/auth/login");}
+    }
+    reRoute();
     const getReunions = async () => { 
       const reunions  = await get_reunions();
       

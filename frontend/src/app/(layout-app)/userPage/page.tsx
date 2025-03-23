@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getUser } from "@/services/auth";
+import { getUser, validateJWT } from "@/services/auth";
 import Link from "next/link";
 import "./page.css";
+import { useRouter } from "next/navigation";
 
 export default function UserPage() {
+  const router = useRouter();
   const [username, setUsername] = useState<String>();
 
   useEffect(() => {
@@ -16,6 +18,14 @@ export default function UserPage() {
     let user = await getUser();
     console.log("USERNAME FOUND : ", user);
     setUsername(user.username);
+    const reRoute = async () => {
+      try{const res = await validateJWT();
+      if (!res.ok) {
+        router.push("/auth/login");
+      }
+    }catch(e){router.push("/auth/login");}
+    }
+    reRoute();
   }
 
   return (
