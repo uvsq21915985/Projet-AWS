@@ -35,22 +35,20 @@ def get_user_reunions(request):
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def allow_user_join_reunion(request):
-    room_id = request.query_params.get('room_id')
+def allow_user_join_reunion(request, room_id):
+    if request.method == "GET":
+        if not room_id:
+            return Response({"Error": "Missing 'reunion' parameter"}, status=status.HTTP_400_BAD_REQUEST)
 
-    if not room_id:
-        return Response({"Error": "Missing 'reunion' parameter"}, status=status.HTTP_400_BAD_REQUEST)
-
-    reunion_exists = CustomReunion.objects.filter(room_id=room_id).exists()
-
-    return Response({"is_allowed": reunion_exists}, status=status.HTTP_200_OK)
+        if CustomReunion.objects.filter(room_id=room_id, ongoing=True).exists():
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def end_reunion(request):
     room_id = request.data.get('room_id')
-
     if not room_id:
         return Response({"Error": "Missing 'room_id' parameter"}, status=status.HTTP_400_BAD_REQUEST)
 
