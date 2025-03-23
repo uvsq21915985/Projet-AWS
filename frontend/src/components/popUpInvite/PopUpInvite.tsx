@@ -7,9 +7,9 @@ import { getUser } from '@/services/auth';
 import emailjs from '@emailjs/browser';
 import '../../app/globals.css';
 
-const SERVICE_ID = process.env.SERVICE_ID  ;
-const TEMPLATE_ID = process.env.TEMPLATE_ID;
-const PUBLIC_KEY = process.env.PUBLIC_KEY;
+const SERVICE_ID = process.env.NEXT_PUBLIC_SERVICE_ID   /* "service_xsxhjlg";*/
+const TEMPLATE_ID = process.env.NEXT_PUBLIC_TEMPLATE_ID // "template_d8gzia6";
+const PUBLIC_KEY = process.env.NEXT_PUBLIC_PUBLIC_KEY // "eFM9k5Cr0Prv4neqt";
 
 
 
