@@ -1,3 +1,4 @@
+import LocalStorage from "@/app/hooks/LocalStorage";
 import { API_ROUTE } from "@/shared/API_ROUTE";
 import { redirect } from "next/navigation";
 
@@ -59,6 +60,7 @@ export async function logoutJWT() {
             },    
         });
 
+        LocalStorage.clear();
         return response;
     } catch (error) {
         console.error("Error during logout:", error);
@@ -142,7 +144,7 @@ export async function updatePassword(data: FormData) {
 }
 
 
-export async function create_reunion(roomId: string, startTime: number, numberOfParticipants: number) {
+export async function create_reunion(startTime: number, numberOfParticipants: number) {
     return await handleTokenRefresh(API_ROUTE.create_reunion,{
         method: 'POST',
         credentials: 'include',
@@ -150,7 +152,6 @@ export async function create_reunion(roomId: string, startTime: number, numberOf
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            room_id: roomId,
             begin_time: new Date(startTime).toISOString(),
             num_participants: numberOfParticipants,
         })

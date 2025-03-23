@@ -36,6 +36,7 @@ header{
         transition: top ease-in-out 0.3s;
         opacity: 0;
         visibility: hidden;
+        z-index: 1000000000;
 
         a {
             transition: all ease-in-out 0.3s;
@@ -121,7 +122,7 @@ header{
 
 
 
-    &.auth{
+    &.auth-h{
         .auth_mobile_menu{
             display: none;
         }

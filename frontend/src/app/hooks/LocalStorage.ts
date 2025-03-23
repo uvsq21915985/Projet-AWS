@@ -24,6 +24,9 @@ export default class LocalStorage{
     static saveUser(value: any) {
         return window.localStorage.setItem("user", LocalStorage.encryptData(JSON.stringify(value)))
     }
+    static clear() {
+        return window.localStorage.clear()
+    }
     static getUser(){ 
         return JSON.parse(LocalStorage.getItem('user') ?? "{}")
     }

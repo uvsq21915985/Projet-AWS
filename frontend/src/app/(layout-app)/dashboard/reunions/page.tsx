@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react'
 import './page.css'
 import { get_reunions } from '@/services/auth'
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 type CallItem = {
     begin_time: string,
@@ -33,6 +35,7 @@ function CallItem({call}: {call:CallItem}){
 }
 
 export default function Reunions() {
+    const router = useRouter(); 
     const [calls, setCalls] = useState<CallItem[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     //let calls: CallItem[] = [];
@@ -55,11 +58,14 @@ export default function Reunions() {
         
     },[]);
     
+
+    function createVideo(){router.push("/createVideoConference");}
+
   return (
     <div>
         <div className="add-line">
             <h2>Mes reunions</h2>
-            <div className="btn btn-main">Nouvelle reunion</div>
+            <div className="btn btn-main" onClick={createVideo}>Nouvelle reunion</div>
         </div>
         
         {loading && <div className='call empty-list'>

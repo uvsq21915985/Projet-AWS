@@ -1,3 +1,6 @@
+'use client';
+
+
 import {JitsiMeeting} from '@jitsi/react-sdk';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -9,6 +12,7 @@ import { create_reunion, end_reunion , delete_room } from '@/services/auth';
 import ReactModal from 'react-modal';
 import '../../app/globals.css';
 import LocalStorage from '@/app/hooks/LocalStorage';
+import { userAgent } from 'next/server';
 /*
 page for creating a meeting
 
@@ -20,12 +24,19 @@ export default function Jitsit(props: {id: string ; subject: string}) {
   const [startTime, setStartTime] = useState(0);
   const [subject,setSubject] = useState('');
   const [numParticipants, setNumParticipants] = useState<number>(1);
+  const [userName,setUsername] = useState('');
+  const [email,setEmail] = useState('');
  
   useEffect(()=>{
     setRoomId(props.id);
     setSubject(props.subject);
     setStartTime(Date.now());
     ReactModal.setAppElement('body');
+/*    if (LocalStorage.getUser()){
+      setUsername(LocalStorage.getUser().get('user'));
+      setEmail(LocalStorage.getUser().get('email'));
+    }*/
+   
   }
     
   ,[])
@@ -35,18 +46,17 @@ export default function Jitsit(props: {id: string ; subject: string}) {
     if (numParticipants ==0 ){
       end_reunion(roomId,Date.now(),numParticipants);
       console.log("End API CALL@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-      delete_room(roomId);
+    
 
     }
   }
 
 
 
-  return <div style={{ display: "flex" }}>
-    <div style={{  flex: 1}}><JitsiMeeting 
-    domain = "jitsimeetproject.hopto.org:443" // domain of jitsi server
- //domain = "localhost:8443"
-roomName = /*{roomId}*/ "111" //FOR TESTING
+  return <div style={{  flex: 1}}><JitsiMeeting 
+   // domain = "jitsimeetproject.hopto.org:443" // domain of jitsi server
+ domain = "localhost:8443"
+roomName = {roomId}
 configOverwrite = {{
     subject:subject, //add subject set by user
     startWithAudioMuted: true,
@@ -89,8 +99,8 @@ interfaceConfigOverwrite = {{}}
 
 
 userInfo = {{
-  displayName: LocalStorage.getUser().user.username,
-  email: LocalStorage.getUser().user.email
+  displayName: userName,
+  email: email
 }}
 
 onApiReady = { (api) => {
@@ -103,7 +113,7 @@ onApiReady = { (api) => {
     })
     api.on('videoConferenceJoined',(event)=>{
       setNumParticipants((prev) => prev + 1);
-       create_reunion(roomId, Date.now(), numParticipants);
+     //  create_reunion( Date.now(), numParticipants);
       if (startTime==0)
       setStartTime(Date.now());
     });
@@ -126,6 +136,7 @@ onApiReady = { (api) => {
     api.addListener('participantLeft',()=>{
       setNumParticipants((prev) => prev - 1);
       handleWhenAllUserLeft();
+      //router.push("/userPage");
     })
 
     // when a user click on the invite a participant button there will be an alert
@@ -142,7 +153,7 @@ getIFrameRef = { (iframeRef) => { iframeRef.style.height = String(window.innerHe
 
 
 
-/></div>
+/>
 
  <PopUpInvite setPopUp={setInvitePopUp} invitePopUp={invitePopUp} roomId={roomId}/>
 

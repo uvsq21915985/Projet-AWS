@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Jitsit from '@/components/Jitsi/Jitsi';
 import ErrorPage from '@/components/ErrorPage/ErrorPage';
-import {create_room, reRoute, validateJWT } from "@/services/auth";
+import {create_reunion, create_room, reRoute, validateJWT } from "@/services/auth";
 import { Suspense } from 'react'
 import Loading from '@/components/Loading/Loading';
 import LocalStorage from '@/app/hooks/LocalStorage';
@@ -13,7 +13,7 @@ import LocalStorage from '@/app/hooks/LocalStorage';
 page pour créer une réunion
 
 */ 
-export default function VideoConference() {
+ function VideoConferenceComponenent() {
   const router = useRouter(); 
   const searchParams = useSearchParams();
   const [roomId, setRoomId] = useState('');
@@ -24,59 +24,63 @@ export default function VideoConference() {
   useEffect(()=> {
 
     const reRoute = async () => {
-      try{const res = await validateJWT();
+      try{
+        const res = await validateJWT();
+        console.log('VALIDATE TOKEN RESP: ' + res);
       if (!res.ok) {
         router.push("/auth/login");
       }
     }catch(e){router.push("/auth/login");}
     }
     reRoute();
-},[])
-  const creatingRoom = async () => {
-    try{
-    setLoading(true);
-    const subject = searchParams.get('subject');
-    let roomID= await create_room(Date.now());
-    if (roomID && subject){   
-      setSubject(subject);
-      setRoomId(roomID);
-      setLoading(false);   
-    }else{setError(true);}
-    }catch(e){
-      setError(true);
+    const creatingRoom = async () => {
+      try{
+      setLoading(true);
+      const subject = searchParams.get('subject');
+      let reunion = await create_reunion(Date.now(),1);
+      let json = await reunion.json();
+      let roomID = json.room_id;
+      console.log("ROOD FOUNDID  : " ,roomID);
+      if (roomID ){   
+        if (subject)
+        setSubject(subject);
+        setRoomId(roomID);
+        setLoading(false);   
+      }else{setError(true);}
+      }catch(e){
+        setError(true);
+      }
     }
-  }
+    creatingRoom();
+},[])
+ 
 
 
 
   
-  useEffect(()=>{
-    const a = async () => reRoute();
-    creatingRoom();
-   
-  },[])
+  return( <div>{ !loading ? <Jitsit id={roomId} subject={subject} /> : <Loading></Loading>}</div>);
 
 
 
-
-return (
-<div>
-  {error ? <ErrorPage></ErrorPage>:
-    loading ? <Loading /> : <Jitsit id={roomId} subject={subject} />
-  }
-</div>
-
-);
+}
 
 
+export default function VideoConference(){
+  return (<Suspense fallback={<Loading />}>
+      <VideoConferenceComponenent />
+      </Suspense>);
 }
 
 
 
 
 /*
+error ? <ErrorPage></ErrorPage>:
+
+
  { error &&  <p>Erreur lors du chargement veuillez réessayez</p> } 
   { !error && !loading && <Jitsit id={roomId} ></Jitsit> }
+
   {!error && loading && <div className='call empty-list'><p>Chargement...</p></div>} 
 
 */

@@ -5,13 +5,14 @@ import "./page.css";
 import "./../../globals.css";
 import { FormEvent , useEffect, useState } from "react";
 import { validateJWT } from "@/services/auth";
+import LocalStorage from "@/app/hooks/LocalStorage";
 
 export default function JoinRoom() {
   const router = useRouter();
   const [error, setError] = useState<string|null>(null);
   
   useEffect(()=> {
-
+    if (LocalStorage.isAuth()){
     const reRoute = async () => {
       try{const res = await validateJWT();
       if (!res.ok) {
@@ -20,6 +21,7 @@ export default function JoinRoom() {
     }catch(e){router.push("/auth/login");}
     }
     reRoute();
+  }else{router.push("/auth/login");}
 },[])
 
 

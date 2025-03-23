@@ -3,7 +3,7 @@
 import Link from "next/link";
 import "./login.css"
 import {  FormEvent, useState } from "react";
-import { loginJWT } from "@/services/auth";
+import { getUser, loginJWT } from "@/services/auth";
 import { useRouter } from 'next/navigation';
 import LocalStorage from "@/app/hooks/LocalStorage";
 
@@ -36,13 +36,20 @@ export default function Login() {
             console.log("RESPONSE IS OK :" ,res.ok);
          //   redirect('/videoConference');
             if (res.ok){
-                let d = await res.json()
-                LocalStorage.saveUser(d)
-                location.replace('/userPage')
-            }
+                console.log("is ok");
+                let d = await res.json();
+                let u  = await getUser();
+                console.log("USER FOUND : " + u);
+                 LocalStorage.saveUser(u);
+                 router.push('/userPage');
+            }else{  
+                console.log("login not ok");
+                 setTimeout(() =>setError('mot de passe ou email erroné !'), 1500)
+                ;
+                setPending(false);}
         } catch (error) {
             console.log("LOGIN ERROR", error);
-            setTimeout(() => setError(null), 1500)
+            setTimeout(() => setError('mot de passe ou email erroné !'), 1500)
             setError("mot de passe ou email erroné !")
         }
         setPending(false)
