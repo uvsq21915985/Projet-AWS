@@ -33,7 +33,10 @@ export default function Jitsit(props: {id: string ; subject: string}) {
 
   function handleWhenAllUserLeft(){
     if (numParticipants ==0 ){
+      end_reunion(roomId,Date.now(),numParticipants);
+      console.log("End API CALL@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
       delete_room(roomId);
+
     }
   }
 
@@ -116,10 +119,6 @@ onApiReady = { (api) => {
     api.on('videoConferenceLeft',()=>{
       setNumParticipants((prev) => prev - 1);
       handleWhenAllUserLeft();
-      //create the reunion in database
-      // if (numParticipants)
-      //   end_reunion(roomId,Date.now(),numParticipants);
-      end_reunion(roomId,Date.now(),numParticipants);
       router.push("/userPage");
     }
     )
