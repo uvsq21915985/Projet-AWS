@@ -4,27 +4,26 @@ import { useRouter } from 'next/navigation';
 
 
 
-import { PopUpInvite } from './PopUpInvite';
+import { PopUpInvite } from '../popUpInvite/PopUpInvite';
 import { create_reunion, end_reunion , delete_room } from '@/services/auth';
 import ReactModal from 'react-modal';
-import '../app/globals.css';
-import './popUpInvite.css';
+import '../../app/globals.css';
 import LocalStorage from '@/app/hooks/LocalStorage';
 /*
 page for creating a meeting
 
 */ 
-export default function Jitsit({id} :{id: string}) {
-  const [roomId,setRoomId] = useState(id);
+export default function Jitsit(props: {id: string ; subject: string}) {
+  const [roomId,setRoomId] = useState('');
   const router = useRouter(); // handle change of url
   const [invitePopUp,setInvitePopUp] = useState(false);
   const [startTime, setStartTime] = useState(0);
-  const [isReunionCreated,setReunionCreated] = useState(false);
+  const [subject,setSubject] = useState('');
   const [numParticipants, setNumParticipants] = useState<number>(1);
-  //let numParticipants = 0;
  
   useEffect(()=>{
-    setRoomId(id);
+    setRoomId(props.id);
+    setSubject(props.subject);
     setStartTime(Date.now());
     ReactModal.setAppElement('body');
   }
@@ -33,30 +32,23 @@ export default function Jitsit({id} :{id: string}) {
 
 
   function handleWhenAllUserLeft(){
-    if (numParticipants ==0 && !isReunionCreated){
+    if (numParticipants ==0 ){
       delete_room(roomId);
     }
   }
 
 
- 
-
-  function setEndTime(arg0: number) {
-    throw new Error('Function not implemented.');
-  }
 
   return <div style={{ display: "flex" }}>
     <div style={{  flex: 1}}><JitsiMeeting 
-    domain = "jitsimeetproject.hopto.org:443" // le domaine du server jitsi
-//domain = "localhost:8443"
-roomName = {roomId}
+   // domain = "jitsimeetproject.hopto.org:443" // domain of jitsi server
+ domain = "localhost:8443"
+roomName = "111111" /*{roomId}*/
 configOverwrite = {{
+    subject:subject, //add subject set by user
     startWithAudioMuted: true,
-    disableModeratorIndicator: true,
+    disableModeratorIndicator: false,
     startScreenSharing: true,
-    //enableEmailInStats: false,
-  //  brandingRoomAlias: "localhost:3000", // to modify the link given in invite button
-  //  inviteAppName: "myMeet",
     lobby: {
       autoKnock: true,
       enableChat: true
@@ -65,15 +57,15 @@ configOverwrite = {{
   customToolbarButtons: [
     {
         icon: '',
-        id: 'custominvite', // the key
+        id: 'custominvite', // the id
         text: 'inviter un participant',
     }
   ],
   buttonsWithNotifyClick: [
-        'custominvite' // expose the click/tap event in the api 
+        'custominvite' // expose the click
   ],
   toolbarButtons: [
-    'microphone', 'camera', 'custominvite', 'invite', 'closedcaptions', 'desktop', 'fullscreen',
+    'microphone', 'camera', 'custominvite', 'closedcaptions', 'desktop', 'fullscreen',
     'fodeviceselection', 'hangup', 'profile', 'chat', 'recording',
      'settings', 'raisehand',
     'videoquality',
@@ -90,16 +82,7 @@ mainToolbarButtons: [
    ],
    
 }}
-interfaceConfigOverwrite = {{
-  TOOLBAR_BUTTONS: [
-    'microphone', 'camera', 'custominvite', 'invite', 'closedcaptions', 'desktop', 'fullscreen',
-    'fodeviceselection', 'hangup', 'profile', 'chat', 'recording',
-     'settings', 'raisehand',
-    'videoquality',
-    'help', 'mute-everyone'
-],
-SHOW_JITSI_WATERMARK: false,
-}}
+interfaceConfigOverwrite = {{}}
 
 
 userInfo = {{
@@ -109,10 +92,9 @@ userInfo = {{
 
 onApiReady = { (api) => {
 
-  
-
     api.on('participantRoleChanged', (event)=>{
       if(event.role === 'moderator') {
+       
           api.executeCommand('toggleLobby', true);    
       }
     })
@@ -124,6 +106,7 @@ onApiReady = { (api) => {
     });
 
     api.on("participantJoined",(event)=>{
+      
       setNumParticipants((prev) => prev + 1);
       setNumParticipants(api.getNumberOfParticipants());
 
@@ -133,11 +116,6 @@ onApiReady = { (api) => {
     api.on('videoConferenceLeft',()=>{
       setNumParticipants((prev) => prev - 1);
       handleWhenAllUserLeft();
-      setEndTime(Date.now());
-      console.log("USER IS REDIRECTED");
-      const numberOfParticipants = api.getNumberOfParticipants();
-      console.log("number of participant " , numberOfParticipants);
-
       //create the reunion in database
       // if (numParticipants)
       //   end_reunion(roomId,Date.now(),numParticipants);
@@ -173,6 +151,7 @@ getIFrameRef = { (iframeRef) => { iframeRef.style.height = String(window.innerHe
 
 
 }
+
 
 
 

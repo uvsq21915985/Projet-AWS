@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import Jitsit from '@/components/Jitsi/Jitsi';
+import ErrorPage from '@/components/ErrorPage/ErrorPage';
 import {create_room } from "@/services/auth";
 import { Suspense } from 'react'
 import Loading from '@/components/Loading/Loading';
@@ -14,34 +15,31 @@ page for creating a meeting
 */ 
 export default function VideoConference() {
   const router = useRouter(); // handle change of url
+  const searchParams = useSearchParams();
   const [roomId, setRoomId] = useState('');
+  const [subject, setSubject] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  let trials = 0;
-  const maxTrails = 6;
 
   const creatingRoom = async () => {
+    try{
     setLoading(true);
-    let s_name = ""
-    while (s_name == "" && trials < maxTrails){
-        s_name= await create_room(Date.now());
-        trials++;
-        
-    }
-    if (maxTrails == trials){
+    const subject = searchParams.get('subject');
+    let roomID= await create_room(Date.now());
+    if (roomID && subject){   
+      setSubject(subject);
+      setRoomId(roomID);
+      setLoading(false);
+      setLoading(false);   
+    }else{setError(true);}
+    }catch(e){
       setError(true);
-    }else{
-      setRoomId(s_name);
     }
-    setLoading(false);
   }
   
   useEffect(()=>{
-    if (!LocalStorage.isAuth()) {
-      router.push('/auth/login')
-      return
-    }
     creatingRoom();
+   
   },[])
 
 
@@ -49,13 +47,18 @@ export default function VideoConference() {
 
 return (
 <div>
-  {loading && <Loading />}
-  {!loading && <Jitsit id={roomId} ></Jitsit>}
+  {error ? <ErrorPage></ErrorPage>:
+    loading ? <Loading /> : <Jitsit id={roomId} subject={subject} />
+  }
 </div>
+
 );
 
 
 }
+
+
+
 
 /*
  { error &&  <p>Erreur lors du chargement veuillez réessayez</p> } 

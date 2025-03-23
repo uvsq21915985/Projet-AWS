@@ -5,23 +5,27 @@ import './popUpInvite.css';
 import ReactModal from 'react-modal';
 import { getUser } from '@/services/auth';
 import emailjs from '@emailjs/browser';
+import '../../app/globals.css';
 
 const SERVICE_ID = process.env.SERVICE_ID  ;
 const TEMPLATE_ID = process.env.TEMPLATE_ID;
 const PUBLIC_KEY = process.env.PUBLIC_KEY;
 
 
-import '../app/globals.css';
+
 export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>> ; invitePopUp: boolean ; roomId: string; } ) {
-  //{setPopUp} :{setPopUp: Dispatch<SetStateAction<boolean>>},roomId: string
 
   let setPopUp = props.setPopUp;
   let roomId  = props.roomId;
   let invite = props.invitePopUp;
-  const [isHovering, setIsHovering] = useState(false)
-  const [isHoveringRoomId, setIsHoveringRoomId] = useState(false)
-  const [isCopied , setIsCopied] = useState(false)
-  const [isCopiedRoomId , setIsCopiedRoomId] = useState(false)
+  const [isHovering, setIsHovering] = useState(false);
+  const [isHoveringRoomId, setIsHoveringRoomId] = useState(false);
+  const [isCopied , setIsCopied] = useState(false);
+  const [isCopiedRoomId , setIsCopiedRoomId] = useState(false);
+  const [isSend, setIsSend] = useState(false);
+  const [error , setError] = useState<string|null>(null);
+
+  // close the popUp
   function close(){
     setPopUp(false)
   }
@@ -42,7 +46,6 @@ export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>>
 
   const sendEmail = async(f: FormEvent<HTMLFormElement>) => {
     f.preventDefault();
-    console.log("HANDLE SUBMIT");
     const formData = new FormData(f.currentTarget);
     let user = await getUser();
     try{
@@ -57,12 +60,16 @@ export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>>
     const res = await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, PUBLIC_KEY);
    
     if (res.status === 200) {
-      console.log("Message sent successfully!");
+      setIsSend(true);
+      setTimeout(function() {
+        setIsSend(false)
+        }, 1000);
 
     }
   }else{throw new Error("sometign went wrong")}
   } catch {
-    console.log("Failed to send message. Please try again later.");
+    setTimeout(() => setError(null), 1500);
+    setError("erreur lors de l'envoie");
   }
 }
 
@@ -100,17 +107,21 @@ export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>>
         : isHovering ? "copier le lien de la réunion": "http://projet-aws-iota.vercel.app/joinRoom"
         }
         </button>
-        <h3>En en voyant un mail</h3>
-        <form onSubmit={sendEmail} method="post" className="join-form">
-        <div className="same-line-container">
-        <label htmlFor="email" className="label">
-          Veuillez saisir l'email: 
-        </label>
-        <input  type="email" name="email" id="email" className="input" placeholder="Entrer l'email de l'utilisateur à inviter" required/>
-        <button className="btn emailbtn" type="submit"> envoyer</button>
-        </div>
-      </form>
-          <button className="btn closebtn" onClick={close}> Fermer</button>
+        <h3>En envoyant un mail</h3>
+          <form onSubmit={sendEmail} method="post" className="join-form">
+            <div className="same-line-container">
+            {error && <p className="message msg-error text-center">{error}</p>}
+            <label htmlFor="email" className="label" style={{ fontSize: "15px"}}>
+            Veuillez saisir l'email: 
+            </label>
+            <input type="email" name="email" id="email" className="input" placeholder="Entrer l'email de l'utilisateur à inviter" required/>
+            <button className="emailbtn" type="submit"
+            style={{ backgroundColor: isSend ? "rgb(0,100,0)" : "" }}>
+            { isSend ? "email envoyé!" : "envoyer un mail"} 
+            </button>
+            </div>
+          </form>
+        <button className="btn closebtn" onClick={close}> Fermer</button>
       </ReactModal>
          
  

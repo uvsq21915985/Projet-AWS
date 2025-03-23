@@ -38,7 +38,7 @@ export default function Login() {
             if (res.ok){
                 let d = await res.json()
                 LocalStorage.saveUser(d)
-                location.replace('/dashboard')
+                location.replace('/userPage')
             }
         } catch (error) {
             console.log("LOGIN ERROR", error);

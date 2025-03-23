@@ -244,12 +244,12 @@ export default function Header(){
                         <div>Connecter comme <span>{user.email ?? null}</span></div>
                     </div>
                     <Link href={"/dashboard"}>Dashboard</Link>
-                    <Link href={"/videoConference"}>Créer une reunion</Link>
+                    <Link href={"/createVideoConference"}>Créer une reunion</Link>
                     <Link href={"/joinRoom"}>Rejoindre une reunion</Link>
                     <Link href={"/dashboard/profil"}>Mon profil</Link>
                     <Link href={"/api/auth/logout"}>Deconexion</Link>
                 </div>
-                <Link href={"/videoConference"} className="btn btn-main">Créer une reunion</Link>
+                <Link href={"/createVideoConference"} className="btn btn-main">Créer une reunion</Link>
 
                 <div className="auth_side">
                     <div className="auth_badge" onClick={() => setShow(!show)}>{getInitialLetter(user.email ?? "")}</div>

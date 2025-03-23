@@ -96,10 +96,7 @@ export async function getUser(){
     if (res.ok){
         let json = await res.json();
         return json.user;
-        // need to add some management for error
     }
-    
-    // error need to be managed
     else{return "";}
 
 }
@@ -207,6 +204,7 @@ export async function delete_room(roomID : string){
             });
 }
 
+//check if room id is already being used by a room at the same moment
 export async function check_room(roomID : string){
     let res =  await handleTokenRefresh(API_ROUTE.check_room+roomID+"/",
             {
@@ -218,9 +216,5 @@ export async function check_room(roomID : string){
             });
     return res.ok;
 }
-
-
-// get all rooms scheduled for the future for the user 
-export async function get_scheduled_rooms(){} 
 
 

@@ -1,7 +1,7 @@
 'use client'
 
 import LocalStorage from '@/app/hooks/LocalStorage';
-import Jitsit from '@/components/Jitsi';
+import Jitsit from '@/components/Jitsi/Jitsi';
 import Loading from '@/components/Loading/Loading';
 import { check_room } from '@/services/auth';
 import { redirect, useSearchParams } from 'next/navigation';
@@ -24,11 +24,7 @@ function RoomComponent() {
                     console.log(isOk);
                     // redirect if the code is incorect or if the user doest not have the acces to the room
                     if (!isOk) {
-                        if (LocalStorage.isAuth()) {
-                            router.push('/dashboard')
-                            return
-                        }
-                        router.push('/')
+                            router.push('/userPage')
                     }
                     // then set it
                     setRoomId(id);
@@ -39,11 +35,7 @@ function RoomComponent() {
                 (err) => {
                     console.log(err);
                     
-                    if (LocalStorage.isAuth()) {
-                        router.push('/dashboard')
-                        return
-                    }
-                    router.push('/')
+                    
                 }
             )
         }
@@ -54,7 +46,7 @@ function RoomComponent() {
         return <Loading />; 
     }
 
-    return <Jitsit id={roomId} />;
+    return <Jitsit id={roomId}  subject={''} />;
 }
 
 export default function SearchBar() {

@@ -33,7 +33,7 @@ export default function UserPage() {
 
         {/* Boutons */}
         <div className="btn-container">
-          <Link href="/videoConference" className="btn-primary">
+          <Link href="/createVideoConference" className="btn-primary">
             Lancer un call
           </Link>
           <Link href="/joinRoom" className="btn-secondary">
