@@ -43,18 +43,22 @@ export default function Jitsit(props: {id: string ; subject: string}) {
 
 
   function handleWhenAllUserLeft(){
-    console.log("NUM PARTICIPANT LEFT : "+ numParticipants)
-  //  if (numParticipants ==0 ){
-      end_reunion(roomId,Date.now(),numParticipants);
-      console.log("End API CALL@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-   // }
+
+    end_reunion(roomId,Date.now(),numParticipants);
+    console.log("End API CALL@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+    // if (numParticipants ==0 ){
+    //   end_reunion(roomId,Date.now(),numParticipants);
+    //   console.log("End API CALL@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+
+
+    // }
   }
 
 
 
   return <div style={{  flex: 1}}><JitsiMeeting 
- //   domain = "jitsimeetproject.hopto.org:443" // domain of jitsi server
- domain = "localhost:8443"
+    domain = "jitsimeetproject.hopto.org:443" // domain of jitsi server
+ //domain = "localhost:8443"
 roomName = {roomId}
 configOverwrite = {{
     subject:subject, //add subject set by user
@@ -112,9 +116,7 @@ onApiReady = { (api) => {
     })
     api.on('videoConferenceJoined',(event)=>{
       setNumParticipants((prev) => prev + 1);
-      console.log("num Participant : " , numParticipants);
-       create_reunion( Date.now(), numParticipants);
-       end_reunion(roomId,Date.now(),numParticipants);
+     //  create_reunion( Date.now(), numParticipants);
       if (startTime==0)
       setStartTime(Date.now());
     });
@@ -122,29 +124,27 @@ onApiReady = { (api) => {
     api.on("participantJoined",(event)=>{
       
       setNumParticipants((prev) => prev + 1);
-      console.log("num Participant : " , numParticipants);
-      end_reunion(roomId,Date.now(),numParticipants);
-     // setNumParticipants(api.getNumberOfParticipants());
+      setNumParticipants(api.getNumberOfParticipants());
 
       })
     
     //go back to user page when the conference is ended
     api.on('videoConferenceLeft',()=>{
-    //  setNumParticipants((prev) => prev - 1);
-      console.log("num Participant : " , numParticipants);
+      setNumParticipants((prev) => prev - 1);
       handleWhenAllUserLeft();
       if(numParticipants >0 )
         end_reunion(roomId,Date.now(),numParticipants);
-      
+
       router.push("/userPage");
     }
     )
 
     api.addListener('participantLeft',()=>{
       setNumParticipants((prev) => prev - 1);
+
       console.log("num Participant : " , numParticipants);
       handleWhenAllUserLeft();
-      
+
       //router.push("/userPage");
     })
 
