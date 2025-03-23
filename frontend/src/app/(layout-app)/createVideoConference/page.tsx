@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import "./page.css";
 import "./../../globals.css";
 import { FormEvent , useEffect, useState } from "react";
-import HandleAuth from "@/app/hooks/HandleAuth";
 import { validateJWT } from "@/services/auth";
 
 export default function JoinRoom() {
