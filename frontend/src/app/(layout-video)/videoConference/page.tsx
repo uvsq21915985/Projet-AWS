@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Jitsit from '@/components/Jitsi/Jitsi';
 import ErrorPage from '@/components/ErrorPage/ErrorPage';
-import {create_room } from "@/services/auth";
+import {create_room, reRoute } from "@/services/auth";
 import { Suspense } from 'react'
 import Loading from '@/components/Loading/Loading';
 import LocalStorage from '@/app/hooks/LocalStorage';
@@ -29,15 +29,18 @@ export default function VideoConference() {
     if (roomID && subject){   
       setSubject(subject);
       setRoomId(roomID);
-      setLoading(false);
       setLoading(false);   
     }else{setError(true);}
     }catch(e){
       setError(true);
     }
   }
+
+
+
   
   useEffect(()=>{
+    const a = async () => reRoute();
     creatingRoom();
    
   },[])

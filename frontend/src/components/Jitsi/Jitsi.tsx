@@ -41,9 +41,9 @@ export default function Jitsit(props: {id: string ; subject: string}) {
 
   return <div style={{ display: "flex" }}>
     <div style={{  flex: 1}}><JitsiMeeting 
-   // domain = "jitsimeetproject.hopto.org:443" // domain of jitsi server
- domain = "localhost:8443"
-roomName = "111111" /*{roomId}*/
+    domain = "jitsimeetproject.hopto.org:443" // domain of jitsi server
+ //domain = "localhost:8443"
+roomName = /*{roomId}*/ "111" //FOR TESTING
 configOverwrite = {{
     subject:subject, //add subject set by user
     startWithAudioMuted: true,

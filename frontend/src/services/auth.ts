@@ -1,4 +1,14 @@
 import { API_ROUTE } from "@/shared/API_ROUTE";
+import { redirect } from "next/navigation";
+
+
+// function used to reRoute the 
+export async function reRoute(){
+    let res = await validateJWT();
+    if (!res.ok){redirect('/auth/login');}
+}
+
+
 
 // function used to handle the tokens : when a token expired he is refreshed so the user can stay connected     
 export async function handleTokenRefresh(route :string, params: { method: string;headers?: HeadersInit, credentials: RequestCredentials,body?: string} ){
