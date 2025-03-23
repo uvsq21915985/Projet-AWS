@@ -30,7 +30,10 @@
   .welcome-text {
     font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
+    position: inherit;
+    display: inline-block;
+
   }
   
   /* Button Container */
@@ -119,6 +122,26 @@
     width: 100%; /* Ajuste l’image à l’intérieur */
     height: auto;
     object-fit: contain;
+  }
+
+
+  .fade-in-class {
+    animation: fade-in 5s;
+    font-size: 2rem;
+    font-size: 2rem;
+    font-weight: bold;
+    display: inline-block;
+    margin-left: 10px;
+    width: 100px;
+  }
+  
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 100;
+    }
   }
   
  

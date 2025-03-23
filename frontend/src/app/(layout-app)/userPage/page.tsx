@@ -34,7 +34,8 @@ export default function UserPage() {
 
       {/* Contenu principal */}
       <div className="dashboard-content">
-        <h2 className="welcome-text">Bienvenue {username}</h2>
+       <div className="welcome-text">Bienvenue  </div>
+       <div className="fade-in-class "> {username}</div>
 
         {/* Phrase unique sous le message de bienvenue */}
         <p className="info-text">

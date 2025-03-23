@@ -1,34 +1,40 @@
 "use client"
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import './page.css'
 import { get_reunions, validateJWT } from '@/services/auth';
 import { useRouter } from 'next/navigation';
+import Skeleton from 'react-loading-skeleton';
 
 export default function Dashboard() {
   const router = useRouter();
   const [numberReunion, setNumberReunion] = useState<number>(0);
-  useEffect(()=> {
-    const reRoute = async () => {
-      try{const res = await validateJWT();
-      if (!res.ok) {
-        router.push("/auth/login");
-      }
-    }catch(e){router.push("/auth/login");}
-    }
-    reRoute();
-    const getReunions = async () => { 
-      const reunions  = await get_reunions();
-      
-      let json  = await reunions.json();
-      console.log("json is" ,json);
-      console.log("JSON LENGTH" , json.length);
-      if (json.length)
-      setNumberReunion(json.length);
-  }
-  getReunions();
+  const[isAuth,setAuth] = useState(false)
 
-  },[])
+
+  useEffect(()=>{
+    const reRoute = async () => {
+    try{const res = await validateJWT();
+    if (!res.ok) {
+      router.push("/auth/login");
+    }setAuth(true);
+  }catch(e){router.push("/auth/login");}
+
+  const getReunions = async () => { 
+    const reunions  = await get_reunions();
+    
+    let json  = await reunions.json();
+    console.log("json is" ,json);
+    console.log("JSON LENGTH" , json.length);
+    if (json.length)
+    setNumberReunion(json.length);
+}
+getReunions();
+  }
+  reRoute();
+},[])
+if(isAuth){
   return (
+   
     <div>
         <div className="card-stat">
           <div className="stat">
@@ -65,4 +71,5 @@ export default function Dashboard() {
         </div>
     </div>
   );
+}else{<Skeleton></Skeleton>}
 }

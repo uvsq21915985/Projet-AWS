@@ -7,6 +7,8 @@ import {  logoutJWT, validateJWT } from "@/services/auth";
 import "./header.css";
 import LocalStorage from "@/app/hooks/LocalStorage";
 import { getInitialLetter } from "@/app/hooks/StringManipullation";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 export default function Header(){
@@ -16,7 +18,7 @@ export default function Header(){
     const [loading, setLoading] = useState(true);
     const [show,setShow] = useState<boolean>(false);
     const router = useRouter();
-    const [auth, setIsAuth] = useState<boolean>(false);
+    const [auth, setIsAuth] = useState<null |boolean>(null);
     const [user, setUser] = useState<{username: string, email:string}>({username: "", email: ""});
     
 
@@ -27,22 +29,6 @@ export default function Header(){
         
         
         try {
-         /*   const storedToken = localStorage.getItem("token") ?? null; // Gérer null proprement
-            setToken(storedToken); // Mettre à jour le token dans le state
-
-            if (storedToken) {
-                const response = await validate(storedToken);
-                const data = await response.json();
-                setIsAllowed(data?.is_allowed || false);
-            } else {
-                setIsAllowed(false);
-            }
-        } catch (error) {
-            console.error("Validation error:", error);
-            setIsAllowed(false);
-        }*/
-            
-            
                 const response = await validateJWT();
                 const data = await response.json();
                 if (response.ok){
@@ -97,9 +83,9 @@ export default function Header(){
                 if(res && res.ok){
                 // Déclencher l'événement authChange pour mettre à jour le state immédiatement
                 window.dispatchEvent(new Event("authChange"));
-                LocalStorage.clear();
-                router.push('/auth/login');
+                LocalStorage.clear();      
                 setIsAuth(false);
+                router.push('/auth/login');
             }
             }
             else{throw Error}         
@@ -110,13 +96,17 @@ export default function Header(){
     };
 
   
-   // if (loading) return <div>Chargement....</div>
+
        return ( 
+
+            //    loading ? <Skeleton count={1}/>: 
 
             <header className={!auth ?"container" : "container auth-h"} >
                 
                { 
 
+                        
+               
               
                // quand on est pas authentifié
                !auth ?
@@ -124,7 +114,7 @@ export default function Header(){
                     <div className="logo">My<span>Meet</span></div>
     
                    <nav className={active ? "active" : ""}>
-                        <Link href={"/about"}>A propos</Link>
+                       <Link href={"/about"}>A propos</Link> 
                         <Link href={"/team"}>Notre equipe</Link>
                         <Link href={"/auth/login"} className="btn btn-main">Nous rejoindre</Link>
                     </nav>
