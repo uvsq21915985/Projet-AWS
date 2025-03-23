@@ -1,0 +1,83 @@
+/* Main Container */
+.join-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 60px);
+    width: 100%;
+    background: var(--main-color);
+    color: white;
+    text-align: center;
+  }
+  
+  /* Title Styling */
+  .title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 50px;
+  }
+  
+  /* Form Styling */
+  .join-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Label Styling */
+  .label {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  /* Input Field */
+  .input {
+    height: 50px;
+    width: 400px;
+    font-size: 1rem;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  /* Button Styling */
+  .btn-join {
+    background-color: white;
+    color: var(--main-color);
+    text-align: center;
+    font-size: 1rem;
+    padding: 12px 25px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  .btn-join:hover {
+    background-color: var(--main-color);
+    color: white;
+    border: 2px solid white;
+  }
+
+
+.message-error{
+  background-color: red;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.errorinput{
+  border: 2px solid red;
+
+}

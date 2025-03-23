@@ -1,0 +1,44 @@
+.error-page{
+    background-color: var(--main-color) ;
+    width: 100%;
+    height: 100vh;
+    color: var(--white);
+    font-size: 30px;
+    padding: 40px;
+    text-align: center;
+    
+}
+
+
+.btn-menu{
+    background-color:var(--white);  
+    
+    width: 200px;
+    height: auto;
+    padding: 15px;
+    font-size: medium;
+    border-radius: 10px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top:100px;
+    display: block;
+    border: 2px solid white;
+    font-weight: 100px;
+
+}
+
+.btn-menu a{
+    color:  var(--main-color);
+    font-weight:600;
+    width: 200px;
+    height: auto;
+}
+
+.btn-menu:hover{
+    background-color: var(--main-color);
+    color: white;   
+}
+
+.btn-menu:hover a{
+    color: white;
+}
