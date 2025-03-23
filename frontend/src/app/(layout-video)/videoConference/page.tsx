@@ -45,14 +45,12 @@ export default function VideoConference() {
 
 
 
-return (
-<div>
-  {error ? <ErrorPage></ErrorPage>:
-    loading ? <Loading /> : <Jitsit id={roomId} subject={subject} />
-  }
-</div>
-
-);
+  return (
+    <div>
+      {Error ? <ErrorPage /> : (loading ? <Loading /> : <Jitsit id={roomId} subject={subject} />)}
+    </div>
+  );
+  
 
 
 }
