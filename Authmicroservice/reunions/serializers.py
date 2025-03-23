@@ -1,13 +1,19 @@
 from rest_framework import serializers
 from .models import CustomReunion
 from datetime import timedelta
+import random
 
+def generate_random_id():
+    while True:
+        room_id = random.randint(1000000000, 9999999999)
+        if not CustomReunion.objects.filter(room_id=room_id).exists():
+            return room_id
 
 class ReunionSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomReunion
         fields = ['room_id', 'creator','begin_time','end_time','num_participants','duration']
-        extra_kwargs = {'creator': {'read_only': True}}
+        extra_kwargs = {'creator': {'read_only': True}, 'room_id': {'read_only': True}}
 
     def create(self,validated_data):
         user = self.context['request'].user
@@ -19,7 +25,7 @@ class ReunionSerializer(serializers.ModelSerializer):
             creator=user,
             begin_time= validated_data['begin_time'],
             num_participants=validated_data['num_participants'],
-            room_id= validated_data["room_id"]
+            room_id= generate_random_id()
         )
         return reunion
 

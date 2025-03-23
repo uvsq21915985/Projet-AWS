@@ -3,6 +3,13 @@ from login.models import CustomUser
 from datetime import timedelta
 from django.utils import timezone
 
+import random
+
+def generate_random_id():
+    while True:
+        room_id = random.randint(1000000000, 9999999999)
+        if not CustomReunion.objects.filter(room_id=room_id).exists():
+            return room_id
 
 class CustomReunion(models.Model):
     creator = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
@@ -28,6 +35,8 @@ class CustomReunion(models.Model):
         if self.end_time:
             self.duration = self.end_time - self.begin_time
             self.ongoing = False
+        if not self.room_id:
+            self.room_id = generate_random_id()
         super().save(*args, **kwargs)
 
     class Meta:
