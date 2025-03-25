@@ -51,8 +51,8 @@ export default function Jitsit(props: {id: string ; subject: string , isJoiningR
     { loading && <Loading/>}
     <div style={{display: loading ? "none"  :"inline"}}>
     <JitsiMeeting 
-  //  domain = "jitsimeetproject.hopto.org:443" // domaine du serveur jitsi
-    domain = "localhost:8443"
+    domain = "jitsimeetproject.hopto.org:443" // domaine du serveur jitsi
+  //  domain = "localhost:8443"
     roomName = {roomId}
     configOverwrite = {{
     subject:subject, //ajoute les sujet de la réunion
