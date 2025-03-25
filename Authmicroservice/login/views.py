@@ -4,6 +4,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.tokens import AccessToken
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.contrib.auth import authenticate
+from django.contrib.auth import password_validation
 from rest_framework.response import Response
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAuthenticatedOrReadOnly
@@ -11,7 +12,7 @@ from rest_framework.decorators import api_view, authentication_classes, permissi
 from django.conf import settings
 from .models import CustomUser
 from .authentification import CustomJWTAuthentication
-
+from django.core.exceptions import ValidationError
 
 @api_view(['POST'])
 @permission_classes([AllowAny])
@@ -38,13 +39,17 @@ def user_login(request):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         user = None
         user = authenticate(username=username, password=password)
-        
         if '@' in username:
             try:
                 user = CustomUser.objects.get(email=username)
             except ObjectDoesNotExist:
                 pass
+        
         if user:
+            try:
+                password_validation.validate_password(password);
+            except ValidationError:
+                pass
             refresh = RefreshToken.for_user(user)
             access_token = refresh.access_token
             refresh_token= str(refresh)

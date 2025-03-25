@@ -43,7 +43,6 @@ ALLOWED_HOSTS = [env('HOST'), 'authdjango.myddns.me']
 INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
-    #'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -51,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_password_validators',
     'login',
     'reunions',
 ]
@@ -110,13 +110,24 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        # 'OPTIONS': {'min_length': 9}
+        'OPTIONS': {'min_length': 9}
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    },
+    {
+        'NAME': 'django_password_validators.password_character_requirements.password_validation.PasswordCharacterValidator',
+        'OPTIONS': {
+             'min_length_digit': 1,
+             'min_length_alpha': 1,
+             'min_length_special': 1,
+             'min_length_lower': 1,
+             'min_length_upper': 1,
+             'special_characters': "~!@#$%^&*()_+{}\":;'[]"
+         }
     },
 ]
 
@@ -155,7 +166,15 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_RENDERER_CLASSES' : (
         'rest_framework.renderers.JSONRenderer',
-    )
+    ),
+    'DEFAULT_THROTTLE_CLASSES': (
+        'rest_framework.throttling.AnonRateThrottle', 
+        'rest_framework.throttling.UserRateThrottle',
+    ),
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '200/min', 
+        'anon': '200/min',
+    },
 }
 
 SIMPLE_JWT = {
