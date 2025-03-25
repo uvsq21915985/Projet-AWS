@@ -5,21 +5,28 @@ import "./page.css";
 import "../../globals.css";
 import { FormEvent , useEffect, useState } from "react";
 import { check_room, validateJWT } from "@/services/auth";
+import AuthLoading from "@/components/AuthLoading/AuthLoading";
 
 export default function JoinRoom() {
   const router = useRouter();
   const [error, setError] = useState<string|null>(null);
-
+  const[isAuth,setAuth] = useState(false);
   useEffect(()=> {
 
-    const reRoute = async () => {
-      try{const res = await validateJWT();
+   /* on teste si l'utilisateur est authentifié 
+   si non il est redirigé vers la page de login /auth/login
+   */
+   const reRoute = async () => {
+    try{
+      const res = await validateJWT();
       if (!res.ok) {
         router.push("/auth/login");
+      }else{
+        setTimeout(()=>{setAuth(true);},1000);
       }
     }catch(e){router.push("/auth/login");}
-    }
-    reRoute();
+  }
+  reRoute();
 },[])
 
 
@@ -46,7 +53,7 @@ export default function JoinRoom() {
   };
 
  
-
+if (isAuth){
   return (
     
     <div className="join-container">
@@ -65,4 +72,5 @@ export default function JoinRoom() {
       
     </div>
   );
+  }else{return <AuthLoading/>}
 }

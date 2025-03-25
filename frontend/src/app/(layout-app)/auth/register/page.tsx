@@ -30,13 +30,12 @@ export default function Register() {
             try {
                 console.log("Registration Starting");
                 let res = await register(e);
-                console.log("RESPONSE" , res);
+             //   console.log("RESPONSE" , res);
                 console.log("RESPONSE IS OK :" ,res.ok);
-                //   redirect('/videoConference');
                 if (res.ok){
                     console.log("IN RES OK");
                     console.log("The user has been registered")
-                    router.push('/auth/login');
+                    router.push('/userPage');
                 }                
                 else {
                     const errorPromise = await res.json();

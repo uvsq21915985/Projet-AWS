@@ -1,9 +1,11 @@
 "use client";
 import { useEffect, useState } from 'react'
 import './page.css'
-import { get_reunions } from '@/services/auth'
+import { get_reunions, validateJWT } from '@/services/auth'
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import DashboardLayout from '@/components/DashboardLayout/DashboardLayout';
+import AuthLoading from '@/components/AuthLoading/AuthLoading';
 
 type CallItem = {
     begin_time: string,
@@ -38,17 +40,30 @@ export default function Reunions() {
     const router = useRouter(); 
     const [calls, setCalls] = useState<CallItem[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
+    const[isAuth,setAuth] = useState(false);
     //let calls: CallItem[] = [];
     useEffect(()=>{
+         /*verification de l'authentification */
+    
+        const reRoute = async () => {
+        try{
+            const res = await validateJWT();
+            if (!res.ok) {
+            router.push("/auth/login");
+            }else{
+                 setTimeout(()=>{setTimeout(()=>{setAuth(true);},1000);},1000);
+            }
+      }catch(e){router.push("/auth/login");}
+      }
+      reRoute();
+      
         const getReunions = async () => { 
             setLoading(true)
             const reunions  = await get_reunions();
             
             let json  = await reunions.json();
             // s'il y a des réunions on les ajoute
-            console.log("fghjknlk");
-            
-            console.log(json);
+          // console.log(json);
             
             if (json.length > 0) setCalls(json);
             setLoading(false)
@@ -59,9 +74,11 @@ export default function Reunions() {
     },[]);
     
 
-    function createVideo(){router.push("/createVideoConference");}
+  function createVideo(){router.push("/createVideoConference");}
 
+ if (isAuth){
   return (
+    <DashboardLayout>
     <div>
         <div className="add-line">
             <h2>Mes reunions</h2>
@@ -80,5 +97,7 @@ export default function Reunions() {
             {calls.length != 0 && calls.map((c, index) => <CallItem key={index} call={c} />)}
         </div>}
     </div>
+    </DashboardLayout>
   );
+ }else{return <AuthLoading/>}
 }

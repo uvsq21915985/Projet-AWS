@@ -7,12 +7,19 @@ import { getUser } from '@/services/auth';
 import emailjs from '@emailjs/browser';
 import '../../app/globals.css';
 
-const SERVICE_ID = process.env.NEXT_PUBLIC_SERVICE_ID   /* "service_xsxhjlg";*/
-const TEMPLATE_ID = process.env.NEXT_PUBLIC_TEMPLATE_ID // "template_d8gzia6";
-const PUBLIC_KEY = process.env.NEXT_PUBLIC_PUBLIC_KEY // "eFM9k5Cr0Prv4neqt";
+/**
+ * variable d'environement setup dans vercel 
+ */
+const SERVICE_ID = process.env.NEXT_PUBLIC_SERVICE_ID   
+const TEMPLATE_ID = process.env.NEXT_PUBLIC_TEMPLATE_ID 
+const PUBLIC_KEY = process.env.NEXT_PUBLIC_PUBLIC_KEY 
 
 
-
+/**
+ * 
+ * un popUp qui permet d'inviter les utilisateurs soit en copiant le roomId soit en evoyant
+ * directement un mail en saisisant une adresse Mail.
+ */
 export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>> ; invitePopUp: boolean ; roomId: string; } ) {
 
   let setPopUp = props.setPopUp;
@@ -25,7 +32,6 @@ export function PopUpInvite(props: { setPopUp: Dispatch<SetStateAction<boolean>>
   const [isSend, setIsSend] = useState(false);
   const [error , setError] = useState<string|null>(null);
 
-  // close the popUp
   function close(){
     setPopUp(false)
   }

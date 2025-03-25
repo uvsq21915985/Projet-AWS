@@ -1,6 +1,7 @@
 'use client'
 
 import LocalStorage from '@/app/hooks/LocalStorage';
+import AuthLoading from '@/components/AuthLoading/AuthLoading';
 import Jitsit from '@/components/Jitsi/Jitsi';
 import Loading from '@/components/Loading/Loading';
 import { check_room, validateJWT } from '@/services/auth';
@@ -10,12 +11,10 @@ import { useState, useEffect, Suspense } from 'react';
 
 function RoomComponent() {
     const searchParams = useSearchParams();
-    const router = useRouter()
+    const router = useRouter();
     const [roomId, setRoomId] = useState<string | null>(null);
 
     useEffect(() => {
-
- 
 
             const reRoute = async () => {
               try{const res = await validateJWT();
@@ -31,18 +30,19 @@ function RoomComponent() {
         console.log("ID RECUPERER DS URL " + id);
         if (id) {
             console.log("id is valid");
-            // first check if the id exist in database
+            // on regarde si l'id de réunion existe dans la base de donnée
             check_room(id).then(
                 (isOk) => {
                     console.log(isOk);
-                    // redirect if the code is incorect or if the user doest not have the acces to the room
+                    // redirection si le numéro existe
                     if (!isOk) {
-                            router.push('/userPage')
+                            setTimeout(()=>{})
+                            router.push('/userPage');
                     }
-                    // then set it
-                    setRoomId(id);
-                    console.log("ROOM ID SET WITH : ", id);
-
+                    else{
+                        setRoomId(id);
+                        console.log("ROOM ID SET WITH : ", id);
+                    }       
                 }
             ).catch(
                 (err) => {
@@ -55,17 +55,40 @@ function RoomComponent() {
     }, [searchParams]);
 
     if (!roomId) {
-        // Ajout de Suspense pour le chargement de la page
-        return <Loading />; 
+        
+        return <Loading/>; 
     }
-
-    return <Jitsit id={roomId}  subject={''} />;
+    else{
+        return <Jitsit id={roomId}  subject={''} isJoiningRoom={false} />;
+    }
 }
 
 export default function SearchBar() {
+    const[isAuth,setAuth] = useState(false);
+    const router = useRouter();
+    useEffect(()=> {
+
+        /* on teste si l'utilisateur est authentifié 
+        si non il est redirigé vers la page de login /auth/login
+        */
+        const reRoute = async () => {
+         try{
+           const res = await validateJWT();
+           if (!res.ok) {
+             router.push("/auth/login");
+           }else{
+             setTimeout(()=>{setAuth(true);},1000);
+           }
+         }catch(e){router.push("/auth/login");}
+       }
+       reRoute();
+     },[])
+    if (isAuth){
     return (
-        <Suspense fallback={<Loading />}>
+        // Ajout de Suspense pour le chargement de la page
+        <Suspense fallback={<Loading/>}>
             <RoomComponent />
         </Suspense>
     );
+    }else{return <AuthLoading/>}
 }

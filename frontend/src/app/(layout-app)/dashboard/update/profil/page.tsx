@@ -4,6 +4,8 @@ import { FormEvent, useEffect, useState } from "react";
 import "./page.css";
 import { getUser, updateUser, validateJWT } from "@/services/auth";
 import { useRouter } from "next/navigation";
+import DashboardLayout from "@/components/DashboardLayout/DashboardLayout";
+import AuthLoading from "@/components/AuthLoading/AuthLoading";
 
 export default function Profil() {
   const router = useRouter();
@@ -12,9 +14,9 @@ export default function Profil() {
   const [password, setPassword] = useState<string>('');
   const [validate, setValidate] = useState<string|null>(null);
   const [error, setError] = useState<string|null>(null);
+  const [isAuth,setAuth] = useState(false);
 
   async function setUserParamters(){
-   
     const user = await getUser();
     console.log("USER : ");
     console.log(user);
@@ -22,18 +24,22 @@ export default function Profil() {
     setPassword(user.password);
     setUsername(user.username);
   }
+
+
   useEffect(()=>{
-   setUserParamters();
-   const reRoute = async () => {
-    try{const res = await validateJWT();
-    if (!res.ok) {
-      router.push("/auth/login");
-    }
-  }catch(e){router.push("/auth/login");}
+     /*verification de l'authentification */
+     const reRoute = async () => {
+      try{
+          const res = await validateJWT();
+          if (!res.ok) {
+          router.push("/auth/login");
+          }else{
+              setTimeout(()=>{setAuth(true);},1000);
+          }
+    }catch(e){router.push("/auth/login");}
   }
   reRoute();
-
-
+  setUserParamters();
   },[])
 
 const handleSubmit = async (f: FormEvent<HTMLFormElement>) => {
@@ -53,11 +59,11 @@ const handleSubmit = async (f: FormEvent<HTMLFormElement>) => {
   }catch(err){
     setError("erreur lors de la mise à jour des informations")
       setTimeout(() => setError(null), 3000)
-  }
-  
+  } 
 }
-  
+  if (isAuth){
   return (
+    <DashboardLayout>
     <div className="profil-page">
       <div className="title-section">
         <h2>Profil</h2>
@@ -107,5 +113,8 @@ const handleSubmit = async (f: FormEvent<HTMLFormElement>) => {
         {error && <p className="error">{error}</p>}
       </div>
     </div>
-  );
+    </DashboardLayout>
+    );
+  }else{return (<AuthLoading/>)}
+  
 }

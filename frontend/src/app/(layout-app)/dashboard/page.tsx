@@ -4,37 +4,45 @@ import './page.css'
 import { get_reunions, validateJWT } from '@/services/auth';
 import { useRouter } from 'next/navigation';
 import Skeleton from 'react-loading-skeleton';
+import DashboardLayout from '@/components/DashboardLayout/DashboardLayout';
+import AuthLoading from '@/components/AuthLoading/AuthLoading';
 
 export default function Dashboard() {
   const router = useRouter();
   const [numberReunion, setNumberReunion] = useState<number>(0);
-  const[isAuth,setAuth] = useState(false)
+  const[isAuth,setAuth] = useState(false);
 
 
   useEffect(()=>{
+   /* on teste si l'utilisateur est authentifié 
+   si non il est redirigé vers la page de login /auth/login
+   */
     const reRoute = async () => {
-    try{const res = await validateJWT();
-    if (!res.ok) {
-      router.push("/auth/login");
-    }setAuth(true);
-  }catch(e){router.push("/auth/login");}
-
+      try{
+        const res = await validateJWT();
+        if (!res.ok) {
+          router.push("/auth/login");
+        }else{
+          setTimeout(()=>{setAuth(true);},1000);
+        }
+      }catch(e){router.push("/auth/login");}
+    }
+    reRoute();
   const getReunions = async () => { 
     const reunions  = await get_reunions();
-    
     let json  = await reunions.json();
-    console.log("json is" ,json);
-    console.log("JSON LENGTH" , json.length);
+  //  console.log("json is" ,json);
+  //  console.log("JSON LENGTH" , json.length);
     if (json.length)
     setNumberReunion(json.length);
-}
-getReunions();
   }
-  reRoute();
+  getReunions();
+  
 },[])
+// 
 if(isAuth){
   return (
-   
+<DashboardLayout>
     <div>
         <div className="card-stat">
           <div className="stat">
@@ -70,6 +78,7 @@ if(isAuth){
             <p>Bienvenue dans votre dashboard. Vous retrouvez ici vos reunions</p>
         </div>
     </div>
+    </DashboardLayout>  
   );
-}else{<Skeleton></Skeleton>}
+}else{ return  <AuthLoading/>}
 }

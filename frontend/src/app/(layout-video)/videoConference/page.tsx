@@ -8,6 +8,7 @@ import {create_reunion, create_room, reRoute, validateJWT } from "@/services/aut
 import { Suspense } from 'react'
 import Loading from '@/components/Loading/Loading';
 import LocalStorage from '@/app/hooks/LocalStorage';
+import AuthLoading from '@/components/AuthLoading/AuthLoading';
 
 /*
 page pour créer une réunion
@@ -18,24 +19,16 @@ page pour créer une réunion
   const searchParams = useSearchParams();
   const [roomId, setRoomId] = useState('');
   const [subject, setSubject] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [roomExist, setRoomExist] = useState(false);
   const [error, setError] = useState(false);
+ 
+
 
   useEffect(()=> {
 
-    const reRoute = async () => {
-      try{
-        const res = await validateJWT();
-        console.log('VALIDATE TOKEN RESP: ' + res);
-      if (!res.ok) {
-        router.push("/auth/login");
-      }
-    }catch(e){router.push("/auth/login");}
-    }
-    reRoute();
+
     const creatingRoom = async () => {
       try{
-      setLoading(true);
       const subject = searchParams.get('subject');
       let reunion = await create_reunion(Date.now(),1);
       let json = await reunion.json();
@@ -45,7 +38,7 @@ page pour créer une réunion
         if (subject)
         setSubject(subject);
         setRoomId(roomID);
-        setLoading(false);   
+        setRoomExist(true);   
       }else{setError(true);}
       }catch(e){
         setError(true);
@@ -58,7 +51,7 @@ page pour créer une réunion
 
 
   
-  return( <div>{ !loading ? <Jitsit id={roomId} subject={subject} /> : <Loading></Loading>}</div>);
+  return( <div>{ roomExist ? <Jitsit id={roomId} subject={subject} isJoiningRoom={true} /> : <Loading></Loading>}</div>);
 
 
 
@@ -66,9 +59,34 @@ page pour créer une réunion
 
 
 export default function VideoConference(){
-  return (<Suspense fallback={<Loading />}>
-      <VideoConferenceComponenent />
-      </Suspense>);
+  const router = useRouter(); 
+  const[isAuth,setAuth] = useState(false);
+
+  useEffect(()=> {
+
+    /* on teste si l'utilisateur est authentifié 
+      si non il est redirigé vers la page de login /auth/login
+      */
+      const reRoute = async () => {
+       try{
+         const res = await validateJWT();
+         if (!res.ok) {
+           router.push("/auth/login");
+         }else{
+           setTimeout(()=>{setAuth(true);},1000);
+         }
+       }catch(e){router.push("/auth/login");}
+     }
+     reRoute();
+    });
+
+    if (isAuth){
+      return (<Suspense fallback={<Loading/>}>
+          <VideoConferenceComponenent />
+          </Suspense>);
+    }
+    
+    else{return <AuthLoading/>}
 }
 
 

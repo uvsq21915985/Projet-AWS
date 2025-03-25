@@ -6,22 +6,25 @@ import "./../../globals.css";
 import { FormEvent , useEffect, useState } from "react";
 import { validateJWT } from "@/services/auth";
 import LocalStorage from "@/app/hooks/LocalStorage";
+import AuthLoading from "@/components/AuthLoading/AuthLoading";
 
 export default function JoinRoom() {
   const router = useRouter();
   const [error, setError] = useState<string|null>(null);
-  
+  const[isAuth,setAuth] = useState(false);
+
+
   useEffect(()=> {
-    if (LocalStorage.isAuth()){
+    /*verification de l'authentification */
     const reRoute = async () => {
       try{const res = await validateJWT();
       if (!res.ok) {
         router.push("/auth/login");
-      }
+      }else{setTimeout(()=>{setAuth(true);},1000);}
     }catch(e){router.push("/auth/login");}
     }
     reRoute();
-  }else{router.push("/auth/login");}
+  
 },[])
 
 
@@ -41,7 +44,7 @@ export default function JoinRoom() {
         
     }
 
-
+if (isAuth){
 
   return (
     
@@ -61,4 +64,5 @@ export default function JoinRoom() {
       
     </div>
   );
+}else{return <AuthLoading/>}
 }

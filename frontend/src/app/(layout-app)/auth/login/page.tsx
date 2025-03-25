@@ -9,7 +9,7 @@ import LocalStorage from "@/app/hooks/LocalStorage";
 
 
 export default function Login() {
-    const router = useRouter(); // handle change of url
+    const router = useRouter();
     const [pending, setPending] = useState<boolean>(false)
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
@@ -19,36 +19,29 @@ export default function Login() {
     const handleSubmit = async (f: FormEvent<HTMLFormElement>) => {
         f.preventDefault();
         const e = new FormData(f.currentTarget);
-        console.log("RESPONSEFORM" , e);
-        console.log("email :", e.get("email"));
-        console.log("password :", e.get("password"));
-       // redirect('/videoConference');
         if (pending) {
-            console.log("PENDING");
+           // console.log("PENDING");
             return 
         }
         setPending(true)
         try {
-            console.log("LOGIN STARTING");
-           // let res = await login(e);
+           // console.log("LOGIN STARTING");
            let res = await loginJWT(e); 
-           console.log("RESPONSE" , res);
-            console.log("RESPONSE IS OK :" ,res.ok);
-         //   redirect('/videoConference');
+         //  console.log("RESPONSE" , res);
+         //   console.log("RESPONSE IS OK :" ,res.ok);
             if (res.ok){
                 console.log("is ok");
                 let d = await res.json();
                 let u  = await getUser();
-                console.log("USER FOUND : " + u);
                  LocalStorage.saveUser(u);
                  router.push('/userPage');
             }else{  
-                console.log("login not ok");
+             //   console.log("login not ok");
                  setTimeout(() =>setError('mot de passe ou email erroné !'), 1500)
                 ;
                 setPending(false);}
         } catch (error) {
-            console.log("LOGIN ERROR", error);
+          //  console.log("LOGIN ERROR", error);
             setTimeout(() => setError('mot de passe ou email erroné !'), 1500)
             setError("mot de passe ou email erroné !")
         }

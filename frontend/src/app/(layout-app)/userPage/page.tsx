@@ -5,29 +5,44 @@ import { getUser, validateJWT } from "@/services/auth";
 import Link from "next/link";
 import "./page.css";
 import { useRouter } from "next/navigation";
+import AuthLoading from "@/components/AuthLoading/AuthLoading";
+import LocalStorage from "@/app/hooks/LocalStorage";
 
 export default function UserPage() {
   const router = useRouter();
   const [username, setUsername] = useState<String>();
+  const[isAuth,setAuth] = useState(false);
 
   useEffect(() => {
+    /* on teste si l'utilisateur est authentifié 
+   si non il est redirigé vers la page de login /auth/login
+   */
+   const reRoute = async () => {
+    try{
+      const res = await validateJWT();
+      if (!res.ok) {
+        router.push("/auth/login");
+      }else{
+        setTimeout(()=>{setAuth(true);},1000);
+      }
+    }catch(e){router.push("/auth/login");}
+  }
+  reRoute();
+  window.dispatchEvent(new Event("authChange"));
     setStateUser();
   }, []);
 
   async function setStateUser() {
+    if (LocalStorage.isAuth()){
+      setUsername(LocalStorage.getUser().username);
+    }else{
     let user = await getUser();
-    console.log("USERNAME FOUND : ", user);
     setUsername(user.username);
-    const reRoute = async () => {
-      try{const res = await validateJWT();
-      if (!res.ok) {
-        router.push("/auth/login");
-      }
-    }catch(e){router.push("/auth/login");}
-    }
-    reRoute();
+  }
+   
   }
 
+  if (isAuth){
   return (
     <div className="user-container">
       {/* Garde la barre de navigation intacte */}
@@ -55,4 +70,5 @@ export default function UserPage() {
       <img className="logo-meet"src="/vercel.svg" alt="Logo Vercel" />
     </div>
   );
+}else{ return (<AuthLoading/>)}
 }

@@ -1,3 +1,4 @@
+
 .loading{
     display: flex;
     align-items: center;
@@ -5,7 +6,8 @@
     
     width: 100%;
     min-height: 100vh;
-    background-color: rgb(210, 245, 252);
+    background-color:  var(--main-color);
+    color: white;
 }
 .loading .inner{
     display: flex;

@@ -4,6 +4,8 @@ import { FormEvent, useEffect, useState } from "react";
 import "./page.css";
 import { getUser, updatePassword, updateUser, validateJWT } from "@/services/auth";
 import { useRouter } from "next/navigation";
+import DashboardLayout from "@/components/DashboardLayout/DashboardLayout";
+import AuthLoading from "@/components/AuthLoading/AuthLoading";
 
 export default function Password() {
   const router = useRouter();
@@ -13,19 +15,24 @@ export default function Password() {
   const [newpassword, setNewPassword] = useState<string>('');
   const [validate, setValidate] = useState<string|null>(null);
   const [error, setError] = useState<string|null>(null);
-
+  const[isAuth,setAuth] = useState(false);
 
 
   useEffect(()=> {
 
-    const reRoute = async () => {
-      try{const res = await validateJWT();
-      if (!res.ok) {
-        router.push("/auth/login");
-      }
+     /*verification de l'authentification */
+     const reRoute = async () => {
+      try{
+          const res = await validateJWT();
+          if (!res.ok) {
+          router.push("/auth/login");
+          }else{
+              setTimeout(()=>{setAuth(true);},1000);
+          }
     }catch(e){router.push("/auth/login");}
     }
     reRoute();
+    
 },[])
   const handleSubmit = async (f: FormEvent<HTMLFormElement>) => {
     f.preventDefault();
@@ -63,8 +70,9 @@ export default function Password() {
   }
 }
   
-  
+ if (isAuth){ 
   return (
+    <DashboardLayout>
     <div className="passwrd-page">
       <div className="title-section">
         <h2>Mot de passe</h2>
@@ -144,5 +152,7 @@ export default function Password() {
         </form>
       </div>
     </div>
+    </DashboardLayout>
   );
+}else{return <AuthLoading/>}
 }
